@@ -6,6 +6,8 @@ const respostes = document.getElementById('respostes');
 const score = document.getElementById('score');
 const nextStep = document.getElementById('next-step');
 
+const endpoint = 'https://vtv-vila-server.herokuapp.com/test';
+
 ///////////
 // state //
 ///////////
@@ -34,7 +36,7 @@ const state = {
 const fetchQuestions = async () => {
 	try {
 		// fetch data from backend
-		const data = await fetch('http://localhost:5000/test/');
+		const data = await fetch(`${endpoint}`);
 		const questions = await data.json();
 		state.questions = [...state.questions, ...questions.data];
 		state.fetchedQuestions = true;
@@ -55,14 +57,16 @@ function displayNextQuestion() {
 		})
 		.join('');
 	// display up to date score
-	score.textContent = `Puntuació: ${state.score}`;
+	score.textContent = `Puntuació: ${state.score} / ${
+		state.questions.length - 1
+	}`;
 }
 
 function displayResults() {
 	let congratulation;
 	let explanation;
 	let action;
-	if (state.score < 5) {
+	if (state.score >= 9) {
 		console.log('9 - 10');
 		congratulation = 'Enhorabona';
 		explanation =
@@ -89,7 +93,10 @@ function displayResults() {
 		nextStep.innerHTML = `<button>${action}</button>`;
 	} else {
 		console.log('twitter');
-		nextStep.innerHTML = `<ul><a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=${state.socialMediaText} data-size="large">Comparteix a Twitter</a></ul>`;
+		nextStep.innerHTML = `<div>
+		<a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=${state.socialMediaText} data-size="large">Comparteix a Twitter</a>
+		
+		</div>`;
 	}
 }
 
@@ -103,7 +110,7 @@ function reset() {
 
 // display initial question to start the test
 function displayInitialQuestion() {
-	pregunta.textContent = `${state.questions[state.questionCounter].pregunta}`;
+	// pregunta.textContent = `${state.questions[state.questionCounter].pregunta}`;
 	// button to start to be visible
 	startButton.style.visibility = 'visible';
 	startButton.textContent = 'Comencar el test';
@@ -142,16 +149,19 @@ startButton.addEventListener('click', () => {
 // when a user clicks on the answer
 respostes.addEventListener('click', (e) => {
 	const resposta = e.target.textContent;
-	if (resposta == state.questions[state.questionCounter].correcte) {
-		state.score++;
-		score.textContent = `Puntuació: ${state.score}`;
-	}
-	if (state.questionCounter === state.questions.length - 1) {
-		displayResults();
-	} else {
-		// increase count of question
-		state.questionCounter++;
-		displayNextQuestion();
+	if (e.target.nodeName === 'BUTTON') {
+		if (resposta === state.questions[state.questionCounter].correcte) {
+			console.log('lool');
+			state.score++;
+			displayNextQuestion();
+		}
+		if (state.questionCounter === state.questions.length - 1) {
+			displayResults();
+		} else {
+			// increase count of question
+			state.questionCounter++;
+			displayNextQuestion();
+		}
 	}
 });
 
