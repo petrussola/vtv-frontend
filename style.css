@@ -11,16 +11,31 @@ body {
 	align-items: center;
 	font-family: 'Lato', sans-serif;
 	background-color: #f9fafb;
+	padding: 1rem;
 }
 
 header {
 	display: flex;
-	flex-direction: row;
+	flex-flow: row wrap;
 	justify-content: center;
 	align-items: center;
 	width: 100%;
 	border-bottom: 1px dashed gray;
-	height: 10vh;
+	height: 20vh;
+	padding: 1rem;
+}
+
+header h1 {
+	font-size: 3rem;
+}
+
+@media (max-width: 500px) {
+	header {
+		height: 20vh;
+	}
+	header h1 {
+		font-size: 1.25rem;
+	}
 }
 
 #container {
