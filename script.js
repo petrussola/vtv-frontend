@@ -30,7 +30,7 @@ const state = {
 
 ///////////////
 // functions //
-///////////////
+////////////////
 
 // display first question
 const fetchQuestions = async () => {
