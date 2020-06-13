@@ -22,7 +22,7 @@ const state = {
 		},
 	],
 	fetchedQuestions: false,
-	questionCounter: 9,
+	questionCounter: 0,
 	score: 0,
 	socialMediaText:
 		'Soc un VTV (Vilafranqui de Tota la Vida)! Vols saber si ho ets? Ves a www.xyz.com i respon el questionari i, qui sap, potser guanyes una medalla!',
@@ -49,7 +49,7 @@ const fetchQuestions = async () => {
 // display question in #content node
 function displayNextQuestion() {
 	// change text of pregunta to whatever pregunta we are asking, which is determined by the questioncounter
-	content.innerHTML = `<h1>${
+	content.innerHTML = `<h1 id="pregunta">${
 		state.questions[state.questionCounter].pregunta
 	}</h1>`;
 	// pregunta.textContent = `${state.questions[state.questionCounter].pregunta}`;
@@ -80,20 +80,22 @@ function displayResults() {
 	if (state.score >= 9) {
 		congratulation = 'Enhorabona';
 		explanation =
-			"Comparteix la teva puntuacio amb els teus amics i descarrega't la medalla";
+			'Ets un VTV de soca-arrel. Ara ves i comparteix la teva puntuació per fardar del teu status!';
 		action = 'Comparteix la teva puntuació';
 	} else if (state.score <= 8 && state.score >= 5) {
 		congratulation = 'Hmm';
 		explanation =
-			"Si bé has demostrat un bon coneixement de la teva vila, no estàs encara a la altura per guanyar-te la medalla. Torna'ho a provar.";
+			"T'has esforçat força pero no ets un VTV. Torna'ho a provar i segur que aviat ho ets.";
 		action = 'Torna-ho a provar';
 	} else {
 		congratulation = 'Em sap greu';
 		explanation =
-			"Has d'estudiar més! Quan estiguis preparat torna'ho a provar.";
+			"Hi ha feina per fer - has d'estudiar més. No et preocupis, de ben segur que amb una mica d'esforç ho pots aconseguir. Et recomanem llegir el 3d8 i La Fura. I quan et sentis llest torna'ho a intentar.";
 		action = 'Torna-ho a provar';
 	}
-	content.innerHTML = `<h1>${congratulation}, has encertat ${state.score} preguntes. ${action}</h1>`;
+	content.innerHTML = `<h1>${congratulation}, has encertat ${state.score} ${
+		state.score === 1 ? 'pregunta' : 'preguntes'
+	}. ${explanation}</h1>`;
 	const aux = document.createElement('button');
 	if (action === 'Torna-ho a provar') {
 		aux.id = 'tryAgain';
@@ -114,13 +116,7 @@ function reset() {
 
 // display initial question to start the test
 function displayInitialQuestion() {
-	// pregunta.textContent = `${state.questions[state.questionCounter].pregunta}`;
-	// button to start to be visible
 	content.innerHTML = `<button id='start-button'>Començar el test</button>`;
-	// startButton.style.visibility = 'visible';
-	// startButton.textContent = 'Comencar el test';
-	// hide next step section just in case user is retaking the quizz
-	// nextStep.style.visibility = 'hidden';
 }
 
 function isLastQuestion() {
@@ -171,48 +167,4 @@ content.addEventListener('click', (e) => {
 			reset();
 			break;
 	}
-	// clear error message when clicking on start button after test has been triggered
-	// if (errorContainer.className.includes('activated')) {
-	// 	errorContainer.classList.remove('activated');
-	// 	errorContainer.textContent = '';
-	// }
-	// hide button start test first time we click on the button
-	// if (state.questionCounter === 0) {
-	// 	startButton.style.visibility = 'hidden';
-	// }
-	// increase count of question
-	// state.questionCounter++;
-	// displayNextQuestion();
 });
-
-// when a user clicks on the answer
-// respostes.addEventListener('click', (e) => {
-// 	const resposta = e.target.textContent;
-// 	if (e.target.nodeName === 'BUTTON') {
-// 		if (resposta === state.questions[state.questionCounter].correcte) {
-// 			console.log('lool');
-// 			state.score++;
-// 			displayNextQuestion();
-// 		}
-// 		if (state.questionCounter === state.questions.length - 1) {
-// 			displayResults();
-// 		} else {
-// 			// increase count of question
-// 			state.questionCounter++;
-// 			displayNextQuestion();
-// 		}
-// 	}
-// });
-
-// // click on action button at the end of the quizz
-// nextStep.addEventListener('click', (e) => {
-// 	console.log(e.target.textContent);
-// 	switch (e.target.textContent) {
-// 		case 'Torna-ho a provar':
-// 			reset();
-// 			break;
-// 		case 'Comparteix a Twitter':
-// 			console.log('twitter');
-// 			break;
-// 	}
-// });
