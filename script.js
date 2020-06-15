@@ -64,7 +64,7 @@ function displayNextQuestion() {
 	content.appendChild(respostes);
 	// display up to date score
 	const aux = document.createElement('div');
-	aux.id = 'aux';
+	aux.id = 'auxiliary';
 	const questionsLeft = state.questions.length - state.questionCounter;
 	aux.textContent = `${questionsLeft === 1 ? 'Falta' : 'Falten'} ${
 		state.questions.length - state.questionCounter
@@ -77,7 +77,7 @@ function displayResults() {
 	let explanation;
 	let action;
 	// score === 9 or 10
-	if (state.score >= 9) {
+	if (state.score <= 9) {
 		congratulation = 'Enhorabona';
 		explanation =
 			'Ets un VTV de soca-arrel. Ara ves i comparteix la teva puntuació per fardar del teu status!';
@@ -96,12 +96,19 @@ function displayResults() {
 	content.innerHTML = `<h1>${congratulation}, has encertat ${state.score} ${
 		state.score === 1 ? 'pregunta' : 'preguntes'
 	}. ${explanation}</h1>`;
-	const aux = document.createElement('button');
+	const aux = document.createElement('div');
 	if (action === 'Torna-ho a provar') {
 		aux.id = 'tryAgain';
 		aux.textContent = `${action}`;
 	} else {
-		aux.innerHTML = `<a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=${state.socialMediaText} data-size="large">Comparteix a Twitter</a>`;
+		aux.id = 'auxiliary';
+		aux.innerHTML = `
+		<a href="https://t.me/share/url?url=http://127.0.0.1:5500/&text=${state.socialMediaText}"><button class="shareButton"><img src="media/telegram.png"/></button></a>
+		<a href="https://api.whatsapp.com/send?text=${state.socialMediaText}" data-action="share/whatsapp/share"><button class="shareButton"><img src="media/whatsapp.png"/></button></a>
+		
+		`;
+		// <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=${state.socialMediaText} data-size="large"><button class="shareButton">Comparteix a Twitter</button></a>
+		// <a href="https://api.whatsapp.com/send?text=${state.socialMediaText}" data-action="share/whatsapp/share"><button class="shareButton">Comparteix a Whatsapp</button></a>
 	}
 	content.appendChild(aux);
 }

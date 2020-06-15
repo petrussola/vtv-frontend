@@ -131,7 +131,7 @@ button {
 		height: 50px;
 	}
 }
-#aux {
+#auxiliary {
 	width: 100%;
 	display: flex;
 	flex-flow: row wrap;
@@ -139,6 +139,20 @@ button {
 	align-items: center;
 	font-size: 3rem;
 	font-weight: bold;
+}
+
+button.shareButton {
+	margin: 1rem 2rem;
+	padding: 0;
+	width: 100px;
+	height: 100px;
+	/* background-color: red; */
+	background-color: #f9fafb;
+}
+
+button.shareButton img {
+	width: 100%;
+	height: auto;
 }
 
 @media (max-width: 500px) {
