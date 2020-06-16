@@ -1,9 +1,9 @@
+const header = document.querySelector('header');
 const content = document.getElementById('content');
 const startButton = document.getElementById('start-button');
 const errorContainer = document.getElementById('error');
 const pregunta = document.getElementById('pregunta');
 const respostes = document.getElementById('respostes');
-// const aux = document.getElementById('aux');
 const nextStep = document.getElementById('next-step');
 
 const endpoint = 'https://vtv-vila-server.herokuapp.com/test';
@@ -123,7 +123,7 @@ function reset() {
 
 // display initial question to start the test
 function displayInitialQuestion() {
-	content.innerHTML = `<button id='start-button'>Començar el test</button>`;
+	content.innerHTML = `<h1>Ets un VTV (Vilafranquí de Tota la Vida)? Descobreix-ho!</h1><button id='start-button'>Començar el test</button>`;
 }
 
 function isLastQuestion() {
@@ -131,6 +131,13 @@ function isLastQuestion() {
 		return true;
 	}
 	return false;
+}
+
+// display header
+function displayHeader() {
+	header.innerHTML = `<h1 id="title">VTVs</h1><ul id="navbar"><li>ABOUT</li><li>SUGGERIMENTS</li></ul>  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+    <polygon fill="white" points="0,100 100,0 100,100"/>
+  </svg>`;
 }
 
 ////////////
@@ -141,8 +148,9 @@ function isLastQuestion() {
 // https://stackoverflow.com/questions/588040/window-onload-vs-document-onload
 window.onload = () => {
 	window.history.pushState({}, '/', window.location.origin);
-	displayInitialQuestion();
 	fetchQuestions();
+	displayInitialQuestion();
+	displayHeader();
 };
 
 // click button to start test
