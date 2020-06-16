@@ -22,7 +22,7 @@ const state = {
 		},
 	],
 	fetchedQuestions: false,
-	questionCounter: 9,
+	questionCounter: 0,
 	score: 0,
 	socialMediaTextSucces: `Soc un VTV (Vilafranqui de Tota la Vida)! Vols saber si tu també ho ets? Ves a ${window.location.href} i respon a les preguntes! Preguntes per a totes les edats.`,
 	socialMediaTextFail: `Vols saber si ets un VTV (Vilafranqui de Tota la Vida)? Ves a ${window.location.href} i respon a les preguntes! Preguntes per a totes les edats.`,
