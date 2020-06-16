@@ -2,12 +2,12 @@ const header = document.querySelector('header');
 const content = document.getElementById('content');
 const startButton = document.getElementById('start-button');
 const errorContainer = document.getElementById('error');
-const pregunta = document.getElementById('pregunta');
-const respostes = document.getElementById('respostes');
+// const pregunta = document.getElementById('pregunta');
+// const respostes = document.getElementById('respostes');
 const nextStep = document.getElementById('next-step');
 
 const endpoint = 'https://vtv-vila-server.herokuapp.com/test';
-
+console.log(window.location.href);
 ///////////
 // state //
 ///////////
@@ -22,10 +22,10 @@ const state = {
 		},
 	],
 	fetchedQuestions: false,
-	questionCounter: 0,
+	questionCounter: 9,
 	score: 0,
-	socialMediaText:
-		'Soc un VTV (Vilafranqui de Tota la Vida)! Vols saber si ho ets? Ves a www.xyz.com i respon el questionari i, qui sap, potser guanyes una medalla!',
+	socialMediaTextSucces: `Soc un VTV (Vilafranqui de Tota la Vida)! Vols saber si tu també ho ets? Ves a ${window.location.href} i respon a les preguntes! Preguntes per a totes les edats.`,
+	socialMediaTextFail: `Vols saber si ets un VTV (Vilafranqui de Tota la Vida)? Ves a ${window.location.href} i respon a les preguntes! Preguntes per a totes les edats.`,
 };
 
 ///////////////
@@ -52,7 +52,6 @@ function displayNextQuestion() {
 	content.innerHTML = `<h1 id="pregunta">${
 		state.questions[state.questionCounter].pregunta
 	}</h1>`;
-	// pregunta.textContent = `${state.questions[state.questionCounter].pregunta}`;
 	// display available answers
 	const respostes = document.createElement('div');
 	respostes.id = 'respostes';
@@ -63,12 +62,11 @@ function displayNextQuestion() {
 		.join('');
 	content.appendChild(respostes);
 	// display up to date score
-	const aux = document.createElement('div');
+	const aux = document.createElement('h2');
 	aux.id = 'auxiliary';
-	const questionsLeft = state.questions.length - state.questionCounter;
-	aux.textContent = `${questionsLeft === 1 ? 'Falta' : 'Falten'} ${
-		state.questions.length - state.questionCounter
-	} ${questionsLeft === 1 ? 'pregunta' : 'preguntes'}.`;
+	aux.textContent = `Pregunta ${state.questionCounter}/${
+		state.questions.length - 1
+	}`;
 	content.appendChild(aux);
 }
 
@@ -77,7 +75,7 @@ function displayResults() {
 	let explanation;
 	let action;
 	// score === 9 or 10
-	if (state.score <= 9) {
+	if (state.score >= 9) {
 		congratulation = 'Enhorabona';
 		explanation =
 			'Ets un VTV de soca-arrel. Ara ves i comparteix la teva puntuació per fardar del teu status!';
@@ -93,24 +91,28 @@ function displayResults() {
 			"Hi ha feina per fer - has d'estudiar més. No et preocupis, de ben segur que amb una mica d'esforç ho pots aconseguir. Et recomanem llegir el 3d8 i La Fura. I quan et sentis llest torna'ho a intentar.";
 		action = 'Torna-ho a provar';
 	}
-	content.innerHTML = `<h1>${congratulation}, has encertat ${state.score} ${
+	content.innerHTML = `<h1 id="pregunta">${congratulation}, ${
+		state.score < 5 ? ' només ' : ''
+	} has encertat <span>${state.score} ${
 		state.score === 1 ? 'pregunta' : 'preguntes'
-	}. ${explanation}</h1>`;
-	const aux = document.createElement('div');
+	}</span>.</h1><h2 id="explanation">${explanation}</h2>`;
 	if (action === 'Torna-ho a provar') {
+		const aux = document.createElement('button');
 		aux.id = 'tryAgain';
+		content.appendChild(aux);
 		aux.textContent = `${action}`;
 	} else {
+		const aux = document.createElement('div');
 		aux.id = 'auxiliary';
 		aux.innerHTML = `
-		<a href="https://t.me/share/url?url=http://127.0.0.1:5500/&text=${state.socialMediaText}"><button class="shareButton"><img src="media/telegram.png"/></button></a>
+		<a href="https://t.me/share/url?url=${window.location.href}&text=${state.socialMediaText}"><button class="shareButton"><img src="media/telegram.png"/></button></a>
 		<a href="https://api.whatsapp.com/send?text=${state.socialMediaText}" data-action="share/whatsapp/share"><button class="shareButton"><img src="media/whatsapp.png"/></button></a>
 		
 		`;
 		// <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=${state.socialMediaText} data-size="large"><button class="shareButton">Comparteix a Twitter</button></a>
 		// <a href="https://api.whatsapp.com/send?text=${state.socialMediaText}" data-action="share/whatsapp/share"><button class="shareButton">Comparteix a Whatsapp</button></a>
+		content.appendChild(aux);
 	}
-	content.appendChild(aux);
 }
 
 // reset state for those who have to restart the quizz
@@ -123,7 +125,7 @@ function reset() {
 
 // display initial question to start the test
 function displayInitialQuestion() {
-	content.innerHTML = `<h1>Ets un VTV (Vilafranquí de Tota la Vida)? Descobreix-ho!</h1><button id='start-button'>Començar el test</button>`;
+	content.innerHTML = `<h1>Vols saber si ets un VTV (Vilafranquí de Tota la Vida)?</h1><h2>Fes el test (resultats immediats)!</h2><button id='start-button'>Començar</button>`;
 }
 
 function isLastQuestion() {
