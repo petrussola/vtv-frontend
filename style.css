@@ -251,6 +251,10 @@ button {
 	color: white;
 }
 
+button:disabled {
+	background-color: gray;
+}
+
 @media (max-width: 500px) {
 	button {
 		width: 90vw;
@@ -355,4 +359,8 @@ button.shareButton img {
 a {
 	text-decoration: none;
 	color: white;
+}
+
+.hidden {
+	visibility: hidden;
 }

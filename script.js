@@ -5,8 +5,11 @@ const errorContainer = document.getElementById('error');
 // const pregunta = document.getElementById('pregunta');
 // const respostes = document.getElementById('respostes');
 const nextStep = document.getElementById('next-step');
+const ageSelector = document.getElementById('age-selector');
 
-const endpoint = 'https://vtv-vila-server.herokuapp.com/test';
+// const endpoint = 'https://vtv-vila-server.herokuapp.com/test';
+const endpoint = 'http://localhost:5000/test/';
+
 console.log(window.location.href);
 ///////////
 // state //
@@ -26,6 +29,7 @@ const state = {
 	score: 0,
 	socialMediaTextSucces: `Soc un VTV (Vilafranqui de Tota la Vida)! Vols saber si tu també ho ets? Ves a ${window.location.href} i respon a les preguntes! Preguntes per a totes les edats.`,
 	socialMediaTextFail: `Vols saber si ets un VTV (Vilafranqui de Tota la Vida)? Ves a ${window.location.href} i respon a les preguntes! Preguntes per a totes les edats.`,
+	age: null,
 };
 
 ///////////////
@@ -36,10 +40,18 @@ const state = {
 const fetchQuestions = async () => {
 	try {
 		// fetch data from backend
-		const data = await fetch(`${endpoint}`);
+		const data = await fetch(`${endpoint}`, {
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ age: state.age }),
+		});
 		const questions = await data.json();
 		state.questions = [...state.questions, ...questions.data];
 		state.fetchedQuestions = true;
+		displayNextQuestion();
 	} catch (error) {
 		errorContainer.className = 'activated';
 		errorContainer.textContent = error.message;
@@ -125,7 +137,25 @@ function reset() {
 
 // display initial question to start the test
 function displayInitialQuestion() {
-	content.innerHTML = `<h1>Vols saber si ets un VTV (Vilafranquí de Tota la Vida)?</h1><h2>Fes el test (resultats immediats)!</h2><button id='start-button'>Començar</button>`;
+	content.innerHTML = `<h1>Vols saber si ets un VTV (Vilafranquí de Tota la Vida)?</h1><h2>Fes el test (resultats immediats)!</h2>`;
+	const slider = document.createElement('div');
+	slider.id = 'age-selector';
+	slider.innerHTML = `
+	<input type="radio" id="no-gent-gran" name="age" value="no-gent-gran">
+	<label for="no-gent-gran">No Gent Gran</label>
+	<input type="radio" id="gent-gran" name="age" value="gent-gran">
+	<label for="gent-gran">Gent Gran</label>
+	`;
+	const button = document.createElement('button');
+	button.id = 'start-button';
+	button.disabled = true;
+	button.textContent = 'Començar';
+	const selectAge = document.createElement('h3');
+	selectAge.textContent = 'Tria la modalitat Gent Gran o No Gent Gran';
+	selectAge.id = 'ageDisclaimer';
+	content.appendChild(slider);
+	content.appendChild(button);
+	content.appendChild(selectAge);
 }
 
 function isLastQuestion() {
@@ -150,7 +180,7 @@ function displayHeader() {
 // https://stackoverflow.com/questions/588040/window-onload-vs-document-onload
 window.onload = () => {
 	window.history.pushState({}, '/', window.location.origin);
-	fetchQuestions();
+	// fetchQuestions();
 	displayInitialQuestion();
 	displayHeader();
 };
@@ -158,12 +188,17 @@ window.onload = () => {
 // click button to start test
 content.addEventListener('click', (e) => {
 	const targetId = e.target.id;
+	const startButton = document.getElementById('start-button');
+	const ageSelector = document.getElementById('ageDisclaimer');
 	console.log(`fired ${targetId}`);
 	switch (targetId) {
 		// user has clicked on start button
 		case 'start-button':
-			state.questionCounter++;
-			displayNextQuestion();
+			// only fetch data and proceed if age has been selected
+			if (state.age) {
+				state.questionCounter++;
+				fetchQuestions();
+			}
 			break;
 		// user has clicked on answer
 		case 'answer-option':
@@ -182,6 +217,16 @@ content.addEventListener('click', (e) => {
 		case 'tryAgain':
 			console.log('aux');
 			reset();
+			break;
+		case 'gent-gran':
+			startButton.disabled = false;
+			ageSelector.classList.add('hidden');
+			state.age = 'gent-gran';
+			break;
+		case 'no-gent-gran':
+			startButton.disabled = false;
+			ageSelector.classList.add('hidden');
+			state.age = 'no-gent-gran';
 			break;
 	}
 });
