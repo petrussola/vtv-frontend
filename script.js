@@ -142,16 +142,16 @@ function displayInitialQuestion() {
 	slider.id = 'age-selector';
 	slider.innerHTML = `
 	<input type="radio" id="no-gent-gran" name="age" value="no-gent-gran">
-	<label for="no-gent-gran">No Gent Gran</label>
+	<label for="no-gent-gran">Nivell difícil</label>
 	<input type="radio" id="gent-gran" name="age" value="gent-gran">
-	<label for="gent-gran">Gent Gran</label>
+	<label for="gent-gran">Nivell fàcil</label>
 	`;
 	const button = document.createElement('button');
 	button.id = 'start-button';
 	button.disabled = true;
 	button.textContent = 'Començar';
 	const selectAge = document.createElement('h3');
-	selectAge.textContent = 'Tria la modalitat Gent Gran o No Gent Gran';
+	selectAge.textContent = 'Tria el nivell: fàcil o difícil';
 	selectAge.id = 'ageDisclaimer';
 	content.appendChild(slider);
 	content.appendChild(button);
