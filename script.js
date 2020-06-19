@@ -142,7 +142,7 @@ function displayInitialQuestion() {
 	slider.id = 'age-selector';
 	slider.innerHTML = `
 	<input type="radio" id="no-gent-gran" name="age" value="no-gent-gran">
-	<label for="no-gent-gran">Nivell  fàcil</label>
+	<label for="no-gent-gran">Nivell fàcil</label>
 	<input type="radio" id="gent-gran" name="age" value="gent-gran">
 	<label for="gent-gran">Nivell difícil</label>
 	`;
