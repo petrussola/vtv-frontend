@@ -7,8 +7,8 @@ const errorContainer = document.getElementById('error');
 const nextStep = document.getElementById('next-step');
 const ageSelector = document.getElementById('age-selector');
 
-// const endpoint = 'https://vtv-vila-server.herokuapp.com/test';
-const endpoint = 'http://localhost:5000/test/';
+const endpoint = 'https://vtv-vila-server.herokuapp.com/test';
+// const endpoint = 'http://localhost:5000/test/';
 
 console.log(window.location.href);
 ///////////
