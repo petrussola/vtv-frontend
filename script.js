@@ -1,9 +1,10 @@
 const header = document.querySelector('header');
+const title = document.getElementById('title');
+const about = document.getElementById('about-page');
+const suggeriments = document.getElementById('suggeriments-page');
 const content = document.getElementById('content');
 const startButton = document.getElementById('start-button');
 const errorContainer = document.getElementById('error');
-// const pregunta = document.getElementById('pregunta');
-// const respostes = document.getElementById('respostes');
 const nextStep = document.getElementById('next-step');
 const ageSelector = document.getElementById('age-selector');
 
@@ -116,14 +117,14 @@ function displayResults() {
 			'Ets un VTV de soca-arrel. Ara ves i comparteix la teva puntuació per fardar del teu status!';
 		action = 'Comparteix la teva puntuació';
 	} else if (state.score <= 8 && state.score >= 5) {
-		congratulation = 'Hmm';
+		congratulation = 'Casi ho tens!';
 		explanation =
-			"T'has esforçat força pero no ets un VTV. Torna'ho a provar i segur que aviat ho ets.";
+			"T'has esforçat molt pero encara no ets un VTV del tot. Et recomano llegir el 3d8 i La Fura. I quan et sentis llest torna-ho a intentar!";
 		action = 'Torna-ho a provar';
 	} else {
 		congratulation = 'Em sap greu';
 		explanation =
-			"Hi ha feina per fer - has d'estudiar més. No et preocupis, de ben segur que amb una mica d'esforç ho pots aconseguir. Et recomanem llegir el 3d8 i La Fura. I quan et sentis llest torna'ho a intentar.";
+			"Hi ha feina per fer - has d'estudiar més. Pero no et preocupis, tot té solució: et recomano llegir el 3d8 i La Fura. I quan et sentis llest torna-ho a intentar!";
 		action = 'Torna-ho a provar';
 	}
 	content.innerHTML = `<h1 id="pregunta">${congratulation}, ${
@@ -177,9 +178,9 @@ function isLastQuestion() {
 
 // display header
 function displayHeader() {
-	header.innerHTML = `<h1 id="title">VTVs</h1><ul id="navbar"><li>ABOUT</li><li>SUGGERIMENTS</li></ul>  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-    <polygon fill="white" points="0,100 100,0 100,100"/>
-  </svg>`;
+	// 	header.innerHTML = `<h1 id="title">VTVs</h1><ul id="navbar"><li id="about-page">ABOUT</li><li>SUGGERIMENTS</li></ul>  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+	//     <polygon fill="white" points="0,100 100,0 100,100"/>
+	//   </svg>`;
 }
 
 ////////////
@@ -239,4 +240,29 @@ content.addEventListener('click', (e) => {
 			state.age = 'no-gent-gran';
 			break;
 	}
+});
+
+// when about page in header is clicked
+about.addEventListener('click', (e) => {
+	const text = document.createElement('h2');
+	text.id = 'text-page';
+	text.textContent =
+		'Fet per un VTV que ha pujat als castells, ha ballat un ball de la Festa Major i tantes altres coses que fan els VTVs. No sommio en ser administrador ni pregoner. No us prengueu aquesta web massa en serio, tothom hi és benvingut a Vilafranca!';
+	content.innerHTML = '';
+	content.appendChild(text);
+});
+
+// when suggeriments page in header is clicked
+suggeriments.addEventListener('click', () => {
+	const text = document.createElement('h2');
+	text.id = 'text-page';
+	text.textContent =
+		'Si voleu afegir preguntes al test, o teniu qualsevol suggeriment o comentari, envieu-me un email a socunvtv [at] gmail [dot] com. Salut!';
+	content.innerHTML = '';
+	content.appendChild(text);
+});
+
+title.addEventListener('click', () => {
+	reset();
+	displayInitialQuestion();
 });

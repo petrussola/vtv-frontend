@@ -171,6 +171,12 @@ header {
 	background-image: linear-gradient(#3498db, #f8f8f8);
 }
 
+#about-page,
+#suggeriments-page,
+#title {
+	cursor: pointer;
+}
+
 svg {
 	position: absolute;
 	bottom: 0;
@@ -216,6 +222,14 @@ svg {
 	header h1 {
 		font-size: 1.25rem;
 	}
+}
+
+#text-page {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	padding: 3rem;
 }
 
 #container {
