@@ -7,8 +7,8 @@ const errorContainer = document.getElementById('error');
 const nextStep = document.getElementById('next-step');
 const ageSelector = document.getElementById('age-selector');
 
-const endpoint = 'https://vtv-vila-server.herokuapp.com/test';
-// const endpoint = 'http://localhost:5000/test/';
+// const endpoint = 'https://vtv-vila-server.herokuapp.com/test';
+const endpoint = 'http://localhost:5000/test/';
 
 console.log(window.location.href);
 ///////////
@@ -27,14 +27,37 @@ const state = {
 	fetchedQuestions: false,
 	questionCounter: 0,
 	score: 0,
-	socialMediaTextSucces: `Soc un VTV (Vilafranqui de Tota la Vida)! Vols saber si tu també ho ets? Ves a ${window.location.href} i respon a les preguntes! Preguntes per a totes les edats.`,
-	socialMediaTextFail: `Vols saber si ets un VTV (Vilafranqui de Tota la Vida)? Ves a ${window.location.href} i respon a les preguntes! Preguntes per a totes les edats.`,
+	socialMediaTextSucces: `Soc un VTV (Vilafranqui de Tota la Vida)! Vols saber si tu també ho ets? Ves a ${window.location.href} i fes el test.`,
+	socialMediaTextFail: `Vols saber si ets un VTV (Vilafranqui de Tota la Vida)? Ves a ${window.location.href} i fes el test.`,
 	age: null,
 };
 
 ///////////////
 // functions //
 ////////////////
+
+// display initial question to start the test
+function displayInitialQuestion() {
+	content.innerHTML = `<h1>Vols saber si ets un VTV (Vilafranquí de Tota la Vida)?</h1><h2>Fes el test (resultats immediats)!</h2>`;
+	const slider = document.createElement('div');
+	slider.id = 'age-selector';
+	slider.innerHTML = `
+	<input type="radio" id="no-gent-gran" name="age" value="no-gent-gran">
+	<label for="no-gent-gran">Nivell fàcil</label>
+	<input type="radio" id="gent-gran" name="age" value="gent-gran">
+	<label for="gent-gran">Nivell difícil</label>
+	`;
+	const button = document.createElement('button');
+	button.id = 'start-button';
+	button.disabled = true;
+	button.textContent = 'Començar';
+	const selectAge = document.createElement('h3');
+	selectAge.textContent = 'Tria el nivell: fàcil o difícil';
+	selectAge.id = 'ageDisclaimer';
+	content.appendChild(slider);
+	content.appendChild(button);
+	content.appendChild(selectAge);
+}
 
 // display first question
 const fetchQuestions = async () => {
@@ -109,20 +132,22 @@ function displayResults() {
 		state.score === 1 ? 'pregunta' : 'preguntes'
 	}</span>.</h1><h2 id="explanation">${explanation}</h2>`;
 	if (action === 'Torna-ho a provar') {
-		const aux = document.createElement('button');
-		aux.id = 'tryAgain';
+		const aux = document.createElement('div');
+		aux.id = 'auxiliary';
+		const auxButton = document.createElement('button');
+		auxButton.id = 'tryAgain';
+		auxButton.textContent = `${action}`;
+		// render social media share buttons
+		aux.innerHTML = `<a href="https://t.me/share/url?url=${window.location.href}&text=${state.socialMediaTextSucces}"><i class="fab fa-telegram fa-5x shareButton" id="telegram-logo"></i></a><a href="https://api.whatsapp.com/send?text=${state.socialMediaTextSucces}" data-action="share/whatsapp/share"><i class="fab fa-whatsapp-square fa-5x shareButton" id="whatsapp-logo"></i></a><a 
+		href="https://twitter.com/intent/tweet?text=${state.socialMediaTextSucces}"><i class="fab fa-twitter fa-5x shareButton" id="twitter-logo"></i></a>`;
+		content.appendChild(auxButton);
 		content.appendChild(aux);
-		aux.textContent = `${action}`;
 	} else {
 		const aux = document.createElement('div');
 		aux.id = 'auxiliary';
-		aux.innerHTML = `
-		<a href="https://t.me/share/url?url=${window.location.href}&text=${state.socialMediaText}"><button class="shareButton"><img src="media/telegram.png"/></button></a>
-		<a href="https://api.whatsapp.com/send?text=${state.socialMediaText}" data-action="share/whatsapp/share"><button class="shareButton"><img src="media/whatsapp.png"/></button></a>
-		
-		`;
-		// <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=${state.socialMediaText} data-size="large"><button class="shareButton">Comparteix a Twitter</button></a>
-		// <a href="https://api.whatsapp.com/send?text=${state.socialMediaText}" data-action="share/whatsapp/share"><button class="shareButton">Comparteix a Whatsapp</button></a>
+		// render social media share buttons
+		aux.innerHTML = `<a href="https://t.me/share/url?url=${window.location.href}&text=${state.socialMediaTextSucces}"><i class="fab fa-telegram fa-5x shareButton" id="telegram-logo"></i></a><a href="https://api.whatsapp.com/send?text=${state.socialMediaTextSucces}" data-action="share/whatsapp/share"><i class="fab fa-whatsapp-square fa-5x shareButton" id="whatsapp-logo"></i></a><a 
+		href="https://twitter.com/intent/tweet?text=${state.socialMediaTextSucces}"><i class="fab fa-twitter fa-5x shareButton" id="twitter-logo"></i></a>`;
 		content.appendChild(aux);
 	}
 }
@@ -131,31 +156,16 @@ function displayResults() {
 function reset() {
 	state.questionCounter = 0;
 	state.score = 0;
+	state.questions = [
+		{
+			id: 0,
+			pregunta: 'Ets un Vilafranqui de Tota la Vida? Prova el test!',
+			respostes: [],
+			correcte: null,
+		},
+	];
 	// display initial question
 	displayInitialQuestion();
-}
-
-// display initial question to start the test
-function displayInitialQuestion() {
-	content.innerHTML = `<h1>Vols saber si ets un VTV (Vilafranquí de Tota la Vida)?</h1><h2>Fes el test (resultats immediats)!</h2>`;
-	const slider = document.createElement('div');
-	slider.id = 'age-selector';
-	slider.innerHTML = `
-	<input type="radio" id="no-gent-gran" name="age" value="no-gent-gran">
-	<label for="no-gent-gran">Nivell fàcil</label>
-	<input type="radio" id="gent-gran" name="age" value="gent-gran">
-	<label for="gent-gran">Nivell difícil</label>
-	`;
-	const button = document.createElement('button');
-	button.id = 'start-button';
-	button.disabled = true;
-	button.textContent = 'Començar';
-	const selectAge = document.createElement('h3');
-	selectAge.textContent = 'Tria el nivell: fàcil o difícil';
-	selectAge.id = 'ageDisclaimer';
-	content.appendChild(slider);
-	content.appendChild(button);
-	content.appendChild(selectAge);
 }
 
 function isLastQuestion() {

@@ -331,23 +331,27 @@ button:disabled {
 	align-items: center;
 }
 
+#telegram-logo {
+	color: #039be5;
+}
+#whatsapp-logo {
+	color: #4ded67;
+}
+
+#twitter-logo {
+	color: #1da1f2;
+}
+
 #tryAgain {
 	padding: 1rem;
 	font-size: 2rem;
 }
 
-button.shareButton {
+.shareButton {
 	margin: 1rem 2rem;
 	padding: 0;
 	width: 100px;
 	height: 100px;
-	/* background-color: red; */
-	background-color: #f9fafb;
-}
-
-button.shareButton img {
-	width: 100%;
-	height: auto;
 }
 
 @media (max-width: 500px) {
