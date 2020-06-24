@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,900&display=swap');
 
 :root {
 	--mainColor: #3498db;
@@ -148,27 +148,26 @@ h2 {
 }
 
 body {
-	/* display: flex;
-	flex-direction: column;
-	justify-content: space-evenly;
-	align-items: center; */
-	font-family: 'Lato', sans-serif;
-	background-color: #fff;
-	/* padding: 0 1rem; */
+	font-family: 'Roboto', sans-serif;
+	background-image: url('./assets/white-waves.png');
+	margin: 1rem 2rem;
+	/* position: relative; */
+}
+
+.image {
+	flex: none;
+	/* position: absolute; */
+	top: -1000px;
 }
 
 header {
 	display: flex;
 	flex-flow: row wrap;
 	justify-content: space-between;
-	align-items: flex-start;
+	align-items: center;
 	width: 100%;
-	/* border-bottom: 1px dashed gray; */
-	/* height: 10%; */
-	padding: 1rem;
-	position: relative;
-	height: 15vh;
-	background-image: linear-gradient(#3498db, #f8f8f8);
+	padding: 0.5rem;
+	border-bottom: 1px solid gray;
 }
 
 #about-page,
@@ -177,17 +176,8 @@ header {
 	cursor: pointer;
 }
 
-svg {
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-	height: 5vh;
-	/* set height to pixels if you want angle to change with screen width */
-}
-
 #navbar {
 	width: 30%;
-	/* padding: 0.5rem 0; */
 	display: flex;
 	flex-flow: row wrap;
 	align-items: center;
@@ -203,16 +193,8 @@ svg {
 
 #title:hover,
 #navbar li:hover {
-	/* margin-bottom: 0;
-	border-bottom: 1px solid blue; */
-	/* transform: scale(1.2); */
-	text-shadow: 0px 0px 0 rgb(208, 138, 28), 1px 1px 0 rgb(165, 123, 26),
-		2px 2px 0 rgb(242, 185, 100), 3px 3px 0 rgb(227, 167, 187),
-		4px 4px 0 rgb(182, 129, 63), 5px 5px 0 rgb(161, 117, 50),
-		6px 6px 0 rgb(144, 103, 39), 7px 7px 0 rgb(130, 91, 31),
-		8px 8px 0 rgb(120, 83, 25), 9px 9px 0 rgb(108, 73, 20),
-		10px 10px 0 rgb(93, 63, 13), 11px 11px 0 rgb(60, 54, 12),
-		12px 12px 0 rgb(63, 41, 8), 13px 13px 0;
+	margin-bottom: 0;
+	border-bottom: 5px solid #B15566;
 }
 
 @media (max-width: 500px) {
@@ -237,8 +219,22 @@ svg {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	height: 70vh;
+	height: 500px;
 	width: 100%;
+	position: relative;
+}
+
+#container::after {
+	position: fixed;
+	content: '';
+	/* background-color: red; */
+	width: 450px;
+	height: 450px;
+	background-image: url('./assets//geganta.png');
+	/* transform: rotate(-45deg); */
+	left: 70%;
+	bottom: 0px;
+	z-index: -1;
 }
 
 #error {
@@ -283,6 +279,25 @@ button:disabled {
 	flex-direction: column;
 	align-items: center;
 	justify-content: space-around;
+}
+
+#stamp {
+	position: absolute;
+	bottom: 50px;
+	left: 50px;
+	box-shadow: 0 0 0 3px red, 0 0 0 2px red inset;
+	border: 2px solid transparent;
+	border-radius: 4px;
+	display: inline-block;
+	padding: 1rem 2px;
+	line-height: 22px;
+	color: red;
+	font-size: 24px;
+	text-align: center;
+	opacity: 0.8;
+	width: 300px;
+	height: 4rem;
+	transform: rotate(-15deg);
 }
 
 #pregunta,

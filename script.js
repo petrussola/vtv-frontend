@@ -7,9 +7,10 @@ const startButton = document.getElementById('start-button');
 const errorContainer = document.getElementById('error');
 const nextStep = document.getElementById('next-step');
 const ageSelector = document.getElementById('age-selector');
+const geganta = document.getElementById('image');
 
-const endpoint = 'https://vtv-vila-server.herokuapp.com/test';
-// const endpoint = 'http://localhost:5000/test/';
+// const endpoint = 'https://vtv-vila-server.herokuapp.com/test';
+const endpoint = 'http://localhost:5000/test/';
 
 console.log(window.location.href);
 ///////////
@@ -39,7 +40,7 @@ const state = {
 
 // display initial question to start the test
 function displayInitialQuestion() {
-	content.innerHTML = `<h1>Vols saber si ets un VTV (Vilafranquí de Tota la Vida)?</h1><h2>Fes el test (resultats immediats)!</h2>`;
+	content.innerHTML = `<h1>Vols saber si ets un VTV (Vilafranquí de Tota la Vida)?</h1>`;
 	const slider = document.createElement('div');
 	slider.id = 'age-selector';
 	slider.innerHTML = `
@@ -55,9 +56,13 @@ function displayInitialQuestion() {
 	const selectAge = document.createElement('h3');
 	selectAge.textContent = 'Tria el nivell: fàcil o difícil';
 	selectAge.id = 'ageDisclaimer';
+	const stamp = document.createElement('h2');
+	stamp.id = 'stamp';
+	stamp.textContent = 'RESULTATS IMMEDIATS';
 	content.appendChild(slider);
 	content.appendChild(button);
 	content.appendChild(selectAge);
+	content.appendChild(stamp);
 }
 
 // display first question
@@ -176,11 +181,12 @@ function isLastQuestion() {
 	return false;
 }
 
-// display header
-function displayHeader() {
-	// 	header.innerHTML = `<h1 id="title">VTVs</h1><ul id="navbar"><li id="about-page">ABOUT</li><li>SUGGERIMENTS</li></ul>  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-	//     <polygon fill="white" points="0,100 100,0 100,100"/>
-	//   </svg>`;
+// display geganta
+function displayGeganta() {
+	const imageGeganta = document.createElement('div');
+	imageGeganta.id = geganta;
+	imageGeganta.innerHTML = `<img src="./assets/geganta.png"/>`;
+	geganta.appendChild(imageGeganta);
 }
 
 ////////////
@@ -193,7 +199,7 @@ window.onload = () => {
 	window.history.pushState({}, '/', window.location.origin);
 	// fetchQuestions();
 	displayInitialQuestion();
-	displayHeader();
+	displayGeganta();
 };
 
 // click button to start test
