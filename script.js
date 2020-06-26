@@ -49,6 +49,7 @@ function displayInitialQuestion() {
 	<input type="radio" id="gent-gran" name="age" value="gent-gran">
 	<label for="gent-gran">Nivell difícil</label>
 	`;
+	// start button
 	const button = document.createElement('button');
 	button.id = 'start-button';
 	button.disabled = true;

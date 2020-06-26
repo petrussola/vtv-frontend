@@ -2,7 +2,8 @@
 
 :root {
 	--mainColor: #3498db;
-	--borderRadius: 0.5rem;
+	--startButtonColor: #3ecf8e;
+	--borderRadius: 4px;
 }
 
 /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -191,10 +192,14 @@ header {
 	margin-bottom: 1px;
 }
 
+#title,
+#navbar li {
+	margin-bottom: 5px;
+}
+
 #title:hover,
 #navbar li:hover {
-	margin-bottom: 0;
-	border-bottom: 5px solid #b15566;
+	transform: scale(1.1);
 }
 
 @media (max-width: 500px) {
@@ -278,12 +283,22 @@ header {
 }
 
 button {
-	background-color: #3498db;
 	border: none;
-	padding: 2rem;
-	font-size: 4rem;
+	padding: 1rem;
 	border-radius: var(--borderRadius);
 	color: white;
+}
+
+#start-button {
+	background-color: var(--startButtonColor);
+	font-size: 3rem;
+	text-shadow: 0 1px 3px rgba(36, 180, 126, 0.4);
+	box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+	text-transform: uppercase;
+}
+
+button:hover:enabled {
+	transform: translateY(-1px);
 }
 
 button:disabled {
@@ -355,17 +370,12 @@ button:disabled {
 	align-items: center;
 }
 
-#respostes button {
+#answer-option {
+	background-color: var(--mainColor);
 	font-size: 2rem;
-	margin: 2rem;
-	padding: 1rem;
-	border: none;
-	background-color: #3498db;
-	border-radius: var(--borderRadius);
-	color: white;
-	max-width: 400px;
+	margin: 10px 2%;
+	padding: 2rem;
 	min-width: 200px;
-	height: 100px;
 }
 
 @media (max-width: 500px) {
