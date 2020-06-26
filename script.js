@@ -9,8 +9,8 @@ const nextStep = document.getElementById('next-step');
 const ageSelector = document.getElementById('age-selector');
 const geganta = document.getElementById('image');
 
-const endpoint = 'https://vtv-vila-server.herokuapp.com/test';
-// const endpoint = 'http://localhost:5000/test/';
+// const endpoint = 'https://vtv-vila-server.herokuapp.com/test';
+const endpoint = 'http://localhost:5000/test/';
 
 console.log(window.location.href);
 ///////////
@@ -68,6 +68,10 @@ function displayInitialQuestion() {
 // display first question
 const fetchQuestions = async () => {
 	try {
+		// display spinner while promise resolves
+		const spinner = document.createElement('div');
+		spinner.classList = 'loading';
+		errorContainer.appendChild(spinner);
 		// fetch data from backend
 		const data = await fetch(`${endpoint}`, {
 			method: 'POST',
@@ -78,10 +82,15 @@ const fetchQuestions = async () => {
 			body: JSON.stringify({ age: state.age }),
 		});
 		const questions = await data.json();
+		// hide spinner after promise has resolved
+		errorContainer.innerHTML = '';
+		// errorContainer.classList.remove('loading');
 		state.questions = [...state.questions, ...questions.data];
 		state.fetchedQuestions = true;
 		displayNextQuestion();
 	} catch (error) {
+		// hide spinner after promise has resolved
+		errorContainer.innerHTML = '';
 		errorContainer.className = 'activated';
 		errorContainer.textContent = error.message;
 	}
