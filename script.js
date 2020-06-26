@@ -10,8 +10,8 @@ const nextStep = document.getElementById('next-step');
 const ageSelector = document.getElementById('age-selector');
 const geganta = document.getElementById('image');
 
-// const endpoint = 'https://vtv-vila-server.herokuapp.com/test';
-const endpoint = 'http://localhost:5000/test/';
+const endpoint = 'https://vtv-vila-server.herokuapp.com/test';
+// const endpoint = 'http://localhost:5000/test/';
 
 console.log(window.location.href);
 ///////////
@@ -278,7 +278,7 @@ page.forEach((item) => {
 			madeBy.textContent = 'Fet per en www.peresola.com';
 			textContainer.appendChild(madeBy);
 			whyMade.textContent =
-				'Soc un VTV que ha pujat als castells, ha ballat un ball de la Festa Major i tantes altres coses que fan els VTVs. No sommio en ser administrador ni pregoner. No us prengueu aquesta web seriosament, tothom hi és benvingut a Vilafranca!';
+				'Soc un VTV que ha pujat als castells, ha ballat un ball de la Festa Major i tantes altres coses que fan els VTVs. No somio en ser administrador ni pregoner. No us prengueu aquesta web seriosament, tothom hi és benvingut a Vilafranca!';
 		} else if (e.target.id === 'suggeriments-page') {
 			whyMade.textContent =
 				'Si voleu afegir preguntes al test, o teniu qualsevol suggeriment o comentari, envieu-me un email a socunvtv [arroba] gmail [punt] com. Salut!';
