@@ -1,7 +1,8 @@
 const header = document.querySelector('header');
 const title = document.getElementById('title');
-const about = document.getElementById('about-page');
-const suggeriments = document.getElementById('suggeriments-page');
+const page = document.querySelectorAll('.page');
+
+// const suggeriments = document.getElementById('suggeriments-page');
 const content = document.getElementById('content');
 const startButton = document.getElementById('start-button');
 const errorContainer = document.getElementById('error');
@@ -262,44 +263,32 @@ content.addEventListener('click', (e) => {
 	}
 });
 
-// when about page in header is clicked
-about.addEventListener('click', () => {
-	// create text container
-	const textContainer = document.createElement('div');
-	textContainer.id = 'text-page';
-	// create first line
-	const madeBy = document.createElement('h2');
-	madeBy.textContent = 'Fet per en www.peresola.com';
-	textContainer.appendChild(madeBy);
-	// create context
-	const whyMade = document.createElement('h2');
-	whyMade.textContent =
-		'Soc un VTV que ha pujat als castells, ha ballat un ball de la Festa Major i tantes altres coses que fan els VTVs. No sommio en ser administrador ni pregoner. No us prengueu aquesta web seriosament, tothom hi és benvingut a Vilafranca!';
-	textContainer.appendChild(whyMade);
-	content.innerHTML = '';
-	content.appendChild(textContainer);
-});
-
-// when suggeriments page in header is clicked
-suggeriments.addEventListener('click', () => {
-	// create text container
-	const textContainer = document.createElement('div');
-	textContainer.id = 'text-page';
-	// create context
-	const whyMade = document.createElement('h2');
-	whyMade.textContent =
-	'Si voleu afegir preguntes al test, o teniu qualsevol suggeriment o comentari, envieu-me un email a socunvtv [arroba] gmail [punt] com. Salut!';
-	textContainer.appendChild(whyMade);
-	content.innerHTML = '';
-	content.appendChild(textContainer);
-
-
-	// const text = document.createElement('h2');
-	// text.id = 'text-page';
-	// text.textContent =
-	// 	'Si voleu afegir preguntes al test, o teniu qualsevol suggeriment o comentari, envieu-me un email a socunvtv [at] gmail [dot] com. Salut!';
-	// content.innerHTML = '';
-	// content.appendChild(text);
+// when a page in header is clicked
+page.forEach((item) => {
+	item.addEventListener('click', (e) => {
+		console.log(e.target.id);
+		// create text container
+		const textContainer = document.createElement('div');
+		textContainer.id = 'text-page';
+		// create context
+		const whyMade = document.createElement('h2');
+		if (e.target.id === 'about-page') {
+			// create first line
+			const madeBy = document.createElement('h2');
+			madeBy.textContent = 'Fet per en www.peresola.com';
+			textContainer.appendChild(madeBy);
+			whyMade.textContent =
+				'Soc un VTV que ha pujat als castells, ha ballat un ball de la Festa Major i tantes altres coses que fan els VTVs. No sommio en ser administrador ni pregoner. No us prengueu aquesta web seriosament, tothom hi és benvingut a Vilafranca!';
+		} else if (e.target.id === 'suggeriments-page') {
+			whyMade.textContent =
+				'Si voleu afegir preguntes al test, o teniu qualsevol suggeriment o comentari, envieu-me un email a socunvtv [arroba] gmail [punt] com. Salut!';
+		} else {
+			console.log("page doesn't exist");
+		}
+		textContainer.appendChild(whyMade);
+		content.innerHTML = '';
+		content.appendChild(textContainer);
+	});
 });
 
 title.addEventListener('click', () => {
