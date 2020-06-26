@@ -212,14 +212,6 @@ header {
 	}
 }
 
-#text-page {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
-	padding: 3rem;
-}
-
 #container {
 	display: flex;
 	flex-direction: column;
@@ -452,4 +444,18 @@ a {
 
 .hidden {
 	visibility: hidden;
+}
+
+#text-page {
+	/* background-color: red; */
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	/* justify-content: flex-start; */
+	padding: 3rem 25% 3rem 3rem;
+}
+
+#text-page * {
+	margin: 1rem 0;
+	line-height: 1.6;
 }

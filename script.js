@@ -263,23 +263,43 @@ content.addEventListener('click', (e) => {
 });
 
 // when about page in header is clicked
-about.addEventListener('click', (e) => {
-	const text = document.createElement('h2');
-	text.id = 'text-page';
-	text.textContent =
-		'Fet per un VTV que ha pujat als castells, ha ballat un ball de la Festa Major i tantes altres coses que fan els VTVs. No sommio en ser administrador ni pregoner. No us prengueu aquesta web massa en serio, tothom hi és benvingut a Vilafranca!';
+about.addEventListener('click', () => {
+	// create text container
+	const textContainer = document.createElement('div');
+	textContainer.id = 'text-page';
+	// create first line
+	const madeBy = document.createElement('h2');
+	madeBy.textContent = 'Fet per en www.peresola.com';
+	textContainer.appendChild(madeBy);
+	// create context
+	const whyMade = document.createElement('h2');
+	whyMade.textContent =
+		'Soc un VTV que ha pujat als castells, ha ballat un ball de la Festa Major i tantes altres coses que fan els VTVs. No sommio en ser administrador ni pregoner. No us prengueu aquesta web seriosament, tothom hi és benvingut a Vilafranca!';
+	textContainer.appendChild(whyMade);
 	content.innerHTML = '';
-	content.appendChild(text);
+	content.appendChild(textContainer);
 });
 
 // when suggeriments page in header is clicked
 suggeriments.addEventListener('click', () => {
-	const text = document.createElement('h2');
-	text.id = 'text-page';
-	text.textContent =
-		'Si voleu afegir preguntes al test, o teniu qualsevol suggeriment o comentari, envieu-me un email a socunvtv [at] gmail [dot] com. Salut!';
+	// create text container
+	const textContainer = document.createElement('div');
+	textContainer.id = 'text-page';
+	// create context
+	const whyMade = document.createElement('h2');
+	whyMade.textContent =
+	'Si voleu afegir preguntes al test, o teniu qualsevol suggeriment o comentari, envieu-me un email a socunvtv [arroba] gmail [punt] com. Salut!';
+	textContainer.appendChild(whyMade);
 	content.innerHTML = '';
-	content.appendChild(text);
+	content.appendChild(textContainer);
+
+
+	// const text = document.createElement('h2');
+	// text.id = 'text-page';
+	// text.textContent =
+	// 	'Si voleu afegir preguntes al test, o teniu qualsevol suggeriment o comentari, envieu-me un email a socunvtv [at] gmail [dot] com. Salut!';
+	// content.innerHTML = '';
+	// content.appendChild(text);
 });
 
 title.addEventListener('click', () => {
