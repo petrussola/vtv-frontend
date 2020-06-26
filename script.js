@@ -40,7 +40,10 @@ const state = {
 
 // display initial question to start the test
 function displayInitialQuestion() {
-	content.innerHTML = `<h1>Vols saber si ets un VTV (Vilafranquí de Tota la Vida)?</h1>`;
+	content.innerHTML = `<h1>Vols saber si ets un VTV (Vilafranquí de Tota la Vida)? <span class="outline">Fes el test.</span></h1>`;
+	const actionItems = document.createElement('div');
+	actionItems.id = 'actionItems';
+	content.appendChild(actionItems);
 	const slider = document.createElement('div');
 	slider.id = 'age-selector';
 	slider.innerHTML = `
@@ -60,13 +63,13 @@ function displayInitialQuestion() {
 	const stamp = document.createElement('h2');
 	stamp.id = 'stamp';
 	stamp.textContent = 'RESULTATS IMMEDIATS';
-	content.appendChild(slider);
-	content.appendChild(button);
-	content.appendChild(selectAge);
-	content.appendChild(stamp);
+	actionItems.appendChild(slider);
+	actionItems.appendChild(button);
+	actionItems.appendChild(selectAge);
+	actionItems.appendChild(stamp);
 }
 
-// display first question
+// fetch questions after user clicks on start test
 const fetchQuestions = async () => {
 	try {
 		// display spinner while promise resolves
@@ -103,6 +106,9 @@ function displayNextQuestion() {
 	content.innerHTML = `<h1 id="pregunta">${
 		state.questions[state.questionCounter].pregunta
 	}</h1>`;
+	const actionItems = document.createElement('div');
+	actionItems.id = 'actionItems';
+	content.appendChild(actionItems);
 	// display available answers
 	const respostes = document.createElement('div');
 	respostes.id = 'respostes';
@@ -111,27 +117,28 @@ function displayNextQuestion() {
 			return `<button id="answer-option">${item}</button>`;
 		})
 		.join('');
-	content.appendChild(respostes);
+	actionItems.appendChild(respostes);
 	// display up to date score
 	const aux = document.createElement('h2');
 	aux.id = 'auxiliary';
 	aux.textContent = `Pregunta ${state.questionCounter}/${
 		state.questions.length - 1
 	}`;
-	content.appendChild(aux);
+	actionItems.appendChild(aux);
 }
 
 function displayResults() {
+	// initialize variables that will be used for text depending on the score
 	let congratulation;
 	let explanation;
 	let action;
 	// score === 9 or 10
-	if (state.score >= 9) {
+	if (state.score === 10) {
 		congratulation = 'Enhorabona';
 		explanation =
 			'Ets un VTV de soca-arrel. Ara ves i comparteix la teva puntuació per fardar del teu status!';
-		action = 'Comparteix la teva puntuació';
-	} else if (state.score <= 8 && state.score >= 5) {
+		action = 'Comparteix el teu status!';
+	} else if (state.score <= 9 && state.score >= 5) {
 		congratulation = 'Casi ho tens!';
 		explanation =
 			"T'has esforçat molt pero encara no ets un VTV del tot. Et recomano llegir el 3d8 i La Fura. I quan et sentis llest torna-ho a intentar!";
@@ -147,25 +154,31 @@ function displayResults() {
 	} has encertat <span>${state.score} ${
 		state.score === 1 ? 'pregunta' : 'preguntes'
 	}</span>.</h1><h2 id="explanation">${explanation}</h2>`;
+	// container where User action takes place
+	const actionItems = document.createElement('div');
+	actionItems.id = 'actionItems';
+
+	// share action container
+	const actionContainer = document.createElement('div');
+	actionContainer.id = 'auxiliary';
+	// CTA to share
+	const shareMessage = document.createElement('h2');
+	shareMessage.textContent = "Si t'ha agradat, comparteix aquest test:";
+	actionContainer.appendChild(shareMessage);
+	// render social media share buttons
+	const shareButtons = document.createElement('div');
+	shareButtons.innerHTML = `<a href="https://t.me/share/url?url=${window.location.href}&text=${state.socialMediaTextSucces}"><i class="fab fa-telegram fa-5x shareButton" id="telegram-logo"></i></a><a href="https://api.whatsapp.com/send?text=${state.socialMediaTextSucces}" data-action="share/whatsapp/share"><i class="fab fa-whatsapp-square fa-5x shareButton" id="whatsapp-logo"></i></a><a 
+	href="https://twitter.com/intent/tweet?text=${state.socialMediaTextSucces}"><i class="fab fa-twitter fa-5x shareButton" id="twitter-logo"></i></a>`;
+	actionContainer.appendChild(shareButtons);
+	actionItems.appendChild(actionContainer);
 	if (action === 'Torna-ho a provar') {
-		const aux = document.createElement('div');
-		aux.id = 'auxiliary';
-		const auxButton = document.createElement('button');
-		auxButton.id = 'tryAgain';
-		auxButton.textContent = `${action}`;
-		// render social media share buttons
-		aux.innerHTML = `<a href="https://t.me/share/url?url=${window.location.href}&text=${state.socialMediaTextSucces}"><i class="fab fa-telegram fa-5x shareButton" id="telegram-logo"></i></a><a href="https://api.whatsapp.com/send?text=${state.socialMediaTextSucces}" data-action="share/whatsapp/share"><i class="fab fa-whatsapp-square fa-5x shareButton" id="whatsapp-logo"></i></a><a 
-		href="https://twitter.com/intent/tweet?text=${state.socialMediaTextSucces}"><i class="fab fa-twitter fa-5x shareButton" id="twitter-logo"></i></a>`;
-		content.appendChild(auxButton);
-		content.appendChild(aux);
-	} else {
-		const aux = document.createElement('div');
-		aux.id = 'auxiliary';
-		// render social media share buttons
-		aux.innerHTML = `<a href="https://t.me/share/url?url=${window.location.href}&text=${state.socialMediaTextSucces}"><i class="fab fa-telegram fa-5x shareButton" id="telegram-logo"></i></a><a href="https://api.whatsapp.com/send?text=${state.socialMediaTextSucces}" data-action="share/whatsapp/share"><i class="fab fa-whatsapp-square fa-5x shareButton" id="whatsapp-logo"></i></a><a 
-		href="https://twitter.com/intent/tweet?text=${state.socialMediaTextSucces}"><i class="fab fa-twitter fa-5x shareButton" id="twitter-logo"></i></a>`;
-		content.appendChild(aux);
+		// CTA button
+		const ctaButton = document.createElement('button');
+		ctaButton.id = 'tryAgain';
+		ctaButton.textContent = `${action}`;
+		actionItems.insertBefore(ctaButton, actionItems.firstChild);
 	}
+	content.appendChild(actionItems);
 }
 
 // reset state for those who have to restart the quizz
@@ -191,14 +204,6 @@ function isLastQuestion() {
 	return false;
 }
 
-// display geganta
-function displayGeganta() {
-	const imageGeganta = document.createElement('div');
-	imageGeganta.id = geganta;
-	imageGeganta.innerHTML = `<img src="./assets/geganta.png"/>`;
-	geganta.appendChild(imageGeganta);
-}
-
 ////////////
 // events //
 ////////////
@@ -209,7 +214,6 @@ window.onload = () => {
 	window.history.pushState({}, '/', window.location.origin);
 	// fetchQuestions();
 	displayInitialQuestion();
-	displayGeganta();
 };
 
 // click button to start test
