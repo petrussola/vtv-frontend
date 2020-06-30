@@ -167,7 +167,7 @@ header {
 	justify-content: space-between;
 	align-items: center;
 	width: 100%;
-	height: 65px;
+	min-height: 65px;
 	padding: 0.5rem;
 	border-bottom: 1px solid gray;
 }
@@ -184,13 +184,23 @@ header {
 	flex-flow: row wrap;
 	align-items: center;
 	justify-content: space-evenly;
-	height: 2rem;
+	min-height: 2rem;
 }
 
 #navbar li {
 	font-size: 1.2rem;
 	padding: 0.5rem;
 	margin-bottom: 1px;
+}
+
+#burguer,
+#close {
+	display: none;
+}
+
+#burguer.show,
+#close.show {
+	display: block;
 }
 
 #title,
@@ -201,15 +211,6 @@ header {
 #title:hover,
 #navbar li:hover {
 	transform: scale(1.1);
-}
-
-@media (max-width: 500px) {
-	header {
-		height: 20vh;
-	}
-	header h1 {
-		font-size: 1.25rem;
-	}
 }
 
 #container {
@@ -294,13 +295,6 @@ button:hover:enabled {
 	background-color: gray;
 }
 
-@media (max-width: 500px) {
-	button {
-		width: 90vw;
-		font-size: 2rem;
-	}
-}
-
 #content {
 	width: 100%;
 	height: 100%;
@@ -365,12 +359,6 @@ button:hover:enabled {
 	font-weight: bold;
 }
 
-@media (max-width: 500px) {
-	#pregunta {
-		font-size: 2rem;
-	}
-}
-
 #respostes {
 	width: 100%;
 	display: flex;
@@ -386,15 +374,6 @@ button:hover:enabled {
 	min-width: 200px;
 }
 
-@media (max-width: 500px) {
-	#respostes button {
-		font-size: 1rem;
-		margin: 1rem;
-		padding: 0.5rem;
-		min-width: 100px;
-		height: 50px;
-	}
-}
 #auxiliary {
 	width: 100%;
 	display: flex;
@@ -431,12 +410,6 @@ button:hover:enabled {
 	transform: translateY(-1px);
 }
 
-@media (max-width: 500px) {
-	#aux {
-		font-size: 2rem;
-	}
-}
-
 a {
 	text-decoration: none;
 	color: white;
@@ -458,4 +431,49 @@ a {
 #text-page * {
 	margin: 1rem 0;
 	line-height: 1.6;
+}
+
+@media (max-width: 500px) {
+	header {
+		/* background-color: red; */
+		min-height: 15vh;
+	}
+	#navbar {
+		clear: both;
+		position: fixed;
+		/* top: 10vh; */
+		transform: translateX(100%);
+	}
+	#toggle {
+		display: block;
+	}
+}
+
+@media (max-width: 500px) {
+	#aux {
+		font-size: 2rem;
+	}
+}
+
+@media (max-width: 500px) {
+	#respostes button {
+		font-size: 1rem;
+		margin: 1rem;
+		padding: 0.5rem;
+		min-width: 100px;
+		height: 50px;
+	}
+}
+
+@media (max-width: 500px) {
+	button {
+		width: 90vw;
+		font-size: 2rem;
+	}
+}
+
+@media (max-width: 500px) {
+	#pregunta {
+		font-size: 2rem;
+	}
 }

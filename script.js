@@ -1,6 +1,9 @@
 const header = document.querySelector('header');
 const title = document.getElementById('title');
 const page = document.querySelectorAll('.page');
+const icon = document.getElementById('icon');
+const burguer = document.getElementById('burguer');
+const close = document.getElementById('close');
 
 // const suggeriments = document.getElementById('suggeriments-page');
 const content = document.getElementById('content');
@@ -295,3 +298,10 @@ title.addEventListener('click', () => {
 	reset();
 	displayInitialQuestion();
 });
+
+icon.addEventListener('click', () => {
+	burguer.classList.toggle('show');
+	close.classList.toggle('show');
+	title.classList.toggle('show');
+});
+
