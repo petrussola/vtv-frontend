@@ -1,7 +1,7 @@
 const header = document.querySelector('header');
 const title = document.getElementById('title');
 const page = document.querySelectorAll('.page');
-const icon = document.getElementById('icon');
+const icons = document.getElementById('icons');
 const burguer = document.getElementById('burguer');
 const close = document.getElementById('close');
 const navbar = document.getElementById('navbar');
@@ -299,7 +299,7 @@ title.addEventListener('click', () => {
 	displayInitialQuestion();
 });
 
-icon.addEventListener('click', (e) => {
+icons.addEventListener('click', (e) => {
 	if (e.target.id === 'burguer') {
 		navbar.setAttribute(
 			'style',

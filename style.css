@@ -151,13 +151,12 @@ h2 {
 body {
 	font-family: 'Roboto', sans-serif;
 	background-image: url('./assets/white-waves.png');
-	margin: 1rem 2rem;
-	/* position: relative; */
+	/* margin: 0 1rem; */
+	position: relative;
 }
 
 .image {
 	flex: none;
-	/* position: absolute; */
 	top: -1000px;
 }
 
@@ -166,10 +165,11 @@ header {
 	flex-flow: row wrap;
 	justify-content: space-between;
 	align-items: center;
-	width: 100%;
+	max-width: 100%;
 	min-height: 65px;
 	padding: 0.5rem;
 	border-bottom: 1px solid gray;
+	margin: 1rem;
 }
 
 #about-page,
@@ -217,6 +217,10 @@ header {
 	transform: scale(1.1);
 }
 
+#icons {
+	display: none;
+}
+
 #container {
 	display: flex;
 	flex-direction: column;
@@ -225,6 +229,8 @@ header {
 	height: calc(90vh - 65px);
 	width: 100%;
 	position: relative;
+	padding: 0 2rem;
+	/* margin: 0 1rem; */
 	/* background-color: red; */
 }
 
@@ -438,6 +444,20 @@ a {
 	line-height: 1.6;
 }
 
+footer {
+	position: fixed;
+	width: 100%;
+	/* max-height: 40px; */
+	margin: 0;
+	padding: 0.5rem 0;
+	bottom: 0px;
+	background-color: var(--startButtonColor);
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
 @media (max-width: 500px) {
 	header {
 		min-height: 15vh;
@@ -455,6 +475,9 @@ a {
 	#navbar li:hover {
 		transform: unset;
 	}
+	#icons {
+		display: block;
+	}
 	#toggle {
 		display: block;
 	}
@@ -465,7 +488,8 @@ a {
 	}
 
 	#container {
-		min-height: 100vh;
+		/* min-height: 130vh; */
+		/* margin: 1rem; */
 	}
 	#content {
 		justify-content: flex-start;
@@ -474,7 +498,6 @@ a {
 	#container::after {
 		left: 0;
 		bottom: -150px;
-		/* top: 40vh; */
 	}
 
 	#pregunta,
@@ -497,9 +520,9 @@ a {
 		justify-content: center;
 		align-items: center;
 		background-color: rgba(255, 255, 255, 0.8);
-
 		border-radius: var(--borderRadius);
 		padding: 0 1rem 1rem 1rem;
+		margin-bottom: 2rem;
 	}
 
 	.shareButton {
