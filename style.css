@@ -224,7 +224,6 @@ header {
 	justify-content: center;
 	height: calc(90vh - 65px);
 	width: 100%;
-	min-height: 100vh;
 	position: relative;
 	/* background-color: red; */
 }
@@ -302,11 +301,11 @@ button:hover:enabled {
 
 #content {
 	width: 100%;
-	min-height: 100vh;
+	min-height: 75vh;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-around;
 	margin-top: 2rem;
 	/* background-color: green; */
 }
@@ -465,6 +464,9 @@ a {
 		position: initial;
 	}
 
+	#container {
+		min-height: 100vh;
+	}
 	#content {
 		justify-content: flex-start;
 	}
