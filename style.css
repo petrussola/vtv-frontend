@@ -178,6 +178,10 @@ header {
 	cursor: pointer;
 }
 
+#title.show {
+	display: none;
+}
+
 #navbar {
 	width: 30%;
 	display: flex;
@@ -435,14 +439,14 @@ a {
 
 @media (max-width: 500px) {
 	header {
-		/* background-color: red; */
-		min-height: 15vh;
+		min-height: 20vh;
 	}
 	#navbar {
-		clear: both;
-		position: fixed;
-		/* top: 10vh; */
-		transform: translateX(100%);
+		display: none;
+		min-width: 50%;
+	}
+	#navbar li {
+		font-size: 2rem;
 	}
 	#toggle {
 		display: block;

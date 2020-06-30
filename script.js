@@ -4,6 +4,7 @@ const page = document.querySelectorAll('.page');
 const icon = document.getElementById('icon');
 const burguer = document.getElementById('burguer');
 const close = document.getElementById('close');
+const navbar = document.getElementById('navbar');
 
 // const suggeriments = document.getElementById('suggeriments-page');
 const content = document.getElementById('content');
@@ -299,9 +300,16 @@ title.addEventListener('click', () => {
 	displayInitialQuestion();
 });
 
-icon.addEventListener('click', () => {
+icon.addEventListener('click', (e) => {
+	if (e.target.id === 'burguer') {
+		navbar.setAttribute(
+			'style',
+			'display: flex; flex-direction: column; align-items: flex-start;'
+		);
+	} else {
+		navbar.style.display = 'none';
+	}
 	burguer.classList.toggle('show');
 	close.classList.toggle('show');
 	title.classList.toggle('show');
 });
-
