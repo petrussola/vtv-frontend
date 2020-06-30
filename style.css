@@ -450,6 +450,11 @@ a {
 	#toggle {
 		display: block;
 	}
+
+	#stamp {
+		margin-top: 50px;
+		position: initial;
+	}
 }
 
 @media (max-width: 500px) {
