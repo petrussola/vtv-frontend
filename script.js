@@ -5,8 +5,6 @@ const icon = document.getElementById('icon');
 const burguer = document.getElementById('burguer');
 const close = document.getElementById('close');
 const navbar = document.getElementById('navbar');
-
-// const suggeriments = document.getElementById('suggeriments-page');
 const content = document.getElementById('content');
 const startButton = document.getElementById('start-button');
 const errorContainer = document.getElementById('error');
@@ -172,6 +170,7 @@ function displayResults() {
 	actionContainer.appendChild(shareMessage);
 	// render social media share buttons
 	const shareButtons = document.createElement('div');
+	shareButtons.id = 'socialButtons';
 	shareButtons.innerHTML = `<a href="https://t.me/share/url?url=${window.location.href}&text=${state.socialMediaTextSucces}"><i class="fab fa-telegram fa-5x shareButton" id="telegram-logo"></i></a><a href="https://api.whatsapp.com/send?text=${state.socialMediaTextSucces}" data-action="share/whatsapp/share"><i class="fab fa-whatsapp-square fa-5x shareButton" id="whatsapp-logo"></i></a><a 
 	href="https://twitter.com/intent/tweet?text=${state.socialMediaTextSucces}"><i class="fab fa-twitter fa-5x shareButton" id="twitter-logo"></i></a>`;
 	actionContainer.appendChild(shareButtons);
