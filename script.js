@@ -15,7 +15,6 @@ const geganta = document.getElementById('image');
 const endpoint = 'https://vtv-vila-server.herokuapp.com/test';
 // const endpoint = 'http://localhost:5000/test/';
 
-console.log(window.location.href);
 ///////////
 // state //
 ///////////
@@ -142,7 +141,7 @@ function displayResults() {
 			'Ets un VTV de soca-arrel. Ara ves i comparteix la teva puntuació per fardar del teu status!';
 		action = 'Comparteix el teu status!';
 	} else if (state.score <= 9 && state.score >= 5) {
-		congratulation = 'Casi ho tens!';
+		congratulation = 'T\'ha faltat poc';
 		explanation =
 			"T'has esforçat molt pero encara no ets un VTV del tot. Et recomano llegir el 3d8 i La Fura. I quan et sentis llest torna-ho a intentar!";
 		action = 'Torna-ho a provar';
@@ -225,7 +224,6 @@ content.addEventListener('click', (e) => {
 	const targetId = e.target.id;
 	const startButton = document.getElementById('start-button');
 	const ageSelector = document.getElementById('ageDisclaimer');
-	console.log(`fired ${targetId}`);
 	switch (targetId) {
 		// user has clicked on start button
 		case 'start-button':
@@ -250,7 +248,6 @@ content.addEventListener('click', (e) => {
 			}
 			break;
 		case 'tryAgain':
-			console.log('aux');
 			reset();
 			break;
 		case 'gent-gran':
@@ -269,7 +266,6 @@ content.addEventListener('click', (e) => {
 // when a page in header is clicked
 page.forEach((item) => {
 	item.addEventListener('click', (e) => {
-		console.log(e.target.id);
 		// create text container
 		const textContainer = document.createElement('div');
 		textContainer.id = 'text-page';
