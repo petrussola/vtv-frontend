@@ -23,7 +23,7 @@ const state = {
 	questions: [
 		{
 			id: 0,
-			pregunta: 'Ets un Vilafranqui de Tota la Vida? Prova el test!',
+			pregunta: 'Ets un Vilafranquí de Tota la Vida? Prova el test!',
 			respostes: [],
 			correcte: null,
 		},
@@ -31,8 +31,8 @@ const state = {
 	fetchedQuestions: false,
 	questionCounter: 0,
 	score: 0,
-	socialMediaTextSucces: `Soc un VTV (Vilafranqui de Tota la Vida)! Vols saber si tu també ho ets? Ves a ${window.location.href} i fes el test.`,
-	socialMediaTextFail: `Vols saber si ets un VTV (Vilafranqui de Tota la Vida)? Ves a ${window.location.href} i fes el test.`,
+	socialMediaTextSucces: `Soc un VTV (Vilafranquí de Tota la Vida)! Vols saber si tu també ho ets? Ves a ${window.location.href} i fes el test.`,
+	socialMediaTextFail: `Vols saber si ets un VTV (Vilafranquí de Tota la Vida)? Ves a ${window.location.href} i fes el test.`,
 	age: null,
 };
 
