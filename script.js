@@ -23,7 +23,7 @@ const state = {
 	questions: [
 		{
 			id: 0,
-			pregunta: 'Ets un Vilafranquí de Tota la Vida? Prova el test!',
+			pregunta: 'Ets un/a Vilafranquí/ina de Tota la Vida? Prova el test!',
 			respostes: [],
 			correcte: null,
 		},
@@ -31,8 +31,8 @@ const state = {
 	fetchedQuestions: false,
 	questionCounter: 0,
 	score: 0,
-	socialMediaTextSucces: `Soc un VTV (Vilafranquí de Tota la Vida)! Vols saber si tu també ho ets? Ves a ${window.location.href} i fes el test.`,
-	socialMediaTextFail: `Vols saber si ets un VTV (Vilafranquí de Tota la Vida)? Ves a ${window.location.href} i fes el test.`,
+	socialMediaTextSucces: `Soc un/a VTV (Vilafranquí/ina de Tota la Vida)! Vols saber si tu també ho ets? Ves a ${window.location.href} i fes el test.`,
+	socialMediaTextFail: `Vols saber si ets un/a VTV (Vilafranquí/ina de Tota la Vida)? Ves a ${window.location.href} i fes el test.`,
 	age: null,
 };
 
@@ -42,7 +42,7 @@ const state = {
 
 // display initial question to start the test
 function displayInitialQuestion() {
-	content.innerHTML = `<h1>Vols saber si ets un VTV (Vilafranquí de Tota la Vida)? <span class="outline">Fes el test.</span></h1>`;
+	content.innerHTML = `<h1>Vols saber si ets un/a VTV (Vilafranquí/ina de Tota la Vida)? <span class="outline">Fes el test.</span></h1>`;
 	const actionItems = document.createElement('div');
 	actionItems.id = 'actionItems';
 	content.appendChild(actionItems);
@@ -138,12 +138,12 @@ function displayResults() {
 	if (state.score === 10) {
 		congratulation = 'Enhorabona';
 		explanation =
-			'Ets un VTV de soca-arrel. Ara ves i comparteix la teva puntuació per fardar del teu status!';
+			'Ets un/a VTV de soca-arrel. Ara ves i comparteix la teva puntuació per fardar del teu status!';
 		action = 'Comparteix el teu status!';
 	} else if (state.score <= 9 && state.score >= 5) {
 		congratulation = 'T\'ha faltat poc';
 		explanation =
-			"T'has esforçat molt pero encara no ets un VTV del tot. Et recomano llegir el 3d8 i La Fura. I quan et sentis llest torna-ho a intentar!";
+			"T'has esforçat molt pero encara no ets un/a VTV del tot. Et recomano llegir el 3d8 i La Fura. I quan et sentis llest torna-ho a intentar!";
 		action = 'Torna-ho a provar';
 	} else {
 		congratulation = 'Em sap greu';
@@ -191,7 +191,7 @@ function reset() {
 	state.questions = [
 		{
 			id: 0,
-			pregunta: 'Ets un Vilafranqui de Tota la Vida? Prova el test!',
+			pregunta: 'Ets un/a Vilafranquí/ina de Tota la Vida? Prova el test!',
 			respostes: [],
 			correcte: null,
 		},
