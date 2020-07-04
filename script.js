@@ -138,17 +138,27 @@ function displayResults() {
 	if (state.score === 10) {
 		congratulation = 'Enhorabona';
 		explanation =
-			'Ets un/a VTV de soca-arrel. Ara ves i comparteix la teva puntuació per fardar del teu status!';
+			'Ets un/a VTV de soca-arrel. Aviat seràs Administrador/a. Ara ves i comparteix la teva puntuació per fardar del teu status!';
 		action = 'Comparteix el teu status!';
-	} else if (state.score <= 9 && state.score >= 5) {
-		congratulation = 'T\'ha faltat poc';
+	} else if (state.score <= 9 && state.score >= 8) {
+		congratulation = "T'ha faltat poc";
 		explanation =
-			"T'has esforçat molt pero encara no ets un/a VTV del tot. Et recomano llegir el 3d8 i La Fura. I quan et sentis llest torna-ho a intentar!";
+			"Tens potencial, pero encara no estàs llest. Segueix estudiant l'article de Wikipedia sobre Vilafranca.";
+		action = 'Torna-ho a provar';
+	} else if (state.score <= 7 && state.score >= 5) {
+		congratulation = "Has de millorar bastant";
+		explanation =
+			"Encara hi ha feina per fer. Et recomanem llegir senceres les pàgines web de l'Ajuntament de Vilafranca i l'article de Wikipedia. 5 vegades.";
+		action = 'Torna-ho a provar';
+	} else if (state.score <= 4 && state.score >= 3) {
+		congratulation = 'Molt malament';
+		explanation =
+			"Sintonitza Radio Vilafranca i Vilafranca TV ara mateix! I na canviis d'emisora i canal durant dues setmanes.";
 		action = 'Torna-ho a provar';
 	} else {
-		congratulation = 'Em sap greu';
+		congratulation = 'Fatal';
 		explanation =
-			"Hi ha feina per fer - has d'estudiar més. Pero no et preocupis, tot té solució: et recomano llegir el 3d8 i La Fura. I quan et sentis llest torna-ho a intentar!";
+			'Demana una subscripció al 3 de 8 als Reis i aprèn la secció local de memòria, cada setmana.';
 		action = 'Torna-ho a provar';
 	}
 	content.innerHTML = `<h1 id="pregunta">${congratulation}, ${
