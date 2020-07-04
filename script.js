@@ -11,6 +11,8 @@ const errorContainer = document.getElementById('error');
 const nextStep = document.getElementById('next-step');
 const ageSelector = document.getElementById('age-selector');
 const geganta = document.getElementById('image');
+const refuse = document.getElementById('refuse');
+const tracking = document.getElementById('tracking');
 
 const endpoint = 'https://vtv-vila-server.herokuapp.com/test';
 // const endpoint = 'http://localhost:5000/test/';
@@ -29,11 +31,12 @@ const state = {
 		},
 	],
 	fetchedQuestions: false,
-	questionCounter: 0,
+	questionCounter: 9,
 	score: 0,
 	socialMediaTextSucces: `Soc un/a VTV (Vilafranquí/ina de Tota la Vida)! Vols saber si tu també ho ets? Ves a ${window.location.href} i fes el test.`,
 	socialMediaTextFail: `Vols saber si ets un/a VTV (Vilafranquí/ina de Tota la Vida)? Ves a ${window.location.href} i fes el test.`,
 	age: null,
+	analyticsConsent: false,
 };
 
 ///////////////
@@ -42,6 +45,10 @@ const state = {
 
 // display initial question to start the test
 function displayInitialQuestion() {
+	gtag('config', 'UA-170700693-3', {
+		page_title: 'home',
+		page_path: '/',
+	});
 	content.innerHTML = `<h1>Vols saber si ets un/a VTV (Vilafranquí/ina de Tota la Vida)? <span class="outline">Fes el test.</span></h1>`;
 	const actionItems = document.createElement('div');
 	actionItems.id = 'actionItems';
@@ -104,6 +111,10 @@ const fetchQuestions = async () => {
 
 // display question in #content node
 function displayNextQuestion() {
+	gtag('config', 'UA-170700693-3', {
+		page_title: state.questionCounter,
+		page_path: `/question-${state.questionCounter}`,
+	});
 	// change text of pregunta to whatever pregunta we are asking, which is determined by the questioncounter
 	content.innerHTML = `<h1 id="pregunta">${
 		state.questions[state.questionCounter].pregunta
@@ -130,6 +141,17 @@ function displayNextQuestion() {
 }
 
 function displayResults() {
+	// send page view to Analytics
+	gtag('config', 'UA-170700693-3', {
+		page_title: 'resultat',
+		page_path: '/resultat',
+	});
+	// send event to analytics
+	gtag('event', 'completed-test', {
+		event_category: state.age,
+		event_label: `score: ${state.score}`,
+	});
+
 	// initialize variables that will be used for text depending on the score
 	let congratulation;
 	let explanation;
@@ -141,7 +163,7 @@ function displayResults() {
 			'Ets un/a VTV de soca-arrel. Ara ves i comparteix la teva puntuació per fardar del teu status!';
 		action = 'Comparteix el teu status!';
 	} else if (state.score <= 9 && state.score >= 5) {
-		congratulation = 'T\'ha faltat poc';
+		congratulation = "T'ha faltat poc";
 		explanation =
 			"T'has esforçat molt pero encara no ets un/a VTV del tot. Et recomano llegir el 3d8 i La Fura. I quan et sentis llest torna-ho a intentar!";
 		action = 'Torna-ho a provar';
@@ -207,6 +229,22 @@ function isLastQuestion() {
 	return false;
 }
 
+function hideConsentPolicy() {
+	tracking.classList.add('hide');
+}
+
+function acceptConsentAnalytics(value) {
+	state.analyticsConsent = value;
+	localStorage.setItem('analyticsConsent', state.analyticsConsent);
+}
+
+function displayConsent() {
+	console.log(localStorage.getItem('analyticsConsent'));
+	if (!localStorage.getItem('analyticsConsent')) {
+		tracking.classList.remove('hide');
+	}
+}
+
 ////////////
 // events //
 ////////////
@@ -217,6 +255,7 @@ window.onload = () => {
 	window.history.pushState({}, '/', window.location.origin);
 	// fetchQuestions();
 	displayInitialQuestion();
+	displayConsent();
 };
 
 // click button to start test
@@ -307,4 +346,14 @@ icons.addEventListener('click', (e) => {
 	burguer.classList.toggle('show');
 	close.classList.toggle('show');
 	title.classList.toggle('show');
+});
+
+tracking.addEventListener('click', (e) => {
+	if (e.target.id === 'not-ok-analytics') {
+		acceptConsentAnalytics(false);
+		window['ga-disable-UA-170700693-3'] = true;
+	} else {
+		acceptConsentAnalytics(true);
+	}
+	hideConsentPolicy();
 });

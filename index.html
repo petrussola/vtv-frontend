@@ -5,6 +5,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-170700693-3"></script>
     <script>
+        window['ga-disable-UA-170700693-3'] = false;
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
@@ -20,14 +21,24 @@
 
 <body>
     <header>
-        <h1 id="title">Soc VTV</h1>
-        <ul id="navbar">
-            <li id="about-page" class="page">ABOUT</li>
-            <li id="suggeriments-page" class="page">SUGGERIMENTS</li>
-        </ul>
-        <div id="icons">
-            <i class="fas fa-bars fa-2x show" id="burguer"></i>
-            <i class="fa fa-times fa-2x" id="close"></i>
+        <div id="tracking" class="hide">
+            <p>Fem servir Google Analytics. Ens dones el teu consentiment? <a href="#">Cookie Policy</a></p>
+            <div id="buttons-consent">
+                <div id="ok-analytics" class="btn-consent">D'acord</div>
+                <div id="not-ok-analytics" class="btn-consent">Em nego</div>
+            </div>
+        </div>
+        <div id="header-content">
+
+            <h1 id="title">Soc VTV</h1>
+            <ul id="navbar">
+                <li id="about-page" class="page">ABOUT</li>
+                <li id="suggeriments-page" class="page">SUGGERIMENTS</li>
+            </ul>
+            <div id="icons">
+                <i class="fas fa-bars fa-2x show" id="burguer"></i>
+                <i class="fa fa-times fa-2x" id="close"></i>
+            </div>
         </div>
     </header>
     <section id="container">
