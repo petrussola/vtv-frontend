@@ -363,7 +363,8 @@ button:hover:enabled {
 	padding: 0 1rem;
 }
 
-#pregunta span {
+#pregunta span,
+#resultats {
 	color: var(--startButtonColor);
 	margin: 0 0 0 0.5rem;
 	font-weight: bold;

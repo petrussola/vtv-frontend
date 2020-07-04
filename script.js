@@ -34,6 +34,7 @@ const state = {
 	socialMediaTextSucces: `Soc un/a VTV (Vilafranquí/ina de Tota la Vida)! Vols saber si tu també ho ets? Ves a ${window.location.href} i fes el test.`,
 	socialMediaTextFail: `Vols saber si ets un/a VTV (Vilafranquí/ina de Tota la Vida)? Ves a ${window.location.href} i fes el test.`,
 	age: null,
+	collectedAnswers: [],
 };
 
 ///////////////
@@ -146,7 +147,7 @@ function displayResults() {
 			"Tens potencial, pero encara no estàs llest. Segueix estudiant l'article de Wikipedia sobre Vilafranca.";
 		action = 'Torna-ho a provar';
 	} else if (state.score <= 7 && state.score >= 5) {
-		congratulation = "Has de millorar bastant";
+		congratulation = 'Has de millorar bastant';
 		explanation =
 			"Encara hi ha feina per fer. Et recomanem llegir senceres les pàgines web de l'Ajuntament de Vilafranca i l'article de Wikipedia. 5 vegades.";
 		action = 'Torna-ho a provar';
@@ -165,7 +166,7 @@ function displayResults() {
 		state.score < 5 ? ' només ' : ''
 	} has encertat <span>${state.score} ${
 		state.score === 1 ? 'pregunta' : 'preguntes'
-	}</span>.</h1><h2 id="explanation">${explanation}</h2>`;
+	}</span>.</h1><h2 id="explanation">${explanation}</h2><h2>Veure els <span class="outline">resultats</span></h2>`;
 	// container where User action takes place
 	const actionItems = document.createElement('div');
 	actionItems.id = 'actionItems';
@@ -206,6 +207,7 @@ function reset() {
 			correcte: null,
 		},
 	];
+	state.collectedAnswers = [];
 	// display initial question
 	displayInitialQuestion();
 }
@@ -245,15 +247,36 @@ content.addEventListener('click', (e) => {
 			break;
 		// user has clicked on answer
 		case 'answer-option':
+			// selected answer
 			const selectedAnswer = e.target.textContent;
+			// the question. we need to climb up in the dom to find it :)
+			const selectedQuestion =
+				e.target.parentNode.parentNode.previousSibling.textContent;
+			// add answer to state array with collected answers
+			state.collectedAnswers.push({
+				numQuestion: state.questionCounter,
+				question: selectedQuestion,
+				answer: selectedAnswer,
+				correct: false,
+			});
+			// is selected answer the right one?
 			if (selectedAnswer === state.questions[state.questionCounter].correcte) {
+				// increase score
 				state.score++;
+				// mark question in collected answers array as true
+				state.collectedAnswers[state.questionCounter - 1].correct = true;
 			}
+			console.log(state.collectedAnswers);
+			// increase count of questions
 			state.questionCounter++;
+			// check if it is the last question
 			const isLast = isLastQuestion();
+			// if it is the last question
 			if (isLast) {
+				// display results
 				displayResults();
 			} else {
+				// display next questions
 				displayNextQuestion();
 			}
 			break;
