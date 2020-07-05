@@ -157,6 +157,7 @@ body {
 	flex-direction: column;
 	justify-content: space-between;
 	min-height: 100vh;
+	border: 2px solid red;
 }
 
 .image {
@@ -170,10 +171,13 @@ header {
 	justify-content: space-between;
 	align-items: center;
 	max-width: 100%;
-	min-height: 65px;
-	padding: 0.5rem;
+	max-height: 15vh;
+	/* min-height: 65px; */
+	padding: 1rem;
 	border-bottom: 1px solid gray;
-	margin: 1rem;
+	/* margin-bottom: 1rem; */
+	border: 2px solid green;
+	/* flex-grow: 1; */
 }
 
 #about-page,
@@ -229,11 +233,14 @@ header {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
-	height: calc(90vh - 65px);
+	justify-content: flex-start;
+	/* min-height: 100px; */
+	/* height: calc(90vh - 65px); */
 	width: 100%;
 	position: relative;
-	padding: 0 2rem;
+	padding: 0 1rem;
+	border: 2px solid purple;
+	flex-grow: 1;
 }
 
 #container::after {
@@ -243,7 +250,7 @@ header {
 	height: 450px;
 	background-image: url('./assets/geganta.png');
 	left: 70%;
-	bottom: 2px;
+	/* bottom: 2px; */
 	z-index: -1;
 }
 
@@ -309,12 +316,14 @@ button:hover:enabled {
 
 #content {
 	width: 100%;
-	min-height: 75vh;
+	/* min-height: 75vh; */
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: space-around;
-	margin-top: 2rem;
+	justify-content: flex-start;
+	/* margin-top: 2rem; */
+	border: 2px solid blue;
+	flex-grow: 1;
 }
 
 #actionItems {
@@ -323,7 +332,8 @@ button:hover:enabled {
 	justify-content: flex-start;
 	align-items: center;
 	width: 100%;
-	height: 50%;
+	border: 2px solid pink;
+	/* height: 50%; */
 }
 
 #actionItems * {
@@ -472,12 +482,14 @@ a {
 footer {
 	width: 100%;
 	margin: 0;
+	max-height: 5vh;
 	padding: 0.5rem 0;
 	background-color: var(--startButtonColor);
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
+	/* flex-grow: 1; */
 }
 
 @media (max-width: 500px) {
@@ -510,10 +522,10 @@ footer {
 	}
 
 	#container {
-		min-height: 800px;
+		/* min-height: 800px; */
 	}
 	#content {
-		min-height: 100vh;
+		/* min-height: 100vh; */
 		justify-content: flex-start;
 	}
 
