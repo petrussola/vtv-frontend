@@ -65,7 +65,7 @@ function displayInitialQuestion() {
 	selectAge.id = 'ageDisclaimer';
 	const stamp = document.createElement('h2');
 	stamp.id = 'stamp';
-	stamp.textContent = 'NOVETATS 4/7 - 16 NOVES PREGUNTES, MÉS DIVERSIÓ';
+	stamp.textContent = 'NOVETATS 4/7 - JA POTS VEURE ELS RESULTATS + 16 NOVES PREGUNTES, MÉS DIVERSIÓ';
 	actionItems.appendChild(slider);
 	actionItems.appendChild(button);
 	actionItems.appendChild(selectAge);
