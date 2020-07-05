@@ -349,6 +349,7 @@ button:hover:enabled {
 	text-align: center;
 	opacity: 0.8;
 	width: 300px;
+	/* min-height: 4rem; */
 	transform: rotate(-15deg);
 }
 
@@ -518,7 +519,7 @@ footer {
 
 	#container::after {
 		left: 0;
-		bottom: -150px;
+		bottom: -220px;
 	}
 
 	#pregunta,
