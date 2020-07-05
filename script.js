@@ -154,7 +154,7 @@ function displayResults() {
 	} else if (state.score <= 4 && state.score >= 3) {
 		congratulation = 'Molt malament';
 		explanation =
-			"Sintonitza Radio Vilafranca i Vilafranca TV ara mateix! I na canviis d'emisora i canal durant dues setmanes.";
+			"Sintonitza Radio Vilafranca i Vilafranca TV ara mateix! I no canviis d'emisora i canal durant dues setmanes.";
 		action = 'Torna-ho a provar';
 	} else {
 		congratulation = 'Fatal';
@@ -166,7 +166,9 @@ function displayResults() {
 		state.score < 5 ? ' només ' : ''
 	} has encertat <span>${state.score} ${
 		state.score === 1 ? 'pregunta' : 'preguntes'
-	}</span>.</h1><h2 id="explanation">${explanation}</h2><h2>Veure els <span class="outline">resultats</span></h2>`;
+	}</span>.</h1><h2 id="display-results-text">Veure els <span class="outline" id="display-results">resultats</span></h2><h2 id="explanation">${explanation}</h2>`;
+	// listen to click on the results link
+	listenResultsClick();
 	// container where User action takes place
 	const actionItems = document.createElement('div');
 	actionItems.id = 'actionItems';
@@ -217,6 +219,52 @@ function isLastQuestion() {
 		return true;
 	}
 	return false;
+}
+
+// listen to click on the results link
+function listenResultsClick() {
+	const resultsLink = document.getElementById('display-results');
+	resultsLink.addEventListener('click', () => {
+		// clean HTML
+		content.innerHTML = '';
+		// create Results title
+		const resultsTitle = document.createElement('h1');
+		resultsTitle.textContent = 'Resultats';
+		content.appendChild(resultsTitle);
+		// create list of answers
+		const answers = document.createElement('ul');
+		state.collectedAnswers.map((item) => {
+			const uniqueAnswer = document.createElement('li');
+			uniqueAnswer.id = 'answer-item';
+			uniqueAnswer.innerHTML = `${
+				item.correct
+					? '<i class="fas fa-check-circle answer-summary" id="correct-answer"></i>'
+					: '<i class="fas fa-times-circle answer-summary" id="wrong-answer"></i>'
+			}<p>Pregunta: ${item.question} | Resposta: ${item.answer}</p>`;
+			// uniqueAnswer.textContent = `Pregunta: ${item.question} | Resposta: ${
+			// 	item.answer
+			// } | ${item.correct ? 'Correcte' : 'Equivocada'}`;
+			answers.appendChild(uniqueAnswer);
+		});
+		content.appendChild(answers);
+
+		// CTA button
+		const ctaButton = document.createElement('button');
+		ctaButton.id = 'tryAgain';
+		ctaButton.textContent = `Torna-ho a provar`;
+		content.appendChild(ctaButton);
+		// social media buttons
+		displaySocialMediaButtons(content);
+	});
+}
+
+function displaySocialMediaButtons(content) {
+	// render social media share buttons
+	const shareButtons = document.createElement('div');
+	shareButtons.id = 'socialButtons';
+	shareButtons.innerHTML = `<a href="https://t.me/share/url?url=${window.location.href}&text=${state.socialMediaTextSucces}"><i class="fab fa-telegram fa-5x shareButton" id="telegram-logo"></i></a><a href="https://api.whatsapp.com/send?text=${state.socialMediaTextSucces}" data-action="share/whatsapp/share"><i class="fab fa-whatsapp-square fa-5x shareButton" id="whatsapp-logo"></i></a><a 
+	href="https://twitter.com/intent/tweet?text=${state.socialMediaTextSucces}"><i class="fab fa-twitter fa-5x shareButton" id="twitter-logo"></i></a>`;
+	content.appendChild(shareButtons);
 }
 
 ////////////

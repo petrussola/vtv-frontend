@@ -445,6 +445,30 @@ a {
 	line-height: 1.6;
 }
 
+#display-results {
+	cursor: pointer;
+}
+
+.answer-summary {
+	padding: 0 1rem;
+}
+
+#answer-item {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;
+	padding: 0.3rem 0;
+}
+
+#correct-answer {
+	color: green;
+}
+
+#wrong-answer {
+	color: red;
+}
+
 footer {
 	width: 100%;
 	margin: 0;
@@ -508,6 +532,11 @@ footer {
 		color: var(--startButtonColor);
 		margin: 1rem 0;
 		font-weight: bold;
+	}
+
+	#display-results-text {
+		padding: 2rem;
+		/* background-color: red; */
 	}
 
 	#socialButtons {
