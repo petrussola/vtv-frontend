@@ -66,7 +66,7 @@ function displayInitialQuestion() {
 	const stamp = document.createElement('h2');
 	stamp.id = 'stamp';
 	stamp.textContent =
-		'NOVETATS 4/7 - JA POTS VEURE ELS RESULTATS + 16 NOVES PREGUNTES, MÉS DIVERSIÓ';
+		'JA POTS VEURE ELS RESULTATS + 16 NOVES PREGUNTES, MÉS DIVERSIÓ';
 	actionItems.appendChild(slider);
 	actionItems.appendChild(button);
 	actionItems.appendChild(selectAge);

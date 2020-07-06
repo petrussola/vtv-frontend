@@ -185,6 +185,7 @@ header {
 #novetats-page {
 	color: white;
 	background-color: red;
+	border-radius: var(--borderRadius);
 }
 
 #title.show {
