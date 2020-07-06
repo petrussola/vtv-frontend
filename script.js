@@ -12,8 +12,8 @@ const nextStep = document.getElementById('next-step');
 const ageSelector = document.getElementById('age-selector');
 const geganta = document.getElementById('image');
 
-// const endpoint = 'https://vtv-vila-server.herokuapp.com/test';
-const endpoint = 'http://localhost:5000/test';
+const endpoint = 'https://vtv-vila-server.herokuapp.com/test';
+// const endpoint = 'http://localhost:5000/test';
 
 ///////////
 // state //
