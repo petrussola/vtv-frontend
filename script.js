@@ -12,8 +12,8 @@ const nextStep = document.getElementById('next-step');
 const ageSelector = document.getElementById('age-selector');
 const geganta = document.getElementById('image');
 
-const endpoint = 'https://vtv-vila-server.herokuapp.com/test';
-// const endpoint = 'http://localhost:5000/test/';
+// const endpoint = 'https://vtv-vila-server.herokuapp.com/test';
+const endpoint = 'http://localhost:5000/test';
 
 ///////////
 // state //
@@ -65,7 +65,8 @@ function displayInitialQuestion() {
 	selectAge.id = 'ageDisclaimer';
 	const stamp = document.createElement('h2');
 	stamp.id = 'stamp';
-	stamp.textContent = 'NOVETATS 4/7 - JA POTS VEURE ELS RESULTATS + 16 NOVES PREGUNTES, MÉS DIVERSIÓ';
+	stamp.textContent =
+		'JA POTS VEURE ELS RESULTATS + 16 NOVES PREGUNTES, MÉS DIVERSIÓ';
 	actionItems.appendChild(slider);
 	actionItems.appendChild(button);
 	actionItems.appendChild(selectAge);
@@ -267,6 +268,17 @@ function displaySocialMediaButtons(content) {
 	content.appendChild(shareButtons);
 }
 
+// fetch novetats from backend
+const fetchNovetats = async () => {
+	try {
+		const data = await fetch(`${endpoint}/novetats`);
+		const questions = await data.json();
+		return questions.data;
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 ////////////
 // events //
 ////////////
@@ -345,7 +357,7 @@ content.addEventListener('click', (e) => {
 
 // when a page in header is clicked
 page.forEach((item) => {
-	item.addEventListener('click', (e) => {
+	item.addEventListener('click', async (e) => {
 		// create text container
 		const textContainer = document.createElement('div');
 		textContainer.id = 'text-page';
@@ -361,6 +373,15 @@ page.forEach((item) => {
 		} else if (e.target.id === 'suggeriments-page') {
 			whyMade.textContent =
 				'Si voleu afegir preguntes al test, o teniu qualsevol suggeriment o comentari, envieu-me un email a socunvtv [arroba] gmail [punt] com. Salut!';
+		} else if (e.target.id === 'novetats-page') {
+			const novetats = await fetchNovetats();
+			const listNovetats = document.createElement('ul');
+			novetats.map((item) => {
+				const novetatItem = document.createElement('li');
+				novetatItem.textContent = `${item.dia}: ${item.novetat}`;
+				listNovetats.appendChild(novetatItem);
+			});
+			textContainer.appendChild(listNovetats);
 		} else {
 			console.log("page doesn't exist");
 		}
