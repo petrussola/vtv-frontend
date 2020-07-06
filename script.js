@@ -31,16 +31,13 @@ const state = {
 		},
 	],
 	fetchedQuestions: false,
-	questionCounter: 9,
+	questionCounter: 0,
 	score: 0,
 	socialMediaTextSucces: `Soc un/a VTV (Vilafranquí/ina de Tota la Vida)! Vols saber si tu també ho ets? Ves a ${window.location.href} i fes el test. NOVETAT: ja pots veure quines preguntes has encertat i fallat.`,
 	socialMediaTextFail: `Vols saber si ets un/a VTV (Vilafranquí/ina de Tota la Vida)? Ves a ${window.location.href} i fes el test. NOVETAT: ja pots veure quines preguntes has encertat i fallat.`,
 	age: null,
-<<<<<<< HEAD
-	analyticsConsent: false,
-=======
 	collectedAnswers: [],
->>>>>>> 5f61c122800b2a9031a329667d48be413cd2d8b2
+	analyticsConsent: false,
 };
 
 ///////////////
@@ -167,11 +164,7 @@ function displayResults() {
 		explanation =
 			'Ets un/a VTV de soca-arrel. Aviat seràs Administrador/a. Ara ves i comparteix la teva puntuació per fardar del teu status!';
 		action = 'Comparteix el teu status!';
-<<<<<<< HEAD
-	} else if (state.score <= 9 && state.score >= 5) {
-=======
 	} else if (state.score <= 9 && state.score >= 8) {
->>>>>>> 5f61c122800b2a9031a329667d48be413cd2d8b2
 		congratulation = "T'ha faltat poc";
 		explanation =
 			"Tens potencial, pero encara no estàs llest. Segueix estudiant l'article de Wikipedia sobre Vilafranca.";
@@ -225,6 +218,8 @@ function displayResults() {
 		actionItems.insertBefore(ctaButton, actionItems.firstChild);
 	}
 	content.appendChild(actionItems);
+	// call function to track clicks on social media
+	clickSocialMediaButton();
 }
 
 // reset state for those who have to restart the quizz
@@ -251,27 +246,15 @@ function isLastQuestion() {
 	return false;
 }
 
-<<<<<<< HEAD
-function hideConsentPolicy() {
-	tracking.classList.add('hide');
-}
-
-function acceptConsentAnalytics(value) {
-	state.analyticsConsent = value;
-	localStorage.setItem('analyticsConsent', state.analyticsConsent);
-}
-
-function displayConsent() {
-	console.log(localStorage.getItem('analyticsConsent'));
-	if (!localStorage.getItem('analyticsConsent')) {
-		tracking.classList.remove('hide');
-	}
-}
-=======
 // listen to click on the results link
 function listenResultsClick() {
 	const resultsLink = document.getElementById('display-results');
 	resultsLink.addEventListener('click', () => {
+		// send Analytics event
+		gtag('event', 'display-results', {
+			event_category: state.age,
+			event_label: `score: ${state.score}`,
+		});
 		// clean HTML
 		content.innerHTML = '';
 		// create Results title
@@ -324,7 +307,33 @@ const fetchNovetats = async () => {
 		console.log(error);
 	}
 };
->>>>>>> 5f61c122800b2a9031a329667d48be413cd2d8b2
+
+function hideConsentPolicy() {
+	tracking.classList.add('hide');
+}
+
+function acceptConsentAnalytics(value) {
+	state.analyticsConsent = value;
+	localStorage.setItem('analyticsConsent', state.analyticsConsent);
+}
+
+function displayConsent() {
+	console.log(localStorage.getItem('analyticsConsent'));
+	if (!localStorage.getItem('analyticsConsent')) {
+		tracking.classList.remove('hide');
+	}
+}
+
+function clickSocialMediaButton() {
+	const shareButtons = document.getElementById('socialButtons');
+	shareButtons.addEventListener('click', (e) => {
+		// send event to analytics
+		gtag('event', 'share', {
+			method: e.target.id,
+		});
+		console.log(e.target.id);
+	});
+}
 
 ////////////
 // events //
@@ -412,6 +421,10 @@ page.forEach((item) => {
 		// create context
 		const whyMade = document.createElement('h2');
 		if (e.target.id === 'about-page') {
+			// send Analytics event
+			gtag('event', 'click-page', {
+				event_category: 'about',
+			});
 			// create first line
 			const madeBy = document.createElement('h2');
 			madeBy.textContent = 'Fet per en www.peresola.com';
@@ -419,9 +432,17 @@ page.forEach((item) => {
 			whyMade.textContent =
 				'Soc un VTV que ha pujat als castells, ha ballat un ball de la Festa Major i tantes altres coses que fan els VTVs. No somio en ser administrador ni pregoner. No us prengueu aquesta web seriosament, tothom hi és benvingut a Vilafranca!';
 		} else if (e.target.id === 'suggeriments-page') {
+			// send Analytics event
+			gtag('event', 'click-page', {
+				event_category: 'suggeriments',
+			});
 			whyMade.textContent =
 				'Si voleu afegir preguntes al test, o teniu qualsevol suggeriment o comentari, envieu-me un email a socunvtv [arroba] gmail [punt] com. Salut!';
 		} else if (e.target.id === 'novetats-page') {
+			// send Analytics event
+			gtag('event', 'click-page', {
+				event_category: 'novetats',
+			});
 			const novetats = await fetchNovetats();
 			const listNovetats = document.createElement('ul');
 			novetats.map((item) => {
@@ -431,6 +452,10 @@ page.forEach((item) => {
 			});
 			textContainer.appendChild(listNovetats);
 		} else {
+			// send Analytics event
+			gtag('event', 'click-page', {
+				event_category: 'error-not-exist',
+			});
 			console.log("page doesn't exist");
 		}
 		textContainer.appendChild(whyMade);

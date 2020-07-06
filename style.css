@@ -170,7 +170,8 @@ header {
 }
 
 #tracking {
-	background-color: red;
+	background-color: var(--startButtonColor);
+	color: #fff;
 	height: 3rem;
 	display: flex;
 	flex-direction: row;
@@ -186,6 +187,10 @@ header {
 	width: 70%;
 }
 
+#cookie-link {
+	text-decoration: underline;
+}
+
 #buttons-consent {
 	width: 30%;
 	display: flex;
@@ -195,8 +200,12 @@ header {
 }
 
 .btn-consent {
-	background-color: black;
-	color: yellow;
+	cursor: pointer;
+}
+
+.btn-consent#ok-analytics {
+	background-color: white;
+	color: var(--startButtonColor);
 	padding: 0.5rem 2rem;
 	border-radius: 4px;
 	cursor: pointer;
