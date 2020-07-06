@@ -314,7 +314,6 @@ content.addEventListener('click', (e) => {
 				// mark question in collected answers array as true
 				state.collectedAnswers[state.questionCounter - 1].correct = true;
 			}
-			console.log(state.collectedAnswers);
 			// increase count of questions
 			state.questionCounter++;
 			// check if it is the last question
