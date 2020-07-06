@@ -13,6 +13,7 @@ const ageSelector = document.getElementById('age-selector');
 const geganta = document.getElementById('image');
 const refuse = document.getElementById('refuse');
 const tracking = document.getElementById('tracking');
+const cookieLink = document.getElementById('cookie-link');
 
 const endpoint = 'https://vtv-vila-server.herokuapp.com/test';
 // const endpoint = 'http://localhost:5000/test';
@@ -487,8 +488,22 @@ tracking.addEventListener('click', (e) => {
 	if (e.target.id === 'not-ok-analytics') {
 		acceptConsentAnalytics(false);
 		window['ga-disable-UA-170700693-3'] = true;
-	} else {
+		hideConsentPolicy();
+	} else if (e.target.id === 'ok-analytics') {
 		acceptConsentAnalytics(true);
+		hideConsentPolicy();
 	}
-	hideConsentPolicy();
+});
+
+cookieLink.addEventListener('click', () => {
+	content.innerHTML = '';
+	const whatAreCookies = document.createElement('div');
+	const whatAreCookiesTitle = document.createElement('h2');
+	whatAreCookiesTitle.textContent = 'Què son les galetes?';
+	const whatAreCookiesExplanation = document.createElement('p');
+	whatAreCookiesExplanation.textContent =
+		'Les galetes o cookies són fitxers de text que es descarreguen a l’equip terminal de l’usuari (ordinador, tauleta, telèfon mòbil...) i que es guarden a la memòria del seu navegador. Les dades contingudes a les galetes poden ser analitzades per la UOC per a millorar la usabilitat dels webs i oferir una informació i uns serveis més personalitzats.';
+	whatAreCookies.appendChild(whatAreCookiesTitle);
+	whatAreCookies.appendChild(whatAreCookiesExplanation);
+	content.appendChild(whatAreCookies);
 });
