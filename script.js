@@ -31,9 +31,10 @@ const state = {
 	fetchedQuestions: false,
 	questionCounter: 0,
 	score: 0,
-	socialMediaTextSucces: `Soc un/a VTV (Vilafranquí/ina de Tota la Vida)! Vols saber si tu també ho ets? Ves a ${window.location.href} i fes el test.`,
-	socialMediaTextFail: `Vols saber si ets un/a VTV (Vilafranquí/ina de Tota la Vida)? Ves a ${window.location.href} i fes el test.`,
+	socialMediaTextSucces: `Soc un/a VTV (Vilafranquí/ina de Tota la Vida)! Vols saber si tu també ho ets? Ves a ${window.location.href} i fes el test. NOVETAT: ja pots veure quines preguntes has encertat i fallat.`,
+	socialMediaTextFail: `Vols saber si ets un/a VTV (Vilafranquí/ina de Tota la Vida)? Ves a ${window.location.href} i fes el test. NOVETAT: ja pots veure quines preguntes has encertat i fallat.`,
 	age: null,
+	collectedAnswers: [],
 };
 
 ///////////////
@@ -64,7 +65,7 @@ function displayInitialQuestion() {
 	selectAge.id = 'ageDisclaimer';
 	const stamp = document.createElement('h2');
 	stamp.id = 'stamp';
-	stamp.textContent = 'NOVETATS 4/7 - 16 NOVES PREGUNTES, MÉS DIVERSIÓ';
+	stamp.textContent = 'NOVETATS 4/7 - JA POTS VEURE ELS RESULTATS + 16 NOVES PREGUNTES, MÉS DIVERSIÓ';
 	actionItems.appendChild(slider);
 	actionItems.appendChild(button);
 	actionItems.appendChild(selectAge);
@@ -138,24 +139,36 @@ function displayResults() {
 	if (state.score === 10) {
 		congratulation = 'Enhorabona';
 		explanation =
-			'Ets un/a VTV de soca-arrel. Ara ves i comparteix la teva puntuació per fardar del teu status!';
+			'Ets un/a VTV de soca-arrel. Aviat seràs Administrador/a. Ara ves i comparteix la teva puntuació per fardar del teu status!';
 		action = 'Comparteix el teu status!';
-	} else if (state.score <= 9 && state.score >= 5) {
-		congratulation = 'T\'ha faltat poc';
+	} else if (state.score <= 9 && state.score >= 8) {
+		congratulation = "T'ha faltat poc";
 		explanation =
-			"T'has esforçat molt pero encara no ets un/a VTV del tot. Et recomano llegir el 3d8 i La Fura. I quan et sentis llest torna-ho a intentar!";
+			"Tens potencial, pero encara no estàs llest. Segueix estudiant l'article de Wikipedia sobre Vilafranca.";
+		action = 'Torna-ho a provar';
+	} else if (state.score <= 7 && state.score >= 5) {
+		congratulation = 'Has de millorar bastant';
+		explanation =
+			"Encara hi ha feina per fer. Et recomanem llegir senceres les pàgines web de l'Ajuntament de Vilafranca i l'article de Wikipedia. 5 vegades.";
+		action = 'Torna-ho a provar';
+	} else if (state.score <= 4 && state.score >= 3) {
+		congratulation = 'Molt malament';
+		explanation =
+			"Sintonitza Radio Vilafranca i Vilafranca TV ara mateix! I no canviis d'emisora i canal durant dues setmanes.";
 		action = 'Torna-ho a provar';
 	} else {
-		congratulation = 'Em sap greu';
+		congratulation = 'Fatal';
 		explanation =
-			"Hi ha feina per fer - has d'estudiar més. Pero no et preocupis, tot té solució: et recomano llegir el 3d8 i La Fura. I quan et sentis llest torna-ho a intentar!";
+			'Demana una subscripció al 3 de 8 als Reis i aprèn la secció local de memòria, cada setmana.';
 		action = 'Torna-ho a provar';
 	}
 	content.innerHTML = `<h1 id="pregunta">${congratulation}, ${
 		state.score < 5 ? ' només ' : ''
 	} has encertat <span>${state.score} ${
 		state.score === 1 ? 'pregunta' : 'preguntes'
-	}</span>.</h1><h2 id="explanation">${explanation}</h2>`;
+	}</span>.</h1><h2 id="display-results-text">Veure els <span class="outline" id="display-results">resultats</span></h2><h2 id="explanation">${explanation}</h2>`;
+	// listen to click on the results link
+	listenResultsClick();
 	// container where User action takes place
 	const actionItems = document.createElement('div');
 	actionItems.id = 'actionItems';
@@ -196,6 +209,7 @@ function reset() {
 			correcte: null,
 		},
 	];
+	state.collectedAnswers = [];
 	// display initial question
 	displayInitialQuestion();
 }
@@ -205,6 +219,52 @@ function isLastQuestion() {
 		return true;
 	}
 	return false;
+}
+
+// listen to click on the results link
+function listenResultsClick() {
+	const resultsLink = document.getElementById('display-results');
+	resultsLink.addEventListener('click', () => {
+		// clean HTML
+		content.innerHTML = '';
+		// create Results title
+		const resultsTitle = document.createElement('h1');
+		resultsTitle.textContent = 'Resultats';
+		content.appendChild(resultsTitle);
+		// create list of answers
+		const answers = document.createElement('ul');
+		state.collectedAnswers.map((item) => {
+			const uniqueAnswer = document.createElement('li');
+			uniqueAnswer.id = 'answer-item';
+			uniqueAnswer.innerHTML = `${
+				item.correct
+					? '<i class="fas fa-check-circle answer-summary" id="correct-answer"></i>'
+					: '<i class="fas fa-times-circle answer-summary" id="wrong-answer"></i>'
+			}<p>Pregunta: ${item.question} | Resposta: ${item.answer}</p>`;
+			// uniqueAnswer.textContent = `Pregunta: ${item.question} | Resposta: ${
+			// 	item.answer
+			// } | ${item.correct ? 'Correcte' : 'Equivocada'}`;
+			answers.appendChild(uniqueAnswer);
+		});
+		content.appendChild(answers);
+
+		// CTA button
+		const ctaButton = document.createElement('button');
+		ctaButton.id = 'tryAgain';
+		ctaButton.textContent = `Torna-ho a provar`;
+		content.appendChild(ctaButton);
+		// social media buttons
+		displaySocialMediaButtons(content);
+	});
+}
+
+function displaySocialMediaButtons(content) {
+	// render social media share buttons
+	const shareButtons = document.createElement('div');
+	shareButtons.id = 'socialButtons';
+	shareButtons.innerHTML = `<a href="https://t.me/share/url?url=${window.location.href}&text=${state.socialMediaTextSucces}"><i class="fab fa-telegram fa-5x shareButton" id="telegram-logo"></i></a><a href="https://api.whatsapp.com/send?text=${state.socialMediaTextSucces}" data-action="share/whatsapp/share"><i class="fab fa-whatsapp-square fa-5x shareButton" id="whatsapp-logo"></i></a><a 
+	href="https://twitter.com/intent/tweet?text=${state.socialMediaTextSucces}"><i class="fab fa-twitter fa-5x shareButton" id="twitter-logo"></i></a>`;
+	content.appendChild(shareButtons);
 }
 
 ////////////
@@ -235,15 +295,35 @@ content.addEventListener('click', (e) => {
 			break;
 		// user has clicked on answer
 		case 'answer-option':
+			// selected answer
 			const selectedAnswer = e.target.textContent;
+			// the question. we need to climb up in the dom to find it :)
+			const selectedQuestion =
+				e.target.parentNode.parentNode.previousSibling.textContent;
+			// add answer to state array with collected answers
+			state.collectedAnswers.push({
+				numQuestion: state.questionCounter,
+				question: selectedQuestion,
+				answer: selectedAnswer,
+				correct: false,
+			});
+			// is selected answer the right one?
 			if (selectedAnswer === state.questions[state.questionCounter].correcte) {
+				// increase score
 				state.score++;
+				// mark question in collected answers array as true
+				state.collectedAnswers[state.questionCounter - 1].correct = true;
 			}
+			// increase count of questions
 			state.questionCounter++;
+			// check if it is the last question
 			const isLast = isLastQuestion();
+			// if it is the last question
 			if (isLast) {
+				// display results
 				displayResults();
 			} else {
+				// display next questions
 				displayNextQuestion();
 			}
 			break;
