@@ -172,11 +172,10 @@ header {
 #tracking {
 	background-color: var(--startButtonColor);
 	color: #fff;
-	height: 3rem;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	padding: 0 2rem;
+	padding: 0.5rem 2rem;
 }
 
 #tracking.hide {
@@ -192,7 +191,7 @@ header {
 }
 
 #buttons-consent {
-	width: 30%;
+	width: 40%;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -602,6 +601,21 @@ footer {
 		border: none;
 		padding: 0;
 		text-shadow: none;
+	}
+
+	#tracking {
+		flex-direction: column;
+		padding: 0.5rem;
+	}
+
+	#tracking p {
+		width: 100%;
+		line-height: 1.5rem;
+	}
+
+	#buttons-consent {
+		width: 100%;
+		padding: 0.5rem 0;
 	}
 }
 
