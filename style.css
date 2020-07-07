@@ -531,7 +531,6 @@ footer {
 }
 
 #cookie-explanation {
-	align-items: flex-start;
 	max-width: 75%;
 }
 
@@ -627,6 +626,10 @@ li {
 	#buttons-consent {
 		width: 100%;
 		padding: 0.5rem 0;
+	}
+
+	#cookie-explanation {
+		max-width: 100%;
 	}
 }
 
