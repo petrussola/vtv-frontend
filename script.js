@@ -13,8 +13,8 @@ const ageSelector = document.getElementById('age-selector');
 const geganta = document.getElementById('image');
 const refuse = document.getElementById('refuse');
 const tracking = document.getElementById('tracking');
-const cookieLink = document.getElementById('cookie-link');
-
+const cookieLink = document.querySelectorAll('#cookie-link');
+console.log(cookieLink);
 const endpoint = 'https://vtv-vila-server.herokuapp.com/test';
 // const endpoint = 'http://localhost:5000/test';
 
@@ -495,23 +495,24 @@ tracking.addEventListener('click', (e) => {
 	}
 });
 
-cookieLink.addEventListener('click', () => {
-	content.innerHTML = '';
-	const whatAreCookies = document.createElement('div');
-	whatAreCookies.id = 'cookie-explanation';
-	const whatAreCookiesTitle = document.createElement('h2');
-	whatAreCookiesTitle.textContent = '1. Què son les galetes?';
-	const whatAreCookiesExplanation = document.createElement('p');
-	whatAreCookiesExplanation.innerHTML = `<ul><li>· Les galetes o cookies són fitxers de text que es descarreguen a l’equip terminal de l’usuari (ordinador, tauleta, telèfon mòbil...) i que es guarden a la memòria del seu navegador.</li>
+cookieLink.forEach((item) => {
+	item.addEventListener('click', () => {
+		content.innerHTML = '';
+		const whatAreCookies = document.createElement('div');
+		whatAreCookies.id = 'cookie-explanation';
+		const whatAreCookiesTitle = document.createElement('h2');
+		whatAreCookiesTitle.textContent = '1. Què son les galetes?';
+		const whatAreCookiesExplanation = document.createElement('p');
+		whatAreCookiesExplanation.innerHTML = `<ul><li>· Les galetes o cookies són fitxers de text que es descarreguen a l’equip terminal de l’usuari (ordinador, tauleta, telèfon mòbil...) i que es guarden a la memòria del seu navegador.</li>
 	<li>· Les dades de navegació recuperades per les galetes són anònimes i no s’associen a cap persona. La informació personal ha de ser facilitada a socvtv.fun de manera explícita per l’usuari. </li>
 	<li>· L’usuari pot esborrar o desactivar les galetes des de la configuració dels navegadors. En aquest cas, la pàgina web continua essent operativa, però sense els avantatges de la personalització. Per a més detalls sobre l’ús, la gestió i la configuració de les galetes des dels navegadors, es recomana que es consulti el web http://www.aboutcookies.org.</li></ul>`;
-	whatAreCookies.appendChild(whatAreCookiesTitle);
-	whatAreCookies.appendChild(whatAreCookiesExplanation);
-	const typeOfCookiesTitle = document.createElement('h2');
-	typeOfCookiesTitle.textContent =
-		"2. Quin tipus de galetes s'utilitzen a socvtv.fun?";
-	const typeOfCookiesExplanation = document.createElement('p');
-	typeOfCookiesExplanation.innerHTML = `Segons l’entitat que les gestiona
+		whatAreCookies.appendChild(whatAreCookiesTitle);
+		whatAreCookies.appendChild(whatAreCookiesExplanation);
+		const typeOfCookiesTitle = document.createElement('h2');
+		typeOfCookiesTitle.textContent =
+			"2. Quin tipus de galetes s'utilitzen a socvtv.fun?";
+		const typeOfCookiesExplanation = document.createElement('p');
+		typeOfCookiesExplanation.innerHTML = `Segons l’entitat que les gestiona
 	<ul>
 	<li>· De tercers. Són galetes que s’envien al terminal de l’usuari des d’un equip o domini no gestionat ni controlat per socvtv.fun. En aquest cas s’inclouen també les galetes que, instal·lades per socvtv.fun, recullen informació gestionada per tercers. Les galetes de tercers es poden utilitzar per al mesurament i l’anàlisi del comportament dels usuaris amb l’objectiu de millorar la seva experiència al web socvtv.fun.</li></ul>
 	
@@ -519,16 +520,25 @@ cookieLink.addEventListener('click', () => {
 	<li>· Persistents. Es desen al terminal de l’usuari. Caduquen en un període llarg o mitjà de temps o no ho fan mai.</li></ul>
 	Segons la finalitat:<ul><li>
 	· D’anàlisi. Permeten a socvtv.fun l’anàlisi vinculada a la navegació duta a terme per l’usuari amb la finalitat de fer un seguiment de l’ús de la pàgina web, i també de fer estadístiques dels continguts més visitats, del nombre de visitants, etc.</li></ul>`;
-	whatAreCookies.appendChild(typeOfCookiesTitle);
-	whatAreCookies.appendChild(typeOfCookiesExplanation);
-	const cookiesUsedTitle = document.createElement('h2');
-	cookiesUsedTitle.textContent =
-		'3. Quines són les finalitats de les galetes que es fan servir a socvtv.fun?';
-	const cookiesUsedExplanation = document.createElement('p');
-	cookiesUsedExplanation.innerHTML = `Les finalitats de les galetes que es fan servir a socvtv.fun són:
+		whatAreCookies.appendChild(typeOfCookiesTitle);
+		whatAreCookies.appendChild(typeOfCookiesExplanation);
+		const cookiesUsedTitle = document.createElement('h2');
+		cookiesUsedTitle.textContent =
+			'3. Quines són les finalitats de les galetes que es fan servir a socvtv.fun?';
+		const cookiesUsedExplanation = document.createElement('p');
+		cookiesUsedExplanation.innerHTML = `Les finalitats de les galetes que es fan servir a socvtv.fun són:
 	<ul><li>
 	· Analítiques. Les dades anònimes contingudes en aquestes galetes permeten el mesurament, el seguiment i l’estudi de l’activitat dels usuaris per tal d’incorporar millores a socvtv.fun.</li></ul>`;
-	whatAreCookies.appendChild(cookiesUsedTitle);
-	whatAreCookies.appendChild(cookiesUsedExplanation);
-	content.appendChild(whatAreCookies);
+		whatAreCookies.appendChild(cookiesUsedTitle);
+		whatAreCookies.appendChild(cookiesUsedExplanation);
+		const backButton = document.createElement('button');
+		backButton.textContent = 'Tornar';
+		backButton.id = 'back-button';
+		whatAreCookies.appendChild(backButton);
+		content.appendChild(whatAreCookies);
+		backButton.addEventListener('click', () => {
+			displayInitialQuestion();
+			history.pushState({}, '/', window.location.origin);
+		});
+	});
 });

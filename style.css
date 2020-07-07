@@ -530,14 +530,30 @@ footer {
 	align-items: center;
 }
 
+footer p:first-child {
+	margin-right: auto;
+	background-color: red;
+	visibility: hidden;
+}
+
+footer #cookie-link {
+	margin-left: auto;
+	padding: 0 1rem;
+}
+
 #cookie-explanation {
 	max-width: 75%;
+	padding: 1rem 0;
 }
 
 #cookie-explanation h2,
 p,
 li {
 	padding: 0.5rem 0;
+}
+
+#back-button {
+	background-color: var(--startButtonColor);
 }
 
 @media (max-width: 500px) {
