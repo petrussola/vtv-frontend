@@ -530,6 +530,17 @@ footer {
 	align-items: center;
 }
 
+#cookie-explanation {
+	align-items: flex-start;
+	max-width: 75%;
+}
+
+#cookie-explanation h2,
+p,
+li {
+	padding: 0.5rem 0;
+}
+
 @media (max-width: 500px) {
 	header {
 		min-height: 15vh;
