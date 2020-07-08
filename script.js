@@ -15,8 +15,13 @@ const refuse = document.getElementById('refuse');
 const tracking = document.getElementById('tracking');
 const cookieLink = document.querySelectorAll('#cookie-link');
 
-const endpoint = 'https://vtv-vila-server.herokuapp.com/test';
-// const endpoint = 'http://localhost:5000/test';
+let endpoint;
+
+if (window.location.hostname === '127.0.0.1') {
+	endpoint = 'http://localhost:5000/test';
+} else {
+	endpoint = 'https://vtv-vila-server.herokuapp.com/test';
+}
 
 ///////////
 // state //
