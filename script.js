@@ -256,6 +256,11 @@ function isLastQuestion() {
 function listenResultsClick() {
 	const resultsLink = document.getElementById('display-results');
 	resultsLink.addEventListener('click', () => {
+		// send page view to Analytics
+		gtag('config', 'UA-170700693-1', {
+			page_title: 'resultat-detall',
+			page_path: '/resultat-detall',
+		});
 		// send Analytics event
 		gtag('event', 'display-results', {
 			event_category: state.age,
