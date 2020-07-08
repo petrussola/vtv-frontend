@@ -14,7 +14,7 @@ const geganta = document.getElementById('image');
 const refuse = document.getElementById('refuse');
 const tracking = document.getElementById('tracking');
 const cookieLink = document.querySelectorAll('#cookie-link');
-console.log(cookieLink);
+
 const endpoint = 'https://vtv-vila-server.herokuapp.com/test';
 // const endpoint = 'http://localhost:5000/test';
 
