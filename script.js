@@ -11,9 +11,17 @@ const errorContainer = document.getElementById('error');
 const nextStep = document.getElementById('next-step');
 const ageSelector = document.getElementById('age-selector');
 const geganta = document.getElementById('image');
+const refuse = document.getElementById('refuse');
+const tracking = document.getElementById('tracking');
+const cookieLink = document.querySelectorAll('#cookie-link');
 
-const endpoint = 'https://vtv-vila-server.herokuapp.com/test';
-// const endpoint = 'http://localhost:5000/test';
+let endpoint;
+
+if (window.location.hostname === '127.0.0.1') {
+	endpoint = 'http://localhost:5000/test';
+} else {
+	endpoint = 'https://vtv-vila-server.herokuapp.com/test';
+}
 
 ///////////
 // state //
@@ -35,6 +43,7 @@ const state = {
 	socialMediaTextFail: `Vols saber si ets un/a VTV (Vilafranquí/ina de Tota la Vida)? Ves a ${window.location.href} i fes el test. NOVETAT: ja pots veure quines preguntes has encertat i fallat.`,
 	age: null,
 	collectedAnswers: [],
+	analyticsConsent: false,
 };
 
 ///////////////
@@ -43,6 +52,10 @@ const state = {
 
 // display initial question to start the test
 function displayInitialQuestion() {
+	gtag('config', 'UA-170700693-3', {
+		page_title: 'home',
+		page_path: '/',
+	});
 	content.innerHTML = `<h1>Vols saber si ets un/a VTV (Vilafranquí/ina de Tota la Vida)? <span class="outline">Fes el test.</span></h1>`;
 	const actionItems = document.createElement('div');
 	actionItems.id = 'actionItems';
@@ -106,6 +119,10 @@ const fetchQuestions = async () => {
 
 // display question in #content node
 function displayNextQuestion() {
+	gtag('config', 'UA-170700693-3', {
+		page_title: state.questionCounter,
+		page_path: `/question-${state.questionCounter}`,
+	});
 	// change text of pregunta to whatever pregunta we are asking, which is determined by the questioncounter
 	content.innerHTML = `<h1 id="pregunta">${
 		state.questions[state.questionCounter].pregunta
@@ -132,6 +149,17 @@ function displayNextQuestion() {
 }
 
 function displayResults() {
+	// send page view to Analytics
+	gtag('config', 'UA-170700693-3', {
+		page_title: 'resultat',
+		page_path: '/resultat',
+	});
+	// send event to analytics
+	gtag('event', 'completed-test', {
+		event_category: state.age,
+		event_label: `score: ${state.score}`,
+	});
+
 	// initialize variables that will be used for text depending on the score
 	let congratulation;
 	let explanation;
@@ -196,6 +224,8 @@ function displayResults() {
 		actionItems.insertBefore(ctaButton, actionItems.firstChild);
 	}
 	content.appendChild(actionItems);
+	// call function to track clicks on social media
+	clickSocialMediaButton();
 }
 
 // reset state for those who have to restart the quizz
@@ -226,6 +256,11 @@ function isLastQuestion() {
 function listenResultsClick() {
 	const resultsLink = document.getElementById('display-results');
 	resultsLink.addEventListener('click', () => {
+		// send Analytics event
+		gtag('event', 'display-results', {
+			event_category: state.age,
+			event_label: `score: ${state.score}`,
+		});
 		// clean HTML
 		content.innerHTML = '';
 		// create Results title
@@ -279,6 +314,33 @@ const fetchNovetats = async () => {
 	}
 };
 
+function hideConsentPolicy() {
+	tracking.classList.add('hide');
+}
+
+function acceptConsentAnalytics(value) {
+	state.analyticsConsent = value;
+	localStorage.setItem('analyticsConsent', state.analyticsConsent);
+}
+
+function displayConsent() {
+	console.log(localStorage.getItem('analyticsConsent'));
+	if (!localStorage.getItem('analyticsConsent')) {
+		tracking.classList.remove('hide');
+	}
+}
+
+function clickSocialMediaButton() {
+	const shareButtons = document.getElementById('socialButtons');
+	shareButtons.addEventListener('click', (e) => {
+		// send event to analytics
+		gtag('event', 'share', {
+			method: e.target.id,
+		});
+		console.log(e.target.id);
+	});
+}
+
 ////////////
 // events //
 ////////////
@@ -289,6 +351,7 @@ window.onload = () => {
 	window.history.pushState({}, '/', window.location.origin);
 	// fetchQuestions();
 	displayInitialQuestion();
+	displayConsent();
 };
 
 // click button to start test
@@ -364,6 +427,10 @@ page.forEach((item) => {
 		// create context
 		const whyMade = document.createElement('h2');
 		if (e.target.id === 'about-page') {
+			// send Analytics event
+			gtag('event', 'click-page', {
+				event_category: 'about',
+			});
 			// create first line
 			const madeBy = document.createElement('h2');
 			madeBy.textContent = 'Fet per en www.peresola.com';
@@ -371,9 +438,17 @@ page.forEach((item) => {
 			whyMade.textContent =
 				'Soc un VTV que ha pujat als castells, ha ballat un ball de la Festa Major i tantes altres coses que fan els VTVs. No somio en ser administrador ni pregoner. No us prengueu aquesta web seriosament, tothom hi és benvingut a Vilafranca!';
 		} else if (e.target.id === 'suggeriments-page') {
+			// send Analytics event
+			gtag('event', 'click-page', {
+				event_category: 'suggeriments',
+			});
 			whyMade.textContent =
 				'Si voleu afegir preguntes al test, o teniu qualsevol suggeriment o comentari, envieu-me un email a socunvtv [arroba] gmail [punt] com. Salut!';
 		} else if (e.target.id === 'novetats-page') {
+			// send Analytics event
+			gtag('event', 'click-page', {
+				event_category: 'novetats',
+			});
 			const novetats = await fetchNovetats();
 			const listNovetats = document.createElement('ul');
 			novetats.map((item) => {
@@ -383,6 +458,10 @@ page.forEach((item) => {
 			});
 			textContainer.appendChild(listNovetats);
 		} else {
+			// send Analytics event
+			gtag('event', 'click-page', {
+				event_category: 'error-not-exist',
+			});
 			console.log("page doesn't exist");
 		}
 		textContainer.appendChild(whyMade);
@@ -408,4 +487,70 @@ icons.addEventListener('click', (e) => {
 	burguer.classList.toggle('show');
 	close.classList.toggle('show');
 	title.classList.toggle('show');
+});
+
+tracking.addEventListener('click', (e) => {
+	if (e.target.id === 'not-ok-analytics') {
+		acceptConsentAnalytics(false);
+		window['ga-disable-UA-170700693-3'] = true;
+		hideConsentPolicy();
+	} else if (e.target.id === 'ok-analytics') {
+		acceptConsentAnalytics(true);
+		hideConsentPolicy();
+	}
+});
+
+cookieLink.forEach((item) => {
+	item.addEventListener('click', () => {
+		content.innerHTML = '';
+		const whatAreCookies = document.createElement('div');
+		whatAreCookies.id = 'cookie-explanation';
+		const backButtonTop = document.createElement('button');
+		backButtonTop.textContent = 'Tornar';
+		backButtonTop.classList.add('back-button');
+		whatAreCookies.appendChild(backButtonTop);
+		const whatAreCookiesTitle = document.createElement('h2');
+		whatAreCookiesTitle.textContent = '1. Què son les galetes?';
+		const whatAreCookiesExplanation = document.createElement('p');
+		whatAreCookiesExplanation.innerHTML = `<ul><li>· Les galetes o cookies són fitxers de text que es descarreguen a l’equip terminal de l’usuari (ordinador, tauleta, telèfon mòbil...) i que es guarden a la memòria del seu navegador.</li>
+	<li>· Les dades de navegació recuperades per les galetes són anònimes i no s’associen a cap persona. La informació personal ha de ser facilitada a socvtv.fun de manera explícita per l’usuari. </li>
+	<li>· L’usuari pot esborrar o desactivar les galetes des de la configuració dels navegadors. En aquest cas, la pàgina web continua essent operativa, però sense els avantatges de la personalització. Per a més detalls sobre l’ús, la gestió i la configuració de les galetes des dels navegadors, es recomana que es consulti el web http://www.aboutcookies.org.</li></ul>`;
+		whatAreCookies.appendChild(whatAreCookiesTitle);
+		whatAreCookies.appendChild(whatAreCookiesExplanation);
+		const typeOfCookiesTitle = document.createElement('h2');
+		typeOfCookiesTitle.textContent =
+			"2. Quin tipus de galetes s'utilitzen a socvtv.fun?";
+		const typeOfCookiesExplanation = document.createElement('p');
+		typeOfCookiesExplanation.innerHTML = `Segons l’entitat que les gestiona
+	<ul>
+	<li>· De tercers. Són galetes que s’envien al terminal de l’usuari des d’un equip o domini no gestionat ni controlat per socvtv.fun. En aquest cas s’inclouen també les galetes que, instal·lades per socvtv.fun, recullen informació gestionada per tercers. Les galetes de tercers es poden utilitzar per al mesurament i l’anàlisi del comportament dels usuaris amb l’objectiu de millorar la seva experiència al web socvtv.fun.</li></ul>
+	
+	Segons el termini de temps que romanguin activades:<ul>
+	<li>· Persistents. Es desen al terminal de l’usuari. Caduquen en un període llarg o mitjà de temps o no ho fan mai.</li></ul>
+	Segons la finalitat:<ul><li>
+	· D’anàlisi. Permeten a socvtv.fun l’anàlisi vinculada a la navegació duta a terme per l’usuari amb la finalitat de fer un seguiment de l’ús de la pàgina web, i també de fer estadístiques dels continguts més visitats, del nombre de visitants, etc.</li></ul>`;
+		whatAreCookies.appendChild(typeOfCookiesTitle);
+		whatAreCookies.appendChild(typeOfCookiesExplanation);
+		const cookiesUsedTitle = document.createElement('h2');
+		cookiesUsedTitle.textContent =
+			'3. Quines són les finalitats de les galetes que es fan servir a socvtv.fun?';
+		const cookiesUsedExplanation = document.createElement('p');
+		cookiesUsedExplanation.innerHTML = `Les finalitats de les galetes que es fan servir a socvtv.fun són:
+	<ul><li>
+	· Analítiques. Les dades anònimes contingudes en aquestes galetes permeten el mesurament, el seguiment i l’estudi de l’activitat dels usuaris per tal d’incorporar millores a socvtv.fun.</li></ul>`;
+		whatAreCookies.appendChild(cookiesUsedTitle);
+		whatAreCookies.appendChild(cookiesUsedExplanation);
+		const backButtonBottom = document.createElement('button');
+		backButtonBottom.textContent = 'Tornar';
+		backButtonBottom.classList.add('back-button');
+		whatAreCookies.appendChild(backButtonBottom);
+		content.appendChild(whatAreCookies);
+		const backButtons = document.querySelectorAll('.back-button');
+		backButtons.forEach((item) => {
+			item.addEventListener('click', () => {
+				displayInitialQuestion();
+				history.pushState({}, '/', window.location.origin);
+			});
+		});
+	});
 });

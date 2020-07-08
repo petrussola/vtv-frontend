@@ -166,6 +166,52 @@ body {
 
 header {
 	display: flex;
+	flex-direction: column;
+}
+
+#tracking {
+	background-color: var(--startButtonColor);
+	color: #fff;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 0.5rem 2rem;
+}
+
+#tracking.hide {
+	display: none;
+}
+
+#tracking p {
+	width: 70%;
+}
+
+#cookie-link {
+	text-decoration: underline;
+}
+
+#buttons-consent {
+	width: 40%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-evenly;
+}
+
+.btn-consent {
+	cursor: pointer;
+}
+
+.btn-consent#ok-analytics {
+	background-color: white;
+	color: var(--startButtonColor);
+	padding: 0.5rem 2rem;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+#header-content {
+	display: flex;
 	flex-flow: row wrap;
 	justify-content: space-between;
 	align-items: center;
@@ -484,7 +530,39 @@ footer {
 	align-items: center;
 }
 
+footer p:first-child {
+	margin-right: auto;
+	background-color: red;
+	visibility: hidden;
+}
+
+footer #cookie-link {
+	margin-left: auto;
+	padding: 0 1rem;
+}
+
+#cookie-explanation {
+	max-width: 75%;
+	padding: 1rem 0;
+}
+
+#cookie-explanation h2,
+p,
+li {
+	padding: 0.5rem 0;
+}
+
+.back-button {
+	background-color: var(--startButtonColor);
+	padding: 0.5rem 1rem;
+	margin: 1rem 0;
+}
+
 @media (max-width: 500px) {
+	body {
+		width: 100%;
+		margin: 0;
+	}
 	header {
 		min-height: 15vh;
 	}
@@ -555,6 +633,51 @@ footer {
 		border: none;
 		padding: 0;
 		text-shadow: none;
+	}
+
+	#tracking {
+		flex-direction: column;
+		padding: 0.5rem;
+	}
+
+	#tracking p {
+		width: 100%;
+		line-height: 1.5rem;
+	}
+
+	#buttons-consent {
+		width: 100%;
+		padding: 0.5rem 0;
+	}
+
+	#cookie-explanation {
+		max-width: 100%;
+	}
+
+	footer {
+		padding: 0 0.2rem;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		/* min-height: 2rem; */
+	}
+
+	footer p:first-child {
+		width: 10px;
+		height: 0;
+	}
+
+	footer #made-with-love {
+		font-size: 85%;
+		width: 65%;
+	}
+	
+	footer #cookie-link {
+		width: 35%;
+		font-size: 75%;
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-end;
 	}
 }
 
