@@ -500,6 +500,10 @@ cookieLink.forEach((item) => {
 		content.innerHTML = '';
 		const whatAreCookies = document.createElement('div');
 		whatAreCookies.id = 'cookie-explanation';
+		const backButtonTop = document.createElement('button');
+		backButtonTop.textContent = 'Tornar';
+		backButtonTop.classList.add('back-button');
+		whatAreCookies.appendChild(backButtonTop);
 		const whatAreCookiesTitle = document.createElement('h2');
 		whatAreCookiesTitle.textContent = '1. Què son les galetes?';
 		const whatAreCookiesExplanation = document.createElement('p');
@@ -531,14 +535,17 @@ cookieLink.forEach((item) => {
 	· Analítiques. Les dades anònimes contingudes en aquestes galetes permeten el mesurament, el seguiment i l’estudi de l’activitat dels usuaris per tal d’incorporar millores a socvtv.fun.</li></ul>`;
 		whatAreCookies.appendChild(cookiesUsedTitle);
 		whatAreCookies.appendChild(cookiesUsedExplanation);
-		const backButton = document.createElement('button');
-		backButton.textContent = 'Tornar';
-		backButton.id = 'back-button';
-		whatAreCookies.appendChild(backButton);
+		const backButtonBottom = document.createElement('button');
+		backButtonBottom.textContent = 'Tornar';
+		backButtonBottom.classList.add('back-button');
+		whatAreCookies.appendChild(backButtonBottom);
 		content.appendChild(whatAreCookies);
-		backButton.addEventListener('click', () => {
-			displayInitialQuestion();
-			history.pushState({}, '/', window.location.origin);
+		const backButtons = document.querySelectorAll('.back-button');
+		backButtons.forEach((item) => {
+			item.addEventListener('click', () => {
+				displayInitialQuestion();
+				history.pushState({}, '/', window.location.origin);
+			});
 		});
 	});
 });
