@@ -511,6 +511,10 @@ tracking.addEventListener('click', (e) => {
 
 cookieLink.forEach((item) => {
 	item.addEventListener('click', () => {
+		// send Analytics event
+		gtag('event', 'select_content', {
+			content_type: 'view-cookie-page',
+		});
 		content.innerHTML = '';
 		const whatAreCookies = document.createElement('div');
 		whatAreCookies.id = 'cookie-explanation';
