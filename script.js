@@ -52,7 +52,7 @@ const state = {
 
 // display initial question to start the test
 function displayInitialQuestion() {
-	gtag('config', 'UA-170700693-3', {
+	gtag('config', 'UA-170700693-1', {
 		page_title: 'home',
 		page_path: '/',
 	});
@@ -119,7 +119,7 @@ const fetchQuestions = async () => {
 
 // display question in #content node
 function displayNextQuestion() {
-	gtag('config', 'UA-170700693-3', {
+	gtag('config', 'UA-170700693-1', {
 		page_title: state.questionCounter,
 		page_path: `/question-${state.questionCounter}`,
 	});
@@ -150,7 +150,7 @@ function displayNextQuestion() {
 
 function displayResults() {
 	// send page view to Analytics
-	gtag('config', 'UA-170700693-3', {
+	gtag('config', 'UA-170700693-1', {
 		page_title: 'resultat',
 		page_path: '/resultat',
 	});
@@ -492,7 +492,7 @@ icons.addEventListener('click', (e) => {
 tracking.addEventListener('click', (e) => {
 	if (e.target.id === 'not-ok-analytics') {
 		acceptConsentAnalytics(false);
-		window['ga-disable-UA-170700693-3'] = true;
+		window['ga-disable-UA-170700693-1'] = true;
 		hideConsentPolicy();
 	} else if (e.target.id === 'ok-analytics') {
 		acceptConsentAnalytics(true);
