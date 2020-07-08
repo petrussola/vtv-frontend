@@ -324,6 +324,10 @@ function hideConsentPolicy() {
 }
 
 function acceptConsentAnalytics(value) {
+	// send Analytics event
+	gtag('event', 'select_content', {
+		content_type: `accept-cookies: ${value}`,
+	});
 	state.analyticsConsent = value;
 	localStorage.setItem('analyticsConsent', state.analyticsConsent);
 }
