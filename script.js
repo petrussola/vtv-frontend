@@ -52,7 +52,7 @@ const state = {
 
 // display initial question to start the test
 function displayInitialQuestion() {
-	gtag('config', 'UA-170700693-1', {
+	gtag('config', 'UA-170700693-2', {
 		page_title: 'home',
 		page_path: '/',
 	});
@@ -119,7 +119,7 @@ const fetchQuestions = async () => {
 
 // display question in #content node
 function displayNextQuestion() {
-	gtag('config', 'UA-170700693-1', {
+	gtag('config', 'UA-170700693-2', {
 		page_title: `${state.age}-${state.questionCounter}`,
 		page_path: `/question-${state.age}-${state.questionCounter}`,
 	});
@@ -150,7 +150,7 @@ function displayNextQuestion() {
 
 function displayResults() {
 	// send page view to Analytics
-	gtag('config', 'UA-170700693-1', {
+	gtag('config', 'UA-170700693-2', {
 		page_title: 'resultat',
 		page_path: '/resultat',
 	});
@@ -257,7 +257,7 @@ function listenResultsClick() {
 	const resultsLink = document.getElementById('display-results');
 	resultsLink.addEventListener('click', () => {
 		// send page view to Analytics
-		gtag('config', 'UA-170700693-1', {
+		gtag('config', 'UA-170700693-2', {
 			page_title: 'resultat-detall',
 			page_path: '/resultat-detall',
 		});
@@ -437,7 +437,7 @@ page.forEach((item) => {
 		const whyMade = document.createElement('h2');
 		if (e.target.id === 'about-page') {
 			// send page view to Analytics
-			gtag('config', 'UA-170700693-1', {
+			gtag('config', 'UA-170700693-2', {
 				page_title: 'about',
 				page_path: '/about',
 			});
@@ -453,7 +453,7 @@ page.forEach((item) => {
 				'Soc un VTV que ha pujat als castells, ha ballat un ball de la Festa Major i tantes altres coses que fan els VTVs. No somio en ser administrador ni pregoner. No us prengueu aquesta web seriosament, tothom hi és benvingut a Vilafranca!';
 		} else if (e.target.id === 'suggeriments-page') {
 			// send page view to Analytics
-			gtag('config', 'UA-170700693-1', {
+			gtag('config', 'UA-170700693-2', {
 				page_title: 'suggeriments',
 				page_path: '/suggeriments',
 			});
@@ -465,7 +465,7 @@ page.forEach((item) => {
 				'Si voleu afegir preguntes al test, o teniu qualsevol suggeriment o comentari, envieu-me un email a socunvtv [arroba] gmail [punt] com. Salut!';
 		} else if (e.target.id === 'novetats-page') {
 			// send page view to Analytics
-			gtag('config', 'UA-170700693-1', {
+			gtag('config', 'UA-170700693-2', {
 				page_title: 'novetats',
 				page_path: '/novetats',
 			});
@@ -483,7 +483,7 @@ page.forEach((item) => {
 			textContainer.appendChild(listNovetats);
 		} else {
 			// send page view to Analytics
-			gtag('config', 'UA-170700693-1', {
+			gtag('config', 'UA-170700693-2', {
 				page_title: 'not-exist',
 				page_path: '/not-exist',
 			});
@@ -521,7 +521,7 @@ icons.addEventListener('click', (e) => {
 tracking.addEventListener('click', (e) => {
 	if (e.target.id === 'not-ok-analytics') {
 		acceptConsentAnalytics(false);
-		window['ga-disable-UA-170700693-1'] = true;
+		window['ga-disable-UA-170700693-2'] = true;
 		hideConsentPolicy();
 	} else if (e.target.id === 'ok-analytics') {
 		acceptConsentAnalytics(true);
@@ -532,7 +532,7 @@ tracking.addEventListener('click', (e) => {
 cookieLink.forEach((item) => {
 	item.addEventListener('click', () => {
 		// send page view to Analytics
-		gtag('config', 'UA-170700693-1', {
+		gtag('config', 'UA-170700693-2', {
 			page_title: 'cookie-policy',
 			page_path: '/cookie-policy',
 		});
