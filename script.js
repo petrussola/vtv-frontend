@@ -18,9 +18,12 @@ const cookieLink = document.querySelectorAll('#cookie-link');
 let endpoint;
 
 if (window.location.hostname === '127.0.0.1') {
-	endpoint = 'http://localhost:5000/test';
-} else {
-	endpoint = 'https://vtv-vila-server.herokuapp.com/test';
+	endpoint = 'http://localhost:5000/';
+} else if (window.location.hostname === 'vtv-dev.netlify.app') {
+	endpoint = 'https://vtv-vila-server.herokuapp.com/';
+} else if (window.location.hostname === 'www.socvtv.fun') {
+	endpoint = 'https://vtv-vila-server-prod.herokuapp.com/';
+
 }
 
 ///////////
@@ -110,10 +113,11 @@ const fetchQuestions = async () => {
 		state.fetchedQuestions = true;
 		displayNextQuestion();
 	} catch (error) {
+		console.log(error);
 		// hide spinner after promise has resolved
 		errorContainer.innerHTML = '';
 		errorContainer.className = 'activated';
-		errorContainer.textContent = error.message;
+		errorContainer.textContent = "Hem tingut un problema al servidor. Sorry! Prova-ho més tard.";
 	}
 };
 
