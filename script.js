@@ -315,7 +315,7 @@ function displaySocialMediaButtons(content) {
 // fetch novetats from backend
 const fetchNovetats = async () => {
 	try {
-		const data = await fetch(`${endpoint}/novetats`);
+		const data = await fetch(`${endpoint}novetats`);
 		const questions = await data.json();
 		return questions.data;
 	} catch (error) {
