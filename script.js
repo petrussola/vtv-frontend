@@ -436,6 +436,11 @@ page.forEach((item) => {
 		// create context
 		const whyMade = document.createElement('h2');
 		if (e.target.id === 'about-page') {
+			// send page view to Analytics
+			gtag('config', 'UA-170700693-1', {
+				page_title: 'about',
+				page_path: '/about',
+			});
 			// send Analytics event
 			gtag('event', 'click-page', {
 				event_category: 'about',
@@ -447,6 +452,11 @@ page.forEach((item) => {
 			whyMade.textContent =
 				'Soc un VTV que ha pujat als castells, ha ballat un ball de la Festa Major i tantes altres coses que fan els VTVs. No somio en ser administrador ni pregoner. No us prengueu aquesta web seriosament, tothom hi és benvingut a Vilafranca!';
 		} else if (e.target.id === 'suggeriments-page') {
+			// send page view to Analytics
+			gtag('config', 'UA-170700693-1', {
+				page_title: 'suggeriments',
+				page_path: '/suggeriments',
+			});
 			// send Analytics event
 			gtag('event', 'click-page', {
 				event_category: 'suggeriments',
@@ -454,6 +464,11 @@ page.forEach((item) => {
 			whyMade.textContent =
 				'Si voleu afegir preguntes al test, o teniu qualsevol suggeriment o comentari, envieu-me un email a socunvtv [arroba] gmail [punt] com. Salut!';
 		} else if (e.target.id === 'novetats-page') {
+			// send page view to Analytics
+			gtag('config', 'UA-170700693-1', {
+				page_title: 'novetats',
+				page_path: '/novetats',
+			});
 			// send Analytics event
 			gtag('event', 'click-page', {
 				event_category: 'novetats',
@@ -467,6 +482,11 @@ page.forEach((item) => {
 			});
 			textContainer.appendChild(listNovetats);
 		} else {
+			// send page view to Analytics
+			gtag('config', 'UA-170700693-1', {
+				page_title: 'not-exist',
+				page_path: '/not-existgit ',
+			});
 			// send Analytics event
 			gtag('event', 'click-page', {
 				event_category: 'error-not-exist',
@@ -511,6 +531,11 @@ tracking.addEventListener('click', (e) => {
 
 cookieLink.forEach((item) => {
 	item.addEventListener('click', () => {
+		// send page view to Analytics
+		gtag('config', 'UA-170700693-1', {
+			page_title: 'cookie-policy',
+			page_path: '/cookie-policy',
+		});
 		// send Analytics event
 		gtag('event', 'select_content', {
 			content_type: 'view-cookie-page',
