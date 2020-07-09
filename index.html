@@ -2,6 +2,16 @@
 <html lang="en">
 
 <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-170700693-2"></script>
+    <script>
+        window['ga-disable-UA-170700693-2'] = false;
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-170700693-2');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/ed219d8cc9.js" crossorigin="anonymous"></script>
@@ -11,14 +21,26 @@
 
 <body>
     <header>
-        <h1 id="title">Soc VTV</h1>
-        <ul id="navbar">
-            <li id="about-page" class="page">ABOUT</li>
-            <li id="suggeriments-page" class="page">SUGGERIMENTS</li>
-        </ul>
-        <div id="icons">
-            <i class="fas fa-bars fa-2x show" id="burguer"></i>
-            <i class="fa fa-times fa-2x" id="close"></i>
+        <div id="tracking" class="hide">
+            <p>Fem servir galetes per tenir estadístiques. Ens dones el teu consentiment? <a href="#cookies"
+                    id="cookie-link">Cookie Policy</a></p>
+            <div id="buttons-consent">
+                <div id="not-ok-analytics" class="btn-consent">Em nego</div>
+                <div id="ok-analytics" class="btn-consent">D'acord</div>
+            </div>
+        </div>
+        <div id="header-content">
+
+            <h1 id="title">Soc VTV</h1>
+            <ul id="navbar">
+                <li id="about-page" class="page">ABOUT</li>
+                <li id="suggeriments-page" class="page">SUGGERIMENTS</li>
+                <li id="novetats-page" class="page">NOVETATS</li>
+            </ul>
+            <div id="icons">
+                <i class="fas fa-bars fa-2x show" id="burguer"></i>
+                <i class="fa fa-times fa-2x" id="close"></i>
+            </div>
         </div>
     </header>
     <section id="container">
@@ -26,7 +48,9 @@
         <div id="content"></div>
     </section>
     <footer>
-        <p>Made with <span><i class="far fa-heart"></i></span> by peresola.com</p>
+        <p>Cookie Policy</p>
+        <p id="made-with-love">Made with <span><i class="far fa-heart"></i></span> by peresola.com</p>
+        <p id="cookie-link"><a href="#cookies">Cookie Policy</a></p>
     </footer>
     <script src="script.js"></script>
 </body>
