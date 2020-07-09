@@ -110,10 +110,11 @@ const fetchQuestions = async () => {
 		state.fetchedQuestions = true;
 		displayNextQuestion();
 	} catch (error) {
+		console.log(error);
 		// hide spinner after promise has resolved
 		errorContainer.innerHTML = '';
 		errorContainer.className = 'activated';
-		errorContainer.textContent = error.message;
+		errorContainer.textContent = "Hem tingut un problema al servidor. Sorry! Prova-ho més tard.";
 	}
 };
 
