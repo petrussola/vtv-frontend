@@ -120,8 +120,8 @@ const fetchQuestions = async () => {
 // display question in #content node
 function displayNextQuestion() {
 	gtag('config', 'UA-170700693-1', {
-		page_title: state.questionCounter,
-		page_path: `/question-${state.questionCounter}`,
+		page_title: `${state.age}-${state.questionCounter}`,
+		page_path: `/question-${state.age}-${state.questionCounter}`,
 	});
 	// change text of pregunta to whatever pregunta we are asking, which is determined by the questioncounter
 	content.innerHTML = `<h1 id="pregunta">${
@@ -485,7 +485,7 @@ page.forEach((item) => {
 			// send page view to Analytics
 			gtag('config', 'UA-170700693-1', {
 				page_title: 'not-exist',
-				page_path: '/not-existgit ',
+				page_path: '/not-exist',
 			});
 			// send Analytics event
 			gtag('event', 'click-page', {
