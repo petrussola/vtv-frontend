@@ -161,7 +161,7 @@ function displayNextQuestion() {
 	comodi.id = 'comodi';
 	comodi.classList.add('comodi-button');
 	if (state.comodinsLeft > 0) {
-		comodi.textContent = `Fes clic aqui si vols utilitzar el comodí del whatsapp. T'en queden ${state.comodinsLeft}!`;
+		comodi.textContent = `Fes clic aqui si vols utilitzar el comodí de les xarxes socials. T'en queden ${state.comodinsLeft}!`;
 		clickComodi(comodi, pregunta, respostes);
 	} else {
 		comodi.textContent = `Has exhaurit els comodins`;
@@ -383,7 +383,7 @@ function clickComodi(node, pregunta, respostes) {
 			(item) => ` ${item}`
 		)}. Quina creus que és la correcta? Gràcies!`;
 		const comodiShareButtons = document.createElement('div');
-		comodiShareButtons.innerHTML = `<a href="https://t.me/share/url?url=${window.location.href}&text=${socialMediaTextComodi}"><i class="fab fa-telegram fa-5x shareButton" id="telegram-logo"></i></a><a href="https://api.whatsapp.com/send?text=${socialMediaTextComodi}" data-action="share/whatsapp/share"><i class="fab fa-whatsapp-square fa-5x shareButton" id="whatsapp-logo"></i></a>`;
+		comodiShareButtons.innerHTML = `<a href="https://t.me/share/url?url=${window.location.href}&text=${socialMediaTextComodi}" target="_blank"><i class="fab fa-telegram fa-5x shareButton" id="telegram-logo"></i></a><a href="https://api.whatsapp.com/send?text=${socialMediaTextComodi}" data-action="share/whatsapp/share" target="_blank"><i class="fab fa-whatsapp-square fa-5x shareButton" id="whatsapp-logo"></i></a>`;
 		node.parentNode.appendChild(comodiShareButtons);
 		comodiShareButtons.addEventListener('click', (e) => {
 			if (e.target.id === 'telegram-logo' || e.target.id === 'whatsapp-logo') {
