@@ -380,6 +380,14 @@ button:hover:enabled {
 	margin-top: 1rem;
 }
 
+#comodi.comodi-button {
+	background-color: var(--startButtonColor);
+	color: #fff;
+	padding: 0.5rem 1rem;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
 .outline {
 	border-bottom: 5px solid var(--startButtonColor);
 }
@@ -671,7 +679,7 @@ li {
 		font-size: 85%;
 		width: 65%;
 	}
-	
+
 	footer #cookie-link {
 		width: 35%;
 		font-size: 75%;
