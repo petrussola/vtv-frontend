@@ -23,7 +23,6 @@ if (window.location.hostname === '127.0.0.1') {
 	endpoint = 'https://vtv-vila-server.herokuapp.com/';
 } else if (window.location.hostname === 'www.socvtv.fun') {
 	endpoint = 'https://vtv-vila-server-prod.herokuapp.com/';
-
 }
 
 ///////////
@@ -47,6 +46,8 @@ const state = {
 	age: null,
 	collectedAnswers: [],
 	analyticsConsent: false,
+	comodinsLeft: 2,
+	comodiUsedInQuestion: false,
 };
 
 ///////////////
@@ -117,7 +118,8 @@ const fetchQuestions = async () => {
 		// hide spinner after promise has resolved
 		errorContainer.innerHTML = '';
 		errorContainer.className = 'activated';
-		errorContainer.textContent = "Hem tingut un problema al servidor. Sorry! Prova-ho més tard.";
+		errorContainer.textContent =
+			'Hem tingut un problema al servidor. Sorry! Prova-ho més tard.';
 	}
 };
 
@@ -127,29 +129,44 @@ function displayNextQuestion() {
 		page_title: `${state.age}-${state.questionCounter}`,
 		page_path: `/question-${state.age}-${state.questionCounter}`,
 	});
+	// set used comodi to false in case user used comodi in the previous question
+	state.comodiUsedInQuestion = false;
+	const pregunta = state.questions[state.questionCounter].pregunta;
+	const respostes = state.questions[state.questionCounter].respostes;
 	// change text of pregunta to whatever pregunta we are asking, which is determined by the questioncounter
-	content.innerHTML = `<h1 id="pregunta">${
-		state.questions[state.questionCounter].pregunta
-	}</h1>`;
+	content.innerHTML = `<h1 id="pregunta">${pregunta}</h1>`;
 	const actionItems = document.createElement('div');
 	actionItems.id = 'actionItems';
 	content.appendChild(actionItems);
 	// display available answers
-	const respostes = document.createElement('div');
-	respostes.id = 'respostes';
-	respostes.innerHTML = state.questions[state.questionCounter].respostes
+	const respostesSpace = document.createElement('div');
+	respostesSpace.id = 'respostes';
+	respostesSpace.innerHTML = respostes
 		.map((item) => {
 			return `<button id="answer-option">${item}</button>`;
 		})
 		.join('');
-	actionItems.appendChild(respostes);
-	// display up to date score
+	actionItems.appendChild(respostesSpace);
+	// display progress in the format XX/XX
 	const aux = document.createElement('h2');
 	aux.id = 'auxiliary';
 	aux.textContent = `Pregunta ${state.questionCounter}/${
 		state.questions.length - 1
 	}`;
 	actionItems.appendChild(aux);
+	// display Left left
+	const comodiSpace = document.createElement('div');
+	actionItems.appendChild(comodiSpace);
+	const comodi = document.createElement('h3');
+	comodi.id = 'comodi';
+	comodi.classList.add('comodi-button');
+	if (state.comodinsLeft > 0) {
+		comodi.textContent = `Fes clic aqui si vols utilitzar el comodí de les xarxes socials. T'en queden ${state.comodinsLeft}!`;
+		clickComodi(comodi, pregunta, respostes);
+	} else {
+		comodi.textContent = `Has exhaurit els comodins`;
+	}
+	comodiSpace.appendChild(comodi);
 }
 
 function displayResults() {
@@ -351,6 +368,38 @@ function clickSocialMediaButton() {
 			method: e.target.id,
 		});
 		console.log(e.target.id);
+	});
+}
+
+function clickComodi(node, pregunta, respostes) {
+	node.addEventListener('click', (e) => {
+		// remove button and class that gives style
+		node.textContent = `Demana ajuda a través de les xarxes. Et queden ${state.comodinsLeft} comodins.`;
+		// node.classList.toggle('comodi-button');
+		// add social media buttons
+		const socialMediaTextComodi = `Ei, estic fent el test per saber si soc un/a Vilafranquí/ina de Tota la Vida (VTV) a ${
+			window.location.href
+		} i estic utilitzant el comodí de les xarxes socials. Necessito ajuda amb la següent pregunta: '${pregunta}'. Possibles respostes: ${respostes.map(
+			(item) => ` ${item}`
+		)}. Quina creus que és la correcta? Gràcies!`;
+		const comodiShareButtons = document.createElement('div');
+		comodiShareButtons.innerHTML = `<a href="https://t.me/share/url?url=${window.location.href}&text=${socialMediaTextComodi}" target="_blank"><i class="fab fa-telegram fa-5x shareButton" id="telegram-logo"></i></a><a href="https://api.whatsapp.com/send?text=${socialMediaTextComodi}" data-action="share/whatsapp/share" target="_blank"><i class="fab fa-whatsapp-square fa-5x shareButton" id="whatsapp-logo"></i></a>`;
+		node.parentNode.appendChild(comodiShareButtons);
+		comodiShareButtons.addEventListener('click', (e) => {
+			if (e.target.id === 'telegram-logo' || e.target.id === 'whatsapp-logo') {
+				if (state.comodiUsedInQuestion === false && state.comodinsLeft > 1) {
+					state.comodiUsedInQuestion = true;
+					state.comodinsLeft--;
+					node.textContent = `Has utilitzat 1 comodí, t'en queden ${state.comodinsLeft}`;
+				} else if (
+					state.comodiUsedInQuestion === false &&
+					state.comodinsLeft === 1
+				) {
+					state.comodinsLeft--;
+					node.textContent = `Has exhaurits els comodins`;
+				}
+			}
+		});
 	});
 }
 
