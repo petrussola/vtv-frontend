@@ -262,6 +262,8 @@ function reset() {
 		},
 	];
 	state.collectedAnswers = [];
+	state.comodinsLeft = 2,
+	state.comodiUsedInQuestion = false,
 	// display initial question
 	displayInitialQuestion();
 }

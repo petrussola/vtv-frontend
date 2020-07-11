@@ -3,6 +3,7 @@
 :root {
 	--mainColor: #3498db;
 	--startButtonColor: #3ecf8e;
+	--visiblecolor: red;
 	--borderRadius: 4px;
 	--colorStamp: green;
 }
@@ -230,7 +231,7 @@ header {
 
 #novetats-page {
 	color: white;
-	background-color: red;
+	background-color: var(--visiblecolor);
 	border-radius: var(--borderRadius);
 }
 
@@ -382,7 +383,7 @@ button:hover:enabled {
 }
 
 #comodi.comodi-button {
-	background-color: var(--startButtonColor);
+	background-color: var(--visiblecolor);
 	color: #fff;
 	padding: 0.5rem 1rem;
 	border-radius: 4px;
@@ -396,7 +397,8 @@ button:hover:enabled {
 	align-items: center;
 }
 
-#actionItems .shareButtonComodi, #actionItems a {
+#actionItems .shareButtonComodi,
+#actionItems a {
 	margin: 0 0.5rem;
 }
 
