@@ -380,7 +380,7 @@ function clickComodi(node, pregunta, respostes) {
 		const socialMediaTextComodi = `Ei, estic fent el test per saber si soc un/a Vilafranquí/ina de Tota la Vida (VTV) a ${
 			window.location.href
 		} i estic utilitzant el comodí de les xarxes socials. Necessito ajuda amb la següent pregunta: '${pregunta}'. Possibles respostes: ${respostes.map(
-			(item) => ` ${item}`
+			(item, index) => ` ${index + 1}) ${item}`
 		)}. Quina creus que és la correcta? Gràcies!`;
 		const comodiShareButtons = document.createElement('div');
 		comodiShareButtons.innerHTML = `<a href="https://t.me/share/url?url=${window.location.href}&text=${socialMediaTextComodi}" target="_blank"><i class="fab fa-telegram fa-5x shareButton" id="telegram-logo"></i></a><a href="https://api.whatsapp.com/send?text=${socialMediaTextComodi}" data-action="share/whatsapp/share" target="_blank"><i class="fab fa-whatsapp-square fa-5x shareButton" id="whatsapp-logo"></i></a>`;
