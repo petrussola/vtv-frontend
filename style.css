@@ -710,6 +710,10 @@ li {
 		flex-direction: row;
 		justify-content: flex-end;
 	}
+
+	#start-button {
+		font-size: 2rem;
+	}
 }
 
 @media (max-width: 500px) {
