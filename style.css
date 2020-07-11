@@ -5,7 +5,7 @@
 	--startButtonColor: #3ecf8e;
 	--visiblecolor: red;
 	--borderRadius: 4px;
-	--colorStamp: green;
+	--colorStamp: red;
 }
 
 /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -424,6 +424,7 @@ button:hover:enabled {
 	padding: 1rem 5px;
 	line-height: 22px;
 	color: var(--colorStamp);
+	-webkit-text-stroke: 1px black;
 	font-size: 24px;
 	text-align: center;
 	opacity: 0.8;

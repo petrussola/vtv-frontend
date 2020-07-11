@@ -41,8 +41,8 @@ const state = {
 	fetchedQuestions: false,
 	questionCounter: 0,
 	score: 0,
-	socialMediaTextSucces: `Soc un/a VTV (Vilafranquí/ina de Tota la Vida)! Vols saber si tu també ho ets? Ves a ${window.location.href} i fes el test. NOVETAT: ja pots veure quines preguntes has encertat i fallat.`,
-	socialMediaTextFail: `Vols saber si ets un/a VTV (Vilafranquí/ina de Tota la Vida)? Ves a ${window.location.href} i fes el test. NOVETAT: ja pots veure quines preguntes has encertat i fallat.`,
+	socialMediaTextSucces: `Soc un/a VTV (Vilafranquí/ina de Tota la Vida)! Vols saber si tu també ho ets? Ves a ${window.location.href} i fes el test. NOVETAT: ara tens 3 comodins del Whatsapp - més possibilitats de ser VTV!`,
+	socialMediaTextFail: `Vols saber si ets un/a VTV (Vilafranquí/ina de Tota la Vida)? Ves a ${window.location.href} i fes el test. NOVETAT: ara tens 3 comodins del Whatsapp - més possibilitats de ser VTV!`,
 	age: null,
 	collectedAnswers: [],
 	analyticsConsent: false,
@@ -84,7 +84,7 @@ function displayInitialQuestion() {
 	const stamp = document.createElement('h2');
 	stamp.id = 'stamp';
 	stamp.textContent =
-		'JA POTS VEURE ELS RESULTATS + 16 NOVES PREGUNTES, MÉS DIVERSIÓ';
+		'ARA AMB 3 COMODINS DEL WHATSAPP! AFEGIM NOVES PREGUNTES CADA SETMANA';
 	actionItems.appendChild(slider);
 	actionItems.appendChild(button);
 	actionItems.appendChild(selectAge);
