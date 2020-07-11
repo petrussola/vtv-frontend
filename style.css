@@ -388,6 +388,11 @@ button:hover:enabled {
 	padding: 0.5rem 1rem;
 	border-radius: 4px;
 	cursor: pointer;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	text-align: center;
+	line-height: 1.2rem;
 }
 
 #comodi-socialmedia {
@@ -399,7 +404,9 @@ button:hover:enabled {
 
 #actionItems .shareButtonComodi,
 #actionItems a {
+	background-color: white;
 	margin: 0 0.5rem;
+	border-radius: 4px;
 }
 
 .outline {
@@ -432,6 +439,7 @@ button:hover:enabled {
 	justify-content: center;
 	align-items: center;
 	padding: 0 1rem;
+	text-align: center;
 }
 
 #pregunta span,

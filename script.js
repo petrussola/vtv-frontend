@@ -46,7 +46,8 @@ const state = {
 	age: null,
 	collectedAnswers: [],
 	analyticsConsent: false,
-	comodinsLeft: 2,
+	comodinsInitial: 3,
+	comodinsLeft: 3,
 	comodiUsedInQuestion: false,
 };
 
@@ -161,7 +162,13 @@ function displayNextQuestion() {
 	comodi.id = 'comodi';
 	comodi.classList.add('comodi-button');
 	if (state.comodinsLeft > 0) {
-		comodi.textContent = `Fes clic aqui si vols utilitzar el comodí de les xarxes socials. T'en queden ${state.comodinsLeft}!`;
+		comodi.textContent = `Et ${
+			state.comodinsLeft > 1
+				? `queden ${state.comodinsLeft} comodins`
+				: `queda ${state.comodinsLeft} comodi`
+		} del Whatsapp. Fes click aquí per utilitzar-${
+			state.comodinsLeft > 1 ? 'los' : 'lo'
+		}!`;
 		clickComodi(comodi, pregunta, respostes);
 	} else {
 		comodi.textContent = `Has exhaurit els comodins`;
@@ -262,8 +269,8 @@ function reset() {
 		},
 	];
 	state.collectedAnswers = [];
-	state.comodinsLeft = 2,
-	state.comodiUsedInQuestion = false,
+	state.comodinsLeft = state.comodinsInitial;
+	state.comodiUsedInQuestion = false;
 	// display initial question
 	displayInitialQuestion();
 }
@@ -376,7 +383,11 @@ function clickSocialMediaButton() {
 function clickComodi(node, pregunta, respostes) {
 	node.addEventListener('click', () => {
 		// remove button and class that gives style
-		node.textContent = `Demana ajuda a través de les xarxes. Et queden ${state.comodinsLeft} comodins.`;
+		// node.textContent = `Demana ajuda a través de les xarxes. Et ${
+		// 	state.comodinsLeft > 1
+		// 		? `queden ${state.comodinsLeft} comodins`
+		// 		: `queda ${state.comodinsLeft} comodí`
+		// }.`;
 		// node.classList.toggle('comodi-button');
 		// add social media buttons
 		const socialMediaTextComodi = `Ei, estic fent el test per saber si soc un/a Vilafranquí/ina de Tota la Vida (VTV) a ${
@@ -386,7 +397,7 @@ function clickComodi(node, pregunta, respostes) {
 		)}. Quina creus que és la correcta? Gràcies!`;
 		// create div to host social media buttons
 		const comodiShareButtons = document.createElement('div');
-		comodiShareButtons.id = "comodi-socialmedia"
+		comodiShareButtons.id = 'comodi-socialmedia';
 		comodiShareButtons.innerHTML = `<a href="https://t.me/share/url?url=${window.location.href}&text=${socialMediaTextComodi}" target="_blank"><i class="fab fa-telegram fa-5x shareButtonComodi" id="telegram-logo"></i></a><a href="https://api.whatsapp.com/send?text=${socialMediaTextComodi}" data-action="share/whatsapp/share" target="_blank"><i class="fab fa-whatsapp-square fa-5x shareButtonComodi" id="whatsapp-logo"></i></a>`;
 		node.parentNode.appendChild(comodiShareButtons);
 		comodiShareButtons.addEventListener('click', (e) => {
@@ -394,7 +405,15 @@ function clickComodi(node, pregunta, respostes) {
 				if (state.comodiUsedInQuestion === false && state.comodinsLeft > 1) {
 					state.comodiUsedInQuestion = true;
 					state.comodinsLeft--;
-					node.textContent = `Has utilitzat 1 comodí, t'en queden ${state.comodinsLeft}`;
+					node.textContent = `Has utilitzat ${
+						state.comodinsInitial - state.comodinsLeft > 1
+							? `${state.comodinsInitial - state.comodinsLeft} comodins`
+							: `${state.comodinsInitial - state.comodinsLeft} comodí`
+					}, t'en ${
+						state.comodinsLeft > 1
+							? `queden ${state.comodinsLeft}`
+							: `queda ${state.comodinsLeft}`
+					}.`;
 				} else if (
 					state.comodiUsedInQuestion === false &&
 					state.comodinsLeft === 1
