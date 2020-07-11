@@ -372,7 +372,7 @@ function clickSocialMediaButton() {
 }
 
 function clickComodi(node, pregunta, respostes) {
-	node.addEventListener('click', (e) => {
+	node.addEventListener('click', () => {
 		// remove button and class that gives style
 		node.textContent = `Demana ajuda a través de les xarxes. Et queden ${state.comodinsLeft} comodins.`;
 		// node.classList.toggle('comodi-button');
@@ -382,8 +382,10 @@ function clickComodi(node, pregunta, respostes) {
 		} i estic utilitzant el comodí de les xarxes socials. Necessito ajuda amb la següent pregunta: '${pregunta}'. Possibles respostes: ${respostes.map(
 			(item, index) => ` ${index + 1}) ${item}`
 		)}. Quina creus que és la correcta? Gràcies!`;
+		// create div to host social media buttons
 		const comodiShareButtons = document.createElement('div');
-		comodiShareButtons.innerHTML = `<a href="https://t.me/share/url?url=${window.location.href}&text=${socialMediaTextComodi}" target="_blank"><i class="fab fa-telegram fa-5x shareButton" id="telegram-logo"></i></a><a href="https://api.whatsapp.com/send?text=${socialMediaTextComodi}" data-action="share/whatsapp/share" target="_blank"><i class="fab fa-whatsapp-square fa-5x shareButton" id="whatsapp-logo"></i></a>`;
+		comodiShareButtons.id = "comodi-socialmedia"
+		comodiShareButtons.innerHTML = `<a href="https://t.me/share/url?url=${window.location.href}&text=${socialMediaTextComodi}" target="_blank"><i class="fab fa-telegram fa-5x shareButtonComodi" id="telegram-logo"></i></a><a href="https://api.whatsapp.com/send?text=${socialMediaTextComodi}" data-action="share/whatsapp/share" target="_blank"><i class="fab fa-whatsapp-square fa-5x shareButtonComodi" id="whatsapp-logo"></i></a>`;
 		node.parentNode.appendChild(comodiShareButtons);
 		comodiShareButtons.addEventListener('click', (e) => {
 			if (e.target.id === 'telegram-logo' || e.target.id === 'whatsapp-logo') {

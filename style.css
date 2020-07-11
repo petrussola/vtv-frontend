@@ -286,6 +286,7 @@ header {
 	position: relative;
 	padding: 0 1rem;
 	flex-grow: 1;
+	padding-bottom: 3rem;
 }
 
 #container::after {
@@ -386,6 +387,17 @@ button:hover:enabled {
 	padding: 0.5rem 1rem;
 	border-radius: 4px;
 	cursor: pointer;
+}
+
+#comodi-socialmedia {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+#actionItems .shareButtonComodi, #actionItems a {
+	margin: 0 0.5rem;
 }
 
 .outline {
