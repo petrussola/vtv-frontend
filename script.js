@@ -413,6 +413,11 @@ function clickComodi(node, pregunta, respostes) {
 					e.target.id === 'telegram-logo' ||
 					e.target.id === 'whatsapp-logo'
 				) {
+					// send event to analytics
+					gtag('event', e.target.id, {
+						event_category: 'use-comodi',
+						event_label: `${state.age}-${state.questionCounter}`,
+					});
 					if (state.comodiUsedInQuestion === false && state.comodinsLeft > 1) {
 						state.comodiUsedInQuestion = true;
 						state.comodinsLeft--;
