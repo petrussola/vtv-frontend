@@ -138,6 +138,7 @@ function displayNextQuestion() {
 	// reset state comodi button
 	state.comodiButtonExpanded = false;
 	const pregunta = state.questions[state.questionCounter].pregunta;
+	const preguntaId = state.questions[state.questionCounter].id;
 	const respostes = state.questions[state.questionCounter].respostes;
 	// change text of pregunta to whatever pregunta we are asking, which is determined by the questioncounter
 	content.innerHTML = `<h1 id="pregunta">${pregunta}</h1>`;
@@ -175,7 +176,7 @@ function displayNextQuestion() {
 		} del Whatsapp. Fes click aquí per utilitzar-${
 			state.comodinsLeft > 1 ? 'los' : 'lo'
 		}!`;
-		clickComodi(comodi, pregunta, respostes);
+		clickComodi(comodi, pregunta, preguntaId, respostes);
 	} else {
 		comodi.textContent = `Has exhaurit els comodins`;
 	}
@@ -394,7 +395,7 @@ function clickSocialMediaButton() {
 	});
 }
 
-function clickComodi(node, pregunta, respostes) {
+function clickComodi(node, pregunta, preguntaId, respostes) {
 	node.addEventListener('click', () => {
 		if (state.comodiButtonExpanded === false) {
 			state.comodiButtonExpanded = true;
@@ -417,7 +418,7 @@ function clickComodi(node, pregunta, respostes) {
 					// send event to analytics
 					gtag('event', e.target.id, {
 						event_category: 'use-comodi',
-						event_label: `${state.age}-${state.questionCounter}`,
+						event_label: `${state.age}-${preguntaId}`,
 					});
 					if (state.comodiUsedInQuestion === false && state.comodinsLeft > 1) {
 						state.comodiUsedInQuestion = true;
