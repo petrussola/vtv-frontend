@@ -428,6 +428,8 @@ function clickComodi(node, pregunta, respostes) {
 					}
 				}
 			});
+			// bring buttons into view
+			comodiShareButtons.scrollIntoView();
 		}
 	});
 }
