@@ -58,7 +58,7 @@ const state = {
 
 // display initial question to start the test
 function displayInitialQuestion() {
-	gtag('config', 'UA-170700693-2', {
+	gtag('config', 'UA-170700693-3', {
 		page_title: 'home',
 		page_path: '/',
 	});
@@ -129,7 +129,7 @@ const fetchQuestions = async () => {
 
 // display question in #content node
 function displayNextQuestion() {
-	gtag('config', 'UA-170700693-2', {
+	gtag('config', 'UA-170700693-3', {
 		page_title: `${state.age}-${state.questionCounter}`,
 		page_path: `/question-${state.age}-${state.questionCounter}`,
 	});
@@ -138,6 +138,7 @@ function displayNextQuestion() {
 	// reset state comodi button
 	state.comodiButtonExpanded = false;
 	const pregunta = state.questions[state.questionCounter].pregunta;
+	const preguntaId = state.questions[state.questionCounter].id;
 	const respostes = state.questions[state.questionCounter].respostes;
 	// change text of pregunta to whatever pregunta we are asking, which is determined by the questioncounter
 	content.innerHTML = `<h1 id="pregunta">${pregunta}</h1>`;
@@ -160,8 +161,9 @@ function displayNextQuestion() {
 		state.questions.length - 1
 	}`;
 	actionItems.appendChild(aux);
-	// display Left left
+	// display comodins
 	const comodiSpace = document.createElement('div');
+	comodiSpace.id = 'comodi-space';
 	actionItems.appendChild(comodiSpace);
 	const comodi = document.createElement('h3');
 	comodi.id = 'comodi';
@@ -174,7 +176,7 @@ function displayNextQuestion() {
 		} del Whatsapp. Fes click aquí per utilitzar-${
 			state.comodinsLeft > 1 ? 'los' : 'lo'
 		}!`;
-		clickComodi(comodi, pregunta, respostes);
+		clickComodi(comodi, pregunta, preguntaId, respostes);
 	} else {
 		comodi.textContent = `Has exhaurit els comodins`;
 	}
@@ -183,7 +185,7 @@ function displayNextQuestion() {
 
 function displayResults() {
 	// send page view to Analytics
-	gtag('config', 'UA-170700693-2', {
+	gtag('config', 'UA-170700693-3', {
 		page_title: 'resultat',
 		page_path: '/resultat',
 	});
@@ -250,26 +252,6 @@ function displayResults() {
 	href="https://twitter.com/intent/tweet?text=${state.socialMediaTextSucces}"><i class="fab fa-twitter fa-5x shareButton" id="twitter-logo"></i></a>`;
 	actionContainer.appendChild(shareButtons);
 	actionItems.appendChild(actionContainer);
-	// send event to analytics
-	shareButtons.addEventListener('click', (e) => {
-		switch (e.target.id) {
-			case 'telegram-logo':
-				gtag('event', 'share', {
-					method: 'Telegram',
-				});
-				break;
-			case 'whatsapp-logo':
-				gtag('event', 'share', {
-					method: 'Whatsapp',
-				});
-				break;
-			case 'twitter-logo':
-				gtag('event', 'share', {
-					method: 'Twitter',
-				});
-				break;
-		}
-	});
 	if (action === 'Torna-ho a provar') {
 		// CTA button
 		const ctaButton = document.createElement('button');
@@ -314,7 +296,7 @@ function listenResultsClick() {
 	const resultsLink = document.getElementById('display-results');
 	resultsLink.addEventListener('click', () => {
 		// send page view to Analytics
-		gtag('config', 'UA-170700693-2', {
+		gtag('config', 'UA-170700693-3', {
 			page_title: 'resultat-detall',
 			page_path: '/resultat-detall',
 		});
@@ -399,15 +381,21 @@ function displayConsent() {
 function clickSocialMediaButton() {
 	const shareButtons = document.getElementById('socialButtons');
 	shareButtons.addEventListener('click', (e) => {
-		// send event to analytics
-		gtag('event', 'share', {
-			method: e.target.id,
-		});
-		console.log(e.target.id);
+		if (
+			e.target.id === 'telegram-logo' ||
+			e.target.id === 'whatsapp-logo' ||
+			e.target.id === 'twitter-logo'
+		) {
+			// send event to analytics
+			gtag('event', 'share', {
+				method: e.target.id,
+			});
+			console.log(e.target.id);
+		}
 	});
 }
 
-function clickComodi(node, pregunta, respostes) {
+function clickComodi(node, pregunta, preguntaId, respostes) {
 	node.addEventListener('click', () => {
 		if (state.comodiButtonExpanded === false) {
 			state.comodiButtonExpanded = true;
@@ -427,6 +415,11 @@ function clickComodi(node, pregunta, respostes) {
 					e.target.id === 'telegram-logo' ||
 					e.target.id === 'whatsapp-logo'
 				) {
+					// send event to analytics
+					gtag('event', e.target.id, {
+						event_category: 'use-comodi',
+						event_label: `${state.age}-${preguntaId}`,
+					});
 					if (state.comodiUsedInQuestion === false && state.comodinsLeft > 1) {
 						state.comodiUsedInQuestion = true;
 						state.comodinsLeft--;
@@ -541,7 +534,7 @@ page.forEach((item) => {
 		const whyMade = document.createElement('h2');
 		if (e.target.id === 'about-page') {
 			// send page view to Analytics
-			gtag('config', 'UA-170700693-2', {
+			gtag('config', 'UA-170700693-3', {
 				page_title: 'about',
 				page_path: '/about',
 			});
@@ -557,7 +550,7 @@ page.forEach((item) => {
 				'Soc un VTV que ha pujat als castells, ha ballat un ball de la Festa Major i tantes altres coses que fan els VTVs. No somio en ser administrador ni pregoner. No us prengueu aquesta web seriosament, tothom hi és benvingut a Vilafranca!';
 		} else if (e.target.id === 'suggeriments-page') {
 			// send page view to Analytics
-			gtag('config', 'UA-170700693-2', {
+			gtag('config', 'UA-170700693-3', {
 				page_title: 'suggeriments',
 				page_path: '/suggeriments',
 			});
@@ -569,7 +562,7 @@ page.forEach((item) => {
 				'Si voleu afegir preguntes al test, o teniu qualsevol suggeriment o comentari, envieu-me un email a socunvtv [arroba] gmail [punt] com. Salut!';
 		} else if (e.target.id === 'novetats-page') {
 			// send page view to Analytics
-			gtag('config', 'UA-170700693-2', {
+			gtag('config', 'UA-170700693-3', {
 				page_title: 'novetats',
 				page_path: '/novetats',
 			});
@@ -587,7 +580,7 @@ page.forEach((item) => {
 			textContainer.appendChild(listNovetats);
 		} else {
 			// send page view to Analytics
-			gtag('config', 'UA-170700693-2', {
+			gtag('config', 'UA-170700693-3', {
 				page_title: 'not-exist',
 				page_path: '/not-exist',
 			});
@@ -625,7 +618,7 @@ icons.addEventListener('click', (e) => {
 tracking.addEventListener('click', (e) => {
 	if (e.target.id === 'not-ok-analytics') {
 		acceptConsentAnalytics(false);
-		window['ga-disable-UA-170700693-2'] = true;
+		window['ga-disable-UA-170700693-3'] = true;
 		hideConsentPolicy();
 	} else if (e.target.id === 'ok-analytics') {
 		acceptConsentAnalytics(true);
@@ -636,7 +629,7 @@ tracking.addEventListener('click', (e) => {
 cookieLink.forEach((item) => {
 	item.addEventListener('click', () => {
 		// send page view to Analytics
-		gtag('config', 'UA-170700693-2', {
+		gtag('config', 'UA-170700693-3', {
 			page_title: 'cookie-policy',
 			page_path: '/cookie-policy',
 		});

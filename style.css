@@ -634,7 +634,8 @@ li {
 	#pregunta,
 	#explanation {
 		padding: 0;
-		line-height: 150%;
+		font-size: 1.25rem;
+		/* line-height: 115%; */
 	}
 
 	#pregunta span {
@@ -655,12 +656,14 @@ li {
 		align-items: center;
 		background-color: rgba(255, 255, 255, 0.8);
 		border-radius: var(--borderRadius);
-		padding: 0 1rem 1rem 1rem;
+		padding: 0 0 1rem 0;
 		margin-bottom: 2rem;
 	}
 
 	.shareButton {
-		margin: 0.25rem;
+		max-width: 75px;
+		max-height: 75px;
+		margin: 0.10rem;
 		border: none;
 		padding: 0;
 		text-shadow: none;
@@ -714,6 +717,10 @@ li {
 	#start-button {
 		font-size: 2rem;
 	}
+
+	#comodi-space {
+		margin-top: 0.5rem;
+	}
 }
 
 @media (max-width: 500px) {
@@ -735,12 +742,6 @@ li {
 @media (max-width: 500px) {
 	button {
 		width: 90vw;
-		font-size: 2rem;
-	}
-}
-
-@media (max-width: 500px) {
-	#pregunta {
 		font-size: 2rem;
 	}
 }
