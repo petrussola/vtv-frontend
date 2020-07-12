@@ -250,6 +250,26 @@ function displayResults() {
 	href="https://twitter.com/intent/tweet?text=${state.socialMediaTextSucces}"><i class="fab fa-twitter fa-5x shareButton" id="twitter-logo"></i></a>`;
 	actionContainer.appendChild(shareButtons);
 	actionItems.appendChild(actionContainer);
+	// send event to analytics
+	shareButtons.addEventListener('click', (e) => {
+		switch (e.target.id) {
+			case 'telegram-logo':
+				gtag('event', 'share', {
+					method: 'Telegram',
+				});
+				break;
+			case 'whatsapp-logo':
+				gtag('event', 'share', {
+					method: 'Whatsapp',
+				});
+				break;
+			case 'twitter-logo':
+				gtag('event', 'share', {
+					method: 'Twitter',
+				});
+				break;
+		}
+	});
 	if (action === 'Torna-ho a provar') {
 		// CTA button
 		const ctaButton = document.createElement('button');
