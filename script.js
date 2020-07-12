@@ -162,6 +162,7 @@ function displayNextQuestion() {
 	actionItems.appendChild(aux);
 	// display comodins
 	const comodiSpace = document.createElement('div');
+	comodiSpace.id = 'comodi-space';
 	actionItems.appendChild(comodiSpace);
 	const comodi = document.createElement('h3');
 	comodi.id = 'comodi';
