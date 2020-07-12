@@ -3,8 +3,9 @@
 :root {
 	--mainColor: #3498db;
 	--startButtonColor: #3ecf8e;
+	--visiblecolor: red;
 	--borderRadius: 4px;
-	--colorStamp: green;
+	--colorStamp: red;
 }
 
 /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -230,7 +231,7 @@ header {
 
 #novetats-page {
 	color: white;
-	background-color: red;
+	background-color: var(--visiblecolor);
 	border-radius: var(--borderRadius);
 }
 
@@ -286,6 +287,7 @@ header {
 	position: relative;
 	padding: 0 1rem;
 	flex-grow: 1;
+	padding-bottom: 3rem;
 }
 
 #container::after {
@@ -381,11 +383,30 @@ button:hover:enabled {
 }
 
 #comodi.comodi-button {
-	background-color: var(--startButtonColor);
+	background-color: var(--visiblecolor);
 	color: #fff;
 	padding: 0.5rem 1rem;
 	border-radius: 4px;
 	cursor: pointer;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	text-align: center;
+	line-height: 1.2rem;
+}
+
+#comodi-socialmedia {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+#actionItems .shareButtonComodi,
+#actionItems a {
+	background-color: white;
+	margin: 0 0.5rem;
+	border-radius: 4px;
 }
 
 .outline {
@@ -418,6 +439,7 @@ button:hover:enabled {
 	justify-content: center;
 	align-items: center;
 	padding: 0 1rem;
+	text-align: center;
 }
 
 #pregunta span,
@@ -597,6 +619,7 @@ li {
 	#stamp {
 		margin-top: 50px;
 		position: initial;
+		-webkit-text-stroke: 1px black;
 	}
 
 	#content {
@@ -686,6 +709,10 @@ li {
 		display: flex;
 		flex-direction: row;
 		justify-content: flex-end;
+	}
+
+	#start-button {
+		font-size: 2rem;
 	}
 }
 

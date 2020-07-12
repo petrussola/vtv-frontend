@@ -41,13 +41,15 @@ const state = {
 	fetchedQuestions: false,
 	questionCounter: 0,
 	score: 0,
-	socialMediaTextSucces: `Soc un/a VTV (Vilafranquí/ina de Tota la Vida)! Vols saber si tu també ho ets? Ves a ${window.location.href} i fes el test. NOVETAT: ja pots veure quines preguntes has encertat i fallat.`,
-	socialMediaTextFail: `Vols saber si ets un/a VTV (Vilafranquí/ina de Tota la Vida)? Ves a ${window.location.href} i fes el test. NOVETAT: ja pots veure quines preguntes has encertat i fallat.`,
+	socialMediaTextSucces: `Soc un/a VTV (Vilafranquí/ina de Tota la Vida)! Vols saber si tu també ho ets? Ves a ${window.location.href} i fes el test. NOVETAT: ara tens 3 comodins del Whatsapp - més possibilitats de ser VTV!`,
+	socialMediaTextFail: `Vols saber si ets un/a VTV (Vilafranquí/ina de Tota la Vida)? Ves a ${window.location.href} i fes el test. NOVETAT: ara tens 3 comodins del Whatsapp - més possibilitats de ser VTV!`,
 	age: null,
 	collectedAnswers: [],
 	analyticsConsent: false,
-	comodinsLeft: 2,
+	comodinsInitial: 3,
+	comodinsLeft: 3,
 	comodiUsedInQuestion: false,
+	comodiButtonExpanded: false,
 };
 
 ///////////////
@@ -60,6 +62,8 @@ function displayInitialQuestion() {
 		page_title: 'home',
 		page_path: '/',
 	});
+	// reset state comodi button
+	state.comodiButtonExpanded = false;
 	content.innerHTML = `<h1>Vols saber si ets un/a VTV (Vilafranquí/ina de Tota la Vida)? <span class="outline">Fes el test.</span></h1>`;
 	const actionItems = document.createElement('div');
 	actionItems.id = 'actionItems';
@@ -83,7 +87,7 @@ function displayInitialQuestion() {
 	const stamp = document.createElement('h2');
 	stamp.id = 'stamp';
 	stamp.textContent =
-		'JA POTS VEURE ELS RESULTATS + 16 NOVES PREGUNTES, MÉS DIVERSIÓ';
+		'ARA AMB 3 COMODINS DEL WHATSAPP! AFEGIM NOVES PREGUNTES CADA SETMANA';
 	actionItems.appendChild(slider);
 	actionItems.appendChild(button);
 	actionItems.appendChild(selectAge);
@@ -131,6 +135,8 @@ function displayNextQuestion() {
 	});
 	// set used comodi to false in case user used comodi in the previous question
 	state.comodiUsedInQuestion = false;
+	// reset state comodi button
+	state.comodiButtonExpanded = false;
 	const pregunta = state.questions[state.questionCounter].pregunta;
 	const respostes = state.questions[state.questionCounter].respostes;
 	// change text of pregunta to whatever pregunta we are asking, which is determined by the questioncounter
@@ -161,7 +167,13 @@ function displayNextQuestion() {
 	comodi.id = 'comodi';
 	comodi.classList.add('comodi-button');
 	if (state.comodinsLeft > 0) {
-		comodi.textContent = `Fes clic aqui si vols utilitzar el comodí de les xarxes socials. T'en queden ${state.comodinsLeft}!`;
+		comodi.textContent = `Et ${
+			state.comodinsLeft > 1
+				? `queden ${state.comodinsLeft} comodins`
+				: `queda ${state.comodinsLeft} comodi`
+		} del Whatsapp. Fes click aquí per utilitzar-${
+			state.comodinsLeft > 1 ? 'los' : 'lo'
+		}!`;
 		clickComodi(comodi, pregunta, respostes);
 	} else {
 		comodi.textContent = `Has exhaurit els comodins`;
@@ -180,7 +192,8 @@ function displayResults() {
 		event_category: state.age,
 		event_label: `score: ${state.score}`,
 	});
-
+	// reset state comodi button
+	state.comodiButtonExpanded = false;
 	// initialize variables that will be used for text depending on the score
 	let congratulation;
 	let explanation;
@@ -262,6 +275,9 @@ function reset() {
 		},
 	];
 	state.collectedAnswers = [];
+	state.comodinsLeft = state.comodinsInitial;
+	state.comodiUsedInQuestion = false;
+	state.comodiButtonExpanded = false;
 	// display initial question
 	displayInitialQuestion();
 }
@@ -372,34 +388,49 @@ function clickSocialMediaButton() {
 }
 
 function clickComodi(node, pregunta, respostes) {
-	node.addEventListener('click', (e) => {
-		// remove button and class that gives style
-		node.textContent = `Demana ajuda a través de les xarxes. Et queden ${state.comodinsLeft} comodins.`;
-		// node.classList.toggle('comodi-button');
-		// add social media buttons
-		const socialMediaTextComodi = `Ei, estic fent el test per saber si soc un/a Vilafranquí/ina de Tota la Vida (VTV) a ${
-			window.location.href
-		} i estic utilitzant el comodí de les xarxes socials. Necessito ajuda amb la següent pregunta: '${pregunta}'. Possibles respostes: ${respostes.map(
-			(item) => ` ${item}`
-		)}. Quina creus que és la correcta? Gràcies!`;
-		const comodiShareButtons = document.createElement('div');
-		comodiShareButtons.innerHTML = `<a href="https://t.me/share/url?url=${window.location.href}&text=${socialMediaTextComodi}" target="_blank"><i class="fab fa-telegram fa-5x shareButton" id="telegram-logo"></i></a><a href="https://api.whatsapp.com/send?text=${socialMediaTextComodi}" data-action="share/whatsapp/share" target="_blank"><i class="fab fa-whatsapp-square fa-5x shareButton" id="whatsapp-logo"></i></a>`;
-		node.parentNode.appendChild(comodiShareButtons);
-		comodiShareButtons.addEventListener('click', (e) => {
-			if (e.target.id === 'telegram-logo' || e.target.id === 'whatsapp-logo') {
-				if (state.comodiUsedInQuestion === false && state.comodinsLeft > 1) {
-					state.comodiUsedInQuestion = true;
-					state.comodinsLeft--;
-					node.textContent = `Has utilitzat 1 comodí, t'en queden ${state.comodinsLeft}`;
-				} else if (
-					state.comodiUsedInQuestion === false &&
-					state.comodinsLeft === 1
+	node.addEventListener('click', () => {
+		if (state.comodiButtonExpanded === false) {
+			state.comodiButtonExpanded = true;
+			// add social media buttons
+			const socialMediaTextComodi = `Ei, estic fent el test per saber si soc un/a Vilafranquí/ina de Tota la Vida (VTV) a ${
+				window.location.href
+			} i estic utilitzant el comodí de les xarxes socials. Necessito ajuda amb la següent pregunta: '${pregunta}'. Possibles respostes: ${respostes.map(
+				(item, index) => ` ${index + 1}) ${item}`
+			)}. Quina creus que és la correcta? Gràcies!`;
+			// create div to host social media buttons
+			const comodiShareButtons = document.createElement('div');
+			comodiShareButtons.id = 'comodi-socialmedia';
+			comodiShareButtons.innerHTML = `<a href="https://t.me/share/url?url=${window.location.href}&text=${socialMediaTextComodi}" target="_blank"><i class="fab fa-telegram fa-5x shareButtonComodi" id="telegram-logo"></i></a><a href="https://api.whatsapp.com/send?text=${socialMediaTextComodi}" data-action="share/whatsapp/share" target="_blank"><i class="fab fa-whatsapp-square fa-5x shareButtonComodi" id="whatsapp-logo"></i></a>`;
+			node.parentNode.appendChild(comodiShareButtons);
+			comodiShareButtons.addEventListener('click', (e) => {
+				if (
+					e.target.id === 'telegram-logo' ||
+					e.target.id === 'whatsapp-logo'
 				) {
-					state.comodinsLeft--;
-					node.textContent = `Has exhaurits els comodins`;
+					if (state.comodiUsedInQuestion === false && state.comodinsLeft > 1) {
+						state.comodiUsedInQuestion = true;
+						state.comodinsLeft--;
+						node.textContent = `Has utilitzat ${
+							state.comodinsInitial - state.comodinsLeft > 1
+								? `${state.comodinsInitial - state.comodinsLeft} comodins`
+								: `${state.comodinsInitial - state.comodinsLeft} comodí`
+						}, t'en ${
+							state.comodinsLeft > 1
+								? `queden ${state.comodinsLeft}`
+								: `queda ${state.comodinsLeft}`
+						}.`;
+					} else if (
+						state.comodiUsedInQuestion === false &&
+						state.comodinsLeft === 1
+					) {
+						state.comodinsLeft--;
+						node.textContent = `Has exhaurits els comodins`;
+					}
 				}
-			}
-		});
+			});
+			// bring buttons into view
+			comodiShareButtons.scrollIntoView();
+		}
 	});
 }
 
