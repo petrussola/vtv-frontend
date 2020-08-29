@@ -50,6 +50,7 @@ const state = {
 	comodinsLeft: 3,
 	comodiUsedInQuestion: false,
 	comodiButtonExpanded: false,
+	rantDone: false,
 };
 
 ///////////////
@@ -454,10 +455,20 @@ function clickComodi(node, pregunta, preguntaId, respostes) {
 // redirect to "/"
 // https://stackoverflow.com/questions/588040/window-onload-vs-document-onload
 window.onload = () => {
-	window.history.pushState({}, '/', window.location.origin);
-	// fetchQuestions();
-	displayInitialQuestion();
-	displayConsent();
+	if (window.location.search) {
+		const searchParams = window.location.search.split('?')[1].split('=');
+		if (searchParams[0] === 'rant' && searchParams[1] === 'done') {
+			state.rantDone = true;
+		}
+	}
+	if (!state.rantDone) {
+		window.location.href = 'https://angry-newton-a584c1.netlify.app/';
+	} else {
+		window.history.pushState({}, '/', window.location.origin);
+		fetchQuestions();
+		displayInitialQuestion();
+		displayConsent();
+	}
 };
 
 // click button to start test
