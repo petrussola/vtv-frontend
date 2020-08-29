@@ -462,7 +462,7 @@ window.onload = () => {
 		}
 	}
 	if (!state.rantDone) {
-		window.location.href = 'https://angry-newton-a584c1.netlify.app/';
+		window.location.href = 'https://rant.socvtv.fun/';
 	} else {
 		window.history.pushState({}, '/', window.location.origin);
 		fetchQuestions();
