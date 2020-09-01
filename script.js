@@ -455,19 +455,19 @@ function clickComodi(node, pregunta, preguntaId, respostes) {
 // redirect to "/"
 // https://stackoverflow.com/questions/588040/window-onload-vs-document-onload
 window.onload = () => {
-	if (window.location.search) {
-		const searchParams = window.location.search.split('?')[1].split('=');
-		if (searchParams[0] === 'rant' && searchParams[1] === 'done') {
-			state.rantDone = true;
-		}
-	}
-	if (!state.rantDone) {
-		window.location.href = 'https://rant.socvtv.fun/';
-	} else {
-		window.history.pushState({}, '/', window.location.origin);
-		displayInitialQuestion();
-		displayConsent();
-	}
+	// if (window.location.search) {
+	// 	const searchParams = window.location.search.split('?')[1].split('=');
+	// 	if (searchParams[0] === 'rant' && searchParams[1] === 'done') {
+	// 		state.rantDone = true;
+	// 	}
+	// }
+	// if (!state.rantDone) {
+	// 	window.location.href = 'https://rant.socvtv.fun/';
+	// } else {
+	window.history.pushState({}, '/', window.location.origin);
+	displayInitialQuestion();
+	displayConsent();
+	// }
 };
 
 // click button to start test
